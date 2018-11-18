@@ -496,8 +496,7 @@ module.exports = (testRunner, jsonFixtures, csvFixtures, inMemoryJsonFixtures) =
   testRunner.add('should unwind and blank out repeated data', (t) => {
     const opts = {
       fields: ['carModel', 'price', 'items.name', 'items.color', 'items.items.position', 'items.items.color'],
-      unwind: ['items', 'items.items'],
-      unwindBlank: true
+      unwindBlank: ['items', 'items.items']
     };
 
     const transform = new Json2csvTransform(opts);

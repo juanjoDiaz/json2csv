@@ -173,7 +173,7 @@ The programatic APIs take a configuration object very equivalent to the CLI opti
 - `fields` - Array of Objects/Strings. Defaults to toplevel JSON attributes. See example below.
 - `ndjson` - Only effective on the streaming API. Indicates that data coming through the stream is NDJSON.
 - `unwind` - Array of Strings, creates multiple rows from a single JSON document similar to MongoDB's $unwind
-- `unwindBlank` - Boolean, unwind using blank values instead of repeating data.
+- `unwindBlank` - Array of Strings, creates multiple rows from a single JSON document similar to MongoDB's $unwind
 - `flatten` - Boolean, flattens nested JSON using [flat]. Defaults to `false`.
 - `flattenSeparator` - String, separator to use between nested JSON keys when `flatten` option enabled. Defaults to `.` if not specified.
 - `defaultValue` - String, default value to use when missing data. Defaults to `<empty>` if not specified. (Overridden by `fields[].default`)
@@ -632,7 +632,7 @@ const myCars = [
   }
 ];
 
-const json2csvParser = new Json2csvParser({ fields, unwind: ['items', 'items.items'], unwindBlank: true });
+const json2csvParser = new Json2csvParser({ fields, unwindBlank: ['items', 'items.items'] });
 const csv = json2csvParser.parse(myCars);
 
 console.log(csv);

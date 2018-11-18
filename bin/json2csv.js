@@ -23,7 +23,7 @@ program
   .option('-f, --fields <fields>', 'Specify the fields to convert.')
   .option('-c, --fields-config <path>', 'Specify a file with a fields configuration as a JSON array.')
   .option('-u, --unwind <paths>', 'Creates multiple rows from a single JSON document similar to MongoDB unwind.')
-  .option('-B, --unwind-blank', 'When unwinding, blank out instead of repeating data.')
+  .option('-B, --unwind-blank <paths>', 'Similar to unwind but cells blank after the fiest unwound item.')
   .option('-F, --flatten', 'Flatten nested objects.')
   .option('-S, --flatten-separator <separator>', 'Flattened keys separator.')
   .option('-v, --default-value [defaultValue]', 'Specify a default value other than empty string.')
@@ -155,7 +155,7 @@ Promise.resolve()
     const opts = {
       fields: getFields(),
       unwind: program.unwind ? program.unwind.split(',') : [],
-      unwindBlank: program.unwindBlank,
+      unwindBlank: program.unwindBlank ? program.unwindBlank.split(',') : [],
       flatten: program.flatten,
       flattenSeparator: program.flattenSeparator,
       defaultValue: program.defaultValue,

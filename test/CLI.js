@@ -301,9 +301,9 @@ module.exports = (testRunner, jsonFixtures, csvFixtures) => {
     });
   });
 
-  testRunner.add('hould unwind and blank out repeated data', (t) => {
+  testRunner.add('should unwind and blank out repeated data', (t) => {
     const opts = ' --fields carModel,price,items.name,items.color,items.items.position,items.items.color'
-      + ' --unwind items,items.items --unwind-blank';
+      + ' --unwind-blank items,items.items';
 
     child_process.exec(cli + '-i ' + getFixturePath('/json/unwind2.json') + opts, (err, stdout, stderr) => {
       t.notOk(stderr);
