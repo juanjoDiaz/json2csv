@@ -9,19 +9,26 @@
         "slug": "index",
         "headings": [
           {
-            "title": "How to use",
+            "title": "How to install",
             "depth": 2,
-            "id": "how-to-use"
+            "id": "how-to-install"
           },
           {
-            "title": "Features",
+            "title": "Usage",
             "depth": 2,
-            "id": "features"
+            "id": "usage",
+            "headings": [
+              {
+                "title": "Command Line Interface",
+                "depth": 3,
+                "id": "command-line-interface"
+              }
+            ]
           },
           {
-            "title": "Use as a module",
+            "title": "Javascript module",
             "depth": 2,
-            "id": "use-as-a-module",
+            "id": "javascript-module",
             "headings": [
               {
                 "title": "Available Options",
@@ -29,90 +36,92 @@
                 "id": "available-options"
               },
               {
-                "title": "Example 1",
+                "title": "Data transforms",
                 "depth": 3,
-                "id": "example-1"
+                "id": "data-transforms"
               },
               {
-                "title": "Example 2",
+                "title": "json2csv parser (Synchronous API)",
                 "depth": 3,
-                "id": "example-2"
+                "id": "json2csv-parser-(synchronous-api)"
               },
               {
-                "title": "Example 3",
+                "title": "json2csv async parser (Streaming API)",
                 "depth": 3,
-                "id": "example-3"
+                "id": "json2csv-async-parser-(streaming-api)"
               },
               {
-                "title": "Example 4",
+                "title": "json2csv transform (Streaming API)",
                 "depth": 3,
-                "id": "example-4"
+                "id": "json2csv-transform-(streaming-api)"
               },
               {
-                "title": "Example 5",
+                "title": "Javascript module examples",
                 "depth": 3,
-                "id": "example-5"
-              },
-              {
-                "title": "Example 6",
-                "depth": 3,
-                "id": "example-6"
-              },
-              {
-                "title": "Example 7",
-                "depth": 3,
-                "id": "example-7"
-              },
-              {
-                "title": "Example 8",
-                "depth": 3,
-                "id": "example-8"
+                "id": "javascript-module-examples"
               }
             ]
           },
           {
-            "title": "Command Line Interface",
+            "title": "Upgrading major version",
             "depth": 2,
-            "id": "command-line-interface",
+            "id": "upgrading-major-version",
             "headings": [
               {
-                "title": "CLI examples",
+                "title": "Upgrading from 4.X to 5.X",
                 "depth": 3,
-                "id": "cli-examples"
+                "id": "upgrading-from-4.x-to-5.x"
+              },
+              {
+                "title": "Upgrading from 3.X to 4.X",
+                "depth": 3,
+                "id": "upgrading-from-3.x-to-4.x"
               }
             ]
           },
           {
-            "title": "Include using a script tag (not recommended)",
+            "title": "Known Gotchas",
             "depth": 2,
-            "id": "include-using-a-script-tag-(not-recommended)",
+            "id": "known-gotchas",
             "headings": [
+              {
+                "title": "Excel support",
+                "depth": 3,
+                "id": "excel-support"
+              },
+              {
+                "title": "PowerShell escaping",
+                "depth": 3,
+                "id": "powershell-escaping"
+              }
+            ]
+          },
+          {
+            "title": "Development",
+            "depth": 2,
+            "id": "development",
+            "headings": [
+              {
+                "title": "Pulling the repo",
+                "depth": 3,
+                "id": "pulling-the-repo"
+              },
               {
                 "title": "Building",
                 "depth": 3,
                 "id": "building"
+              },
+              {
+                "title": "Linting & Testing",
+                "depth": 3,
+                "id": "linting-and-testing"
+              },
+              {
+                "title": "Contributing changes",
+                "depth": 3,
+                "id": "contributing-changes"
               }
             ]
-          },
-          {
-            "title": "Testing",
-            "depth": 2,
-            "id": "testing"
-          },
-          {
-            "title": "Contributors",
-            "depth": 2,
-            "id": "contributors"
-          },
-          {
-            "title": "But I want streams!",
-            "depth": 2,
-            "id": "but-i-want-streams!"
-          },
-          {
-            "title": "Similar Projects",
-            "depth": 2,
-            "id": "similar-projects"
           },
           {
             "title": "License",
@@ -131,19 +140,26 @@
       "slug": "index",
       "headings": [
         {
-          "title": "How to use",
+          "title": "How to install",
           "depth": 2,
-          "id": "how-to-use"
+          "id": "how-to-install"
         },
         {
-          "title": "Features",
+          "title": "Usage",
           "depth": 2,
-          "id": "features"
+          "id": "usage",
+          "headings": [
+            {
+              "title": "Command Line Interface",
+              "depth": 3,
+              "id": "command-line-interface"
+            }
+          ]
         },
         {
-          "title": "Use as a module",
+          "title": "Javascript module",
           "depth": 2,
-          "id": "use-as-a-module",
+          "id": "javascript-module",
           "headings": [
             {
               "title": "Available Options",
@@ -151,90 +167,92 @@
               "id": "available-options"
             },
             {
-              "title": "Example 1",
+              "title": "Data transforms",
               "depth": 3,
-              "id": "example-1"
+              "id": "data-transforms"
             },
             {
-              "title": "Example 2",
+              "title": "json2csv parser (Synchronous API)",
               "depth": 3,
-              "id": "example-2"
+              "id": "json2csv-parser-(synchronous-api)"
             },
             {
-              "title": "Example 3",
+              "title": "json2csv async parser (Streaming API)",
               "depth": 3,
-              "id": "example-3"
+              "id": "json2csv-async-parser-(streaming-api)"
             },
             {
-              "title": "Example 4",
+              "title": "json2csv transform (Streaming API)",
               "depth": 3,
-              "id": "example-4"
+              "id": "json2csv-transform-(streaming-api)"
             },
             {
-              "title": "Example 5",
+              "title": "Javascript module examples",
               "depth": 3,
-              "id": "example-5"
-            },
-            {
-              "title": "Example 6",
-              "depth": 3,
-              "id": "example-6"
-            },
-            {
-              "title": "Example 7",
-              "depth": 3,
-              "id": "example-7"
-            },
-            {
-              "title": "Example 8",
-              "depth": 3,
-              "id": "example-8"
+              "id": "javascript-module-examples"
             }
           ]
         },
         {
-          "title": "Command Line Interface",
+          "title": "Upgrading major version",
           "depth": 2,
-          "id": "command-line-interface",
+          "id": "upgrading-major-version",
           "headings": [
             {
-              "title": "CLI examples",
+              "title": "Upgrading from 4.X to 5.X",
               "depth": 3,
-              "id": "cli-examples"
+              "id": "upgrading-from-4.x-to-5.x"
+            },
+            {
+              "title": "Upgrading from 3.X to 4.X",
+              "depth": 3,
+              "id": "upgrading-from-3.x-to-4.x"
             }
           ]
         },
         {
-          "title": "Include using a script tag (not recommended)",
+          "title": "Known Gotchas",
           "depth": 2,
-          "id": "include-using-a-script-tag-(not-recommended)",
+          "id": "known-gotchas",
           "headings": [
+            {
+              "title": "Excel support",
+              "depth": 3,
+              "id": "excel-support"
+            },
+            {
+              "title": "PowerShell escaping",
+              "depth": 3,
+              "id": "powershell-escaping"
+            }
+          ]
+        },
+        {
+          "title": "Development",
+          "depth": 2,
+          "id": "development",
+          "headings": [
+            {
+              "title": "Pulling the repo",
+              "depth": 3,
+              "id": "pulling-the-repo"
+            },
             {
               "title": "Building",
               "depth": 3,
               "id": "building"
+            },
+            {
+              "title": "Linting & Testing",
+              "depth": 3,
+              "id": "linting-and-testing"
+            },
+            {
+              "title": "Contributing changes",
+              "depth": 3,
+              "id": "contributing-changes"
             }
           ]
-        },
-        {
-          "title": "Testing",
-          "depth": 2,
-          "id": "testing"
-        },
-        {
-          "title": "Contributors",
-          "depth": 2,
-          "id": "contributors"
-        },
-        {
-          "title": "But I want streams!",
-          "depth": 2,
-          "id": "but-i-want-streams!"
-        },
-        {
-          "title": "Similar Projects",
-          "depth": 2,
-          "id": "similar-projects"
         },
         {
           "title": "License",
