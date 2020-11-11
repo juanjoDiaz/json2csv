@@ -71,7 +71,7 @@ module.exports = (testRunner, jsonFixtures, csvFixtures) => {
     const opts = '--fields carModel,price,color,manual --ndjson';
 
     exec(`${cli} -i "${getFixturePath('/json/ndjsonInvalid.json')}" ${opts}`, (err, stdout, stderr) => {   
-      t.ok(stderr.includes('Invalid JSON'));
+      t.ok(stderr.includes('TokenParserError: Unexpected LEFT_BRACE ("{") in state COMMA'));
       t.end();
     });
   });
@@ -439,7 +439,7 @@ module.exports = (testRunner, jsonFixtures, csvFixtures) => {
 
   testRunner.add('should error if stdin data is not valid', (t) => {
     const test = exec(cli, (err, stdout, stderr) => {
-      t.ok(stderr.includes('Invalid data received from stdin'));
+      t.ok(stderr.includes('TokenParserError: Parser ended in mid-parsing (state: KEY). Either not all the data was received or the data was invalid.'));
       t.end();
     });
 
