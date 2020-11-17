@@ -1,5 +1,3 @@
-'use strict';
-
 const tape = require('tape');
 const loadFixtures = require('./helpers/loadFixtures');
 const CLI = require('./CLI');

@@ -1,5 +1,3 @@
-'use strict';
-
 const { promisify } = require('util');
 const { readFile, mkdir, exists, readdir, lstat, unlink, rmdir } = require('fs');
 const { join: joinPath } = require('path');

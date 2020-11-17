@@ -1,5 +1,3 @@
-'use strict';
-
 const parsendjson = require('../bin/utils/parseNdjson');
 
 module.exports = (testRunner, jsonFixtures) => {

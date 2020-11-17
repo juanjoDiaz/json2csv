@@ -1,5 +1,3 @@
-'use strict';
-
 const { Writable } = require('stream');
 
 const MIN_CELL_WIDTH = 15;

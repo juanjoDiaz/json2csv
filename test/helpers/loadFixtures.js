@@ -1,5 +1,3 @@
-'use strict';
-
 const { readdir, readFile, createReadStream } = require('fs');
 const path = require('path');
 const { promisify } = require('util');

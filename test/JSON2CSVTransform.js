@@ -1,5 +1,3 @@
-'use strict';
-
 const { Readable } = require('stream');
 const {
   Transform: Json2csvTransform,

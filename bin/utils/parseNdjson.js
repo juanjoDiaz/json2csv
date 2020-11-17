@@ -1,5 +1,3 @@
-'use strict';
-
 function parseNdJson(input) {
   return input
     .split('\n')

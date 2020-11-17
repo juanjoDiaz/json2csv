@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-'use strict';
-
 const { promisify } = require('util');
 const { createReadStream, createWriteStream, readFile: readFileOrig, writeFile: writeFileOrig } = require('fs');
 const os = require('os');
