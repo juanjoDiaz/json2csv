@@ -42,5 +42,29 @@ export default [
         presets: [['@babel/env', { modules: false }]],
       })
     ]
+  },
+  {
+    input: 'lib/JSON2CSVTransformStream.js',
+    output: [
+      {
+        file: 'dist/JSON2CSVTransformStream.js',
+        format: 'umd',
+        name: 'json2csv',
+      }
+    ],
+    // external: [ 'os' ],
+    plugins: [
+      resolve({
+        browser: true
+      }),
+      commonjs(),
+      globals(),
+      builtins(),
+      babel({
+        exclude: ['node_modules/**'],
+        babelrc: false,
+        presets: [['@babel/env', { modules: false }]],
+      })
+    ]
   }
 ];

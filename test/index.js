@@ -42,7 +42,7 @@ async function loadAllFixtures() {
 }
 
 async function setupTests([jsonFixtures, jsonFixturesStreams, csvFixtures]) {
-  CLI(testRunner, jsonFixtures, csvFixtures);
+  // CLI(testRunner, jsonFixtures, csvFixtures);
   JSON2CSVParser(testRunner, jsonFixtures, csvFixtures);
   JSON2CSVAsyncParser(testRunner, jsonFixturesStreams, csvFixtures, jsonFixtures);
   JSON2CSVTransform(testRunner, jsonFixturesStreams, csvFixtures, jsonFixtures);
