@@ -8,17 +8,16 @@ const os = require('os');
 const { isAbsolute, join } = require('path');
 const program = require('commander');
 const pkg = require('../package');
-const json2csv = require('../lib/json2csv');
 const parseNdJson = require('./utils/parseNdjson');
 const TablePrinter = require('./utils/TablePrinter');
 
 const readFile = promisify(readFileOrig);
 const writeFile = promisify(writeFileOrig);
 
-const { unwind, flatten } = json2csv.transforms;
-const { string: stringFormatter, stringExcel: stringExcelFormatter } = json2csv.formatters;
-const JSON2CSVParser = json2csv.Parser;
-const Json2csvTransform = json2csv.Transform;
+const { flatten, unwind } = require('../lib/transforms');
+const { string: stringFormatter, stringExcel: stringExcelFormatter } = require('../lib/formatters');
+const Parser = require('../lib/Parser');
+const Json2csvTransform =  require('../lib/NodeTransform');
 
 program
   .version(pkg.version)
@@ -113,7 +112,7 @@ async function processOutput(outputPath, csv, config) {
 
 async function processInMemory(config, opts) {
   const input = await getInput(program.input, config.ndjson, config.eol);
-  const output = new JSON2CSVParser(opts).parse(input);
+  const output = new Parser(opts).parse(input);
   await processOutput(program.output, output, config);
 }
 

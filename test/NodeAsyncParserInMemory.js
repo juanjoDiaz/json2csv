@@ -1,28 +1,96 @@
 'use strict';
 
-const {
-  Parser,
-  transforms: { flatten, unwind },
-  formatters: { number: numberFormatter, string: stringFormatter, stringExcel: stringExcelFormatter, stringQuoteOnlyIfNecessary: stringQuoteOnlyIfNecessaryFormatter },
-} = require('../lib/json2csv');
+const os = require('os');
+
+const { flatten, unwind } = require('../lib/transforms');
+const { number: numberFormatter, string: stringFormatter, stringExcel: stringExcelFormatter, stringQuoteOnlyIfNecessary: stringQuoteOnlyIfNecessaryFormatter } = require('../lib/formatters');
+const Parser = require('../lib/NodeAsyncParser');
 
 async function parseInput(parser, nodeStream) {
-  return parser.parse(nodeStream);
+  return await parser.parse(nodeStream).promise();
 }
 
 module.exports = (testRunner, jsonFixtures, csvFixtures) => {
-  testRunner.add('should not modify the JSON object passed passed', async (t) => {
+  testRunner.add('should error if input is of an invalid format', async (t) => {
+    try {
+      const parser = new Parser();
+      await parseInput(parser, 123);
+
+      t.fail('Exception expected');
+    } catch (err) {
+      t.equal(err.message, 'Data should be a JSON object, JSON array, typed array, string or stream');
+    }
+  });
+
+  testRunner.add('should handle object mode', async (t) => {
     const opts = {
-      fields: ["carModel","price","extras.items.name","extras.items.items.position","extras.items.items.color","extras.items.color"],
-      transforms: [unwind({ paths: ['extras.items', 'extras.items.items'] }), flatten()],
+      fields: ['carModel', 'price', 'color', 'manual']
     };
-    const originalJson = JSON.parse(JSON.stringify(jsonFixtures.unwindComplexObject()));
+    const transformOpts = { objectMode: true };
+
+    const parser = new Parser(opts, transformOpts);
+    const csv = await parseInput(parser, jsonFixtures.default({ objectMode: true }));
+
+    t.equal(csv, csvFixtures.ndjson);
+  });
+
+  testRunner.add('should handle ndjson', async (t) => {
+    const opts = {
+      fields: ['carModel', 'price', 'color', 'manual'],
+      ndjson: true
+    };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, originalJson);
+    const csv = await parseInput(parser, jsonFixtures.ndjson());
 
-    t.equal(csv, csvFixtures.unwindComplexObject);
-    t.deepEqual(jsonFixtures.unwindComplexObject(), originalJson);
+    t.equal(csv, csvFixtures.ndjson);
+  });
+
+  testRunner.add('should error if ndjson input data is empty and fields are not set', async (t) => {
+    const opts = {
+      ndjson: true
+    };
+
+    try {
+      const parser = new Parser(opts);
+      await parseInput(parser, jsonFixtures.empty());
+
+      t.fail('Exception expected');
+    } catch (err) {
+      t.equal(err.message, 'Data should not be empty or the "fields" option should be included');
+    }
+  });
+
+  testRunner.add('should handle ndjson with small chunk size', async (t) => {
+    const opts = {
+      fields: ['carModel', 'price', 'color', 'manual'],
+      ndjson: true
+    };
+
+    try {
+      const parser = new Parser(opts, { highWaterMark: 16 });
+      await parseInput(parser, jsonFixtures.ndjsonInvalid());
+
+      t.fail('Exception expected');
+    } catch(err) {
+      t.equal(err.message, `Unexpected SEPARATOR ("${os.EOL.replace('\r', '\\r').replace('\n', '\\n')}") in state COMMA`);
+    }
+  });
+
+  testRunner.add('should error on invalid ndjson input data', async (t) => {
+    const opts = {
+      fields: ['carModel', 'price', 'color', 'manual'],
+      ndjson: true
+    };
+
+    try {
+      const parser = new Parser(opts);
+      await parseInput(parser, jsonFixtures.ndjsonInvalid());
+
+      t.fail('Exception expected');
+    } catch (err) {
+      t.ok(err.message.includes(`Unexpected SEPARATOR ("${os.EOL.replace('\r', '\\r').replace('\n', '\\n')}") in state COMMA`));
+    }
   });
 
   testRunner.add('should not modify the opts passed', async (t) => {
@@ -30,19 +98,59 @@ module.exports = (testRunner, jsonFixtures, csvFixtures) => {
     const parser = new Parser(opts);
     const csv = await parseInput(parser, jsonFixtures.default());
 
-    t.ok(typeof csv === 'string');
-    t.equal(csv, csvFixtures.default);
+    t.equal(csv, csvFixtures.defaultStream);
     t.deepEqual(opts, {});
+  });
+
+  testRunner.add('should error if input data is empty and fields are not set', async (t) => {
+    try {
+      const parser = new Parser();
+      await parseInput(parser, jsonFixtures.empty());
+
+      t.fail('Exception expected');
+    } catch (err) {
+      t.equal(err.message, 'Data should not be empty or the "fields" option should be included');
+    }
   });
 
   testRunner.add('should error if input data is not an object', async (t) => {
     try {
       const parser = new Parser();
-      await parseInput(parser, jsonFixtures.notAnObject());
+      await parseInput(parser, `"${jsonFixtures.notAnObject()}"`);
 
       t.fail('Exception expected');
     } catch (err) {
-      t.equal(err.message, 'Data should not be empty or the "fields" option should be included');
+      t.equal(err.message, 'Data should be a JSON object or array');
+    }
+  });
+
+  testRunner.add('should error if input data is not valid json', async (t) => {
+    const opts = {
+      fields: ['carModel', 'price', 'color', 'manual']
+    };
+
+    try {
+      const parser = new Parser(opts);
+      await parseInput(parser, jsonFixtures.defaultInvalid());
+
+      t.fail('Exception expected');
+    } catch (err) {
+      t.equal(err.message, 'Unexpected LEFT_BRACE ("{") in state KEY');
+    }
+  });
+
+  testRunner.add('should error if input data is not valid json and doesn\'t emit the first token', async (t) => {
+    const opts = {
+      fields: ['carModel', 'price', 'color', 'manual']
+    };
+
+    try {
+      const parser = new Parser(opts);
+      await parseInput(parser, jsonFixtures.invalidNoToken());
+
+      t.fail('Exception expected');
+    } catch (err) {
+      t.equal(err.message, 'Data should be a JSON object or array');
     }
   });
 
@@ -90,7 +198,7 @@ module.exports = (testRunner, jsonFixtures, csvFixtures) => {
     const parser = new Parser();
     const csv = await parseInput(parser, jsonFixtures.default());
 
-    t.equal(csv, csvFixtures.default);
+    t.equal(csv, csvFixtures.defaultStream);
   });
 
   testRunner.add('should parse json to csv using custom fields', async (t) => {
@@ -558,7 +666,7 @@ module.exports = (testRunner, jsonFixtures, csvFixtures) => {
 
   testRunner.add('should unwind complex objects using the unwind transform', async (t) => {
     const opts = {
-      fields: ["carModel","price","extras.items.name","extras.items.items.position","extras.items.items.color","extras.items.color"],
+      fields: ["carModel", "price", "extras.items.name", "extras.items.items.position", "extras.items.items.color", "extras.items.color"],
       transforms: [unwind({ paths: ['extras.items', 'extras.items.items'] }), flatten()],
     };
 

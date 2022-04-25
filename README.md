@@ -152,9 +152,7 @@ The reason to wrap the actual transform in a factory function is so the counter 
 There is a number of built-in transform provider by the library.
 
 ```js
-const {
-  transforms: { unwind, flatten },
-} = require('json2csv');
+const { unwind, flatten } = require('json2csv/transforms');
 ```
 
 ##### Unwind
@@ -245,7 +243,7 @@ As with the sample transform in the previous section, the reason to wrap the act
 Keep in mind that the above example doesn't quote or escape the string which is problematic. A more realistic example could use our built-in string formatted to do the quoting and escaping like:
 
 ```js
-const { formatters: { string: defaultStringFormatter } } = require('json2csv');
+const { string: defaultStringFormatter } = require('json2csv/formatters');
 
 const stringFixedFormatter = (stringLength, ellipsis = '...', stringFormatter = defaultStringFormatter()) => (item) => item.length <= stringLength ? item :  stringFormatter(`${item.slice(0, stringLength - ellipsis.length)}${ellipsis})`;
 ```
@@ -256,16 +254,14 @@ There is a number of built-in formatters provider by the library.
 
 ```js
 const {
-  formatters: {
-    default: defaultFormatter,
-    number: numberFormatter,
-    string: stringFormatter,
-    stringQuoteOnlyIfNecessary: stringQuoteOnlyIfNecessaryFormatter,
-    stringExcel: stringExcelFormatter,
-    symbol: symbolFormatter,
-    object: objectFormatter,
-  },
-} = require('json2csv');
+  default: defaultFormatter,
+  number: numberFormatter,
+  string: stringFormatter,
+  stringQuoteOnlyIfNecessary: stringQuoteOnlyIfNecessaryFormatter,
+  stringExcel: stringExcelFormatter,
+  symbol: symbolFormatter,
+  object: objectFormatter,
+} = require('json2csv/formatters');
 ```
 
 ##### Default
@@ -419,7 +415,7 @@ This is the default for `function` and `object` elements. `function`'s are forma
 `json2csv` can be used programmatically as a synchronous converter.
 
 ```js
-const { Parser } = require('json2csv');
+const Parser = require('json2csv/Parser');
 
 const fields = ['field1', 'field2', 'field3'];
 const opts = { fields };
@@ -464,7 +460,7 @@ The streaming API takes a second options argument to configure `objectMode` and 
 The streaming API support multiple callbacks to get the resulting CSV, errors, etc.
 
 ```js
-const { StreamParser } = require('json2csv');
+const StreamParser = require('json2csv/StreamParser');
 
 const fields = ['field1', 'field2', 'field3'];
 const opts = { fields };
@@ -480,7 +476,7 @@ streamParser.onError = (err) => console.error(err));
 streamParser.onHeader = (header) => console.log(header));
 streamParser.onLine = (line) => console.log(line));;
 ```
-### json2csv Transform (Node.js Streaming API)
+### json2csv NodeTransform (Node.js Streaming API)
 
 For Node.js users, the Streaming API is wrapped in a Node.js Stream Transform. This approach ensures a consistent memory footprint and avoid blocking JavaScript's event loop.
 
@@ -490,7 +486,7 @@ The async API takes a second options arguments that is directly passed to the un
 
 ```js
 const { createReadStream, createWriteStream } = require('fs');
-const { Transform } = require('json2csv');
+const NodeTransform = require('json2csv/ NodeTransform');
 
 const fields = ['field1', 'field2', 'field3'];
 const opts = { fields };
@@ -498,7 +494,7 @@ const transformOpts = { highWaterMark: 16384, encoding: 'utf-8' };
 
 const input = createReadStream(inputPath, { encoding: 'utf8' });
 const output = createWriteStream(outputPath, { encoding: 'utf8' });
-const json2csv = new Transform(opts, transformOpts);
+const json2csv = new NodeTransform(opts, transformOpts);
 
 const processor = input.pipe(json2csv).pipe(output);
 
@@ -512,8 +508,8 @@ json2csv
 The stream API can also work in object mode. This is useful when you have an input stream in object mode or if you are getting JSON objects one by one and want to convert them to CSV as they come.
 
 ```js
-const { Transform } = require('json2csv');
 const { Readable } = require('stream');
+const NodeTransform = require('json2csv/ NodeTransform');
 
 const input = new Readable({ objectMode: true });
 input._read = () => {};
@@ -527,22 +523,22 @@ const output = process.stdout;
 const opts = {};
 const transformOpts = { objectMode: true };
 
-const json2csv = new Transform(opts, transformOpts);
+const json2csv = new NodeTransform(opts, transformOpts);
 const processor = input.pipe(json2csv).pipe(output);
 ```
 
 ### json2csv Async Parser (Node.js Streaming API)
 
-To facilitate usages, the AsyncParser wraps the Transform exposing a single `parse` method similar to the sync API. This method accepts JSON arrays/objects, TypedArrays, strings and readable streams as input and returns a stream that produces the CSV.
+To facilitate usages, NodeAsyncParser wraps NodeTransform exposing a single `parse` method similar to the sync API. This method accepts JSON arrays/objects, TypedArrays, strings and readable streams as input and returns a stream that produces the CSV.
 
 ```js
-const { AsyncParser } = require('json2csv');
+const NodeAsyncParser = require('json2csv/NodeAsyncParser');
 
 const fields = ['field1', 'field2', 'field3'];
 const opts = { fields };
 const transformOpts = { highWaterMark: 8192 };
 
-const asyncParser = new AsyncParser(opts, transformOpts);
+const asyncParser = new NodeAsyncParser(opts, transformOpts);
 
 let csv = '';
 asyncParser.parse(data)
@@ -557,7 +553,7 @@ asyncParser.parse(data)
 Using the async API you can transform streaming JSON into CSV and output directly to a writable stream.
 ```js
 const { createReadStream, createWriteStream } = require('fs');
-const { AsyncParser } = require('json2csv');
+const NodeAsyncParser = require('json2csv/NodeAsyncParser');
 
 const fields = ['field1', 'field2', 'field3'];
 const opts = { fields };
@@ -566,21 +562,21 @@ const transformOpts = { highWaterMark: 8192 };
 const input = createReadStream(inputPath, { encoding: 'utf8' });
 const output = createWriteStream(outputPath, { encoding: 'utf8' });
 
-const asyncParser = new AsyncParser(opts, transformOpts);
+const asyncParser = new NodeAsyncParser(opts, transformOpts);
 
 asyncParser.parse(input).pipe(output);
 ```
 
-`AsyncParser` also exposes a convenience `promise` method which turns the stream into a promise and resolves the whole CSV:
+`NodeAsyncParser` also exposes a convenience `promise` method which turns the stream into a promise and resolves the whole CSV:
 
 ```js
-const { AsyncParser } = require('json2csv');
+const NodeAsyncParser = require('json2csv/NodeAsyncParser');
 
 const fields = ['field1', 'field2', 'field3'];
 const opts = { fields };
 const transformOpts = { highWaterMark: 8192 };
 
-const asyncParser = new AsyncParser(opts, transformOpts);
+const asyncParser = new NodeAsyncParser(opts, transformOpts);
 
 let csv = await asyncParser.parse(data).promise();
 ```
@@ -590,6 +586,41 @@ let csv = await asyncParser.parse(data).promise();
 ### Upgrading from 5.X to 6.X
 
 The CLI hasn't changed at all.
+
+#### Convenience methods parse and parseAsync have been removed.
+These 2 methods are equivalent to:
+
+```js
+const parse = (data, opts) => new Parser(opts).parse(data);
+
+const parseAsync = (data, opts, transformOpts) => new NodeAsyncParser(opts, transformOpts).parse(data).promise();
+```
+
+#### Cleaner importing and NodeAsyncParser and Trasnform renamed
+
+To better separate pure javascript code from code relying on Node.js core libraries, a new import mechanism has been implemented. Also, interfaces that rely on Node have been renamed to be more clear.
+
+```js
+const {
+  Parser,
+  AsyncParser,
+  StreamParser
+  Transform,
+  transforms: { flatten, unwind },
+  formatters: { number: numberFormatter, string: stringFormatter, stringExcel: stringExcelFormatter, stringQuoteOnlyIfNecessary: stringQuoteOnlyIfNecessaryFormatter },
+} = require('../lib/json2csv');
+```
+
+should be replaced by
+
+```js
+const Parser = require('json2csv/Parser');
+const StreamParse = require('json2csv/StreamParse');
+const NodeAsyncParser = require('json2csv/NodeAsyncParser');
+const NodeTransform = require('json2csv/NodeTransform');
+const { flatten, unwind } = require('json2csv/transforms');
+const { number: numberFormatter, string: stringFormatter, stringExcel: stringExcelFormatter, stringQuoteOnlyIfNecessary: stringQuoteOnlyIfNecessaryFormatter } = require('json2csv/formatters');
+```
 
 #### Formatters
 
@@ -606,7 +637,8 @@ const csv = json2csvParser.parse(myData);
 should be replaced by
 
 ```js
-const { Parser, formatter: { string: stringFormatter } } = require('json2csv');
+const { string: stringFormatter } = require('json2csv/formatters');
+const Parser = require('json2csv/Parser');
 const json2csvParser = new Parser({
   formatters: {
     string: stringFormatter({ quote: '\'', escapedQuote: '\\\'' })),
@@ -630,7 +662,8 @@ const csv = json2csvParser.parse(myData);
 should be replaced by
 
 ```js
-const { Parser, formatter: { stringExcel: stringExcelFormatter } } = require('json2csv');
+const { stringExcel: stringExcelFormatter } = require('json2csv/formatters');
+const Parser = require('json2csv/Parser');
 const json2csvParser = new Parser({
   formatters: {
     string: stringExcelFormatter,
@@ -653,7 +686,7 @@ const csv = await json2csvParser.fromInput(myData).throughTransform(myTransform)
 should be replaced by
 
 ```js
-const { AsyncParser } = require('json2csv');
+const AsyncParser = require('json2csv/AsyncParser');
 const json2csvParser = new AsyncParser();
 json2csvParser.parse(myData.pipe(myTransform)).pipe(myOutput);
 ```
@@ -671,7 +704,7 @@ const csv = await json2csvParser.fromInput(myData).promise();
 should be replaced by
 
 ```js
-const { AsyncParser } = require('json2csv');
+const AsyncParser = require('json2csv/AsyncParser');
 const json2csvParser = new AsyncParser();
 const csv = await json2csvParser.parse(myData).promise();
 ```
