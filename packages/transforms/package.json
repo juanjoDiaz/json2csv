@@ -1,0 +1,30 @@
+{
+  "name": "@json2csv/transforms",
+  "version": "6.0.0",
+  "description": "Built-in transforms. A transform is a function that receives a data recod and returns a transformed record. Transforms are executed in order before converting the data record into a CSV row.",
+  "keywords": [ "json", "to", "csv", "export", "convert", "parse"],
+  "type": "module",
+  "main": "src/index.js",
+  "module": "esm/index.esm.js",
+  "exports": {
+    "./*": "./src/*.js",
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanjoDiaz/json2csv.git"
+  },
+  "author": "Juanjo Díaz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juanjoDiaz/json2csv/issues"
+  },
+  "homepage": "https://github.com/juanjoDiaz/json2csv#readme",
+  "dependencies": {
+    "lodash.get": "^4.4.2"
+  }
+}

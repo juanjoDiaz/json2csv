@@ -1,0 +1,32 @@
+{
+  "name": "@json2csv/parsers",
+  "version": "6.0.0",
+  "description": "Pure Javascript JSON to CSV converter.",
+  "keywords": [ "json", "to", "csv", "export", "convert", "parse"],
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    "./*": "./src/*.js",
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "lint": "eslint src test",
+    "test:raw": "node test",
+    "test": "npm run test:raw | tap-spec",
+    "test-with-coverage": "c8 --reporter=text --reporter=lcov npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanjoDiaz/json2csv.git"
+  },
+  "author": "Juanjo Díaz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juanjoDiaz/json2csv/issues"
+  },
+  "homepage": "https://github.com/juanjoDiaz/json2csv#readme",
+  "dependencies": {
+    "@streamparser/json": "^0.0.7",
+    "lodash.get": "^4.4.2"
+  }
+}

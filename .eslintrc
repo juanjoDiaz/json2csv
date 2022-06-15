@@ -1,10 +1,15 @@
 {
   "env": {
-    "node": true,
     "es6": true
   },
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 9
+    "requireConfigFile": false,
+    "babelOptions": {
+      "plugins": [
+        "@babel/plugin-syntax-import-assertions"
+      ]
+    }
   },
   "extends": "eslint:recommended"
 }

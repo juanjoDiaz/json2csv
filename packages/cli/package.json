@@ -1,0 +1,29 @@
+{
+  "name": "@json2csv/cli",
+  "version": "6.0.0",
+  "description": "Command Line Interface to convert JSON to CSV.",
+  "keywords": [ "json", "to", "csv", "export", "convert", "parse"],
+  "type": "module",
+  "bin": {
+    "json2csv": "./bin/json2csv.js"
+  },
+  "scripts": {
+    "lint": "eslint bin test",
+    "test:raw": "node test",
+    "test": "npm run test:raw | tap-spec",
+    "test-with-coverage": "c8 --reporter=text npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanjoDiaz/json2csv.git"
+  },
+  "author": "Juanjo Díaz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juanjoDiaz/json2csv/issues"
+  },
+  "homepage": "https://github.com/juanjoDiaz/json2csv#readme",
+  "dependencies": {
+    "commander": "^9.3.0"
+  }
+}

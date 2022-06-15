@@ -1,0 +1,24 @@
+{
+  "name": "@json2csv/whatwg",
+  "version": "6.0.0",
+  "description": "WHATWG Transform and Async interface to convert JSON into CSV.",
+  "keywords": [ "json", "to", "csv", "export", "convert", "parse"],
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint src test",
+    "test:raw": "node test",
+    "test": "npm run test:raw | tap-spec",
+    "test-with-coverage": "c8 --reporter=text --reporter=lcov npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanjoDiaz/json2csv.git"
+  },
+  "author": "Juanjo Díaz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juanjoDiaz/json2csv/issues"
+  },
+  "homepage": "https://github.com/juanjoDiaz/json2csv#readme"
+}

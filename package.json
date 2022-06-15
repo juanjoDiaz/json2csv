@@ -1,19 +1,11 @@
 {
   "name": "json2csv",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0",
   "description": "Convert JSON to CSV",
-  "keywords": [
-    "json",
-    "to",
-    "csv",
-    "export",
-    "convert",
-    "parse"
-  ],
+  "keywords": [ "json", "to", "csv", "export", "convert", "parse"],
   "author": {
-    "name": "Mirco Zeiss",
-    "email": "mirco.zeiss@gmail.com",
-    "twitter": "zeMirco"
+    "name": "Juanjo Díaz",
+    "email": "juanjo.diazmo@gmail.com"
   },
   "license": "MIT",
   "bin": {
@@ -24,43 +16,37 @@
   "browser": "dist/json2csv.umd.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zemirco/json2csv"
+    "url": "https://github.com/juanjodiaz/json2csv"
   },
-  "homepage": "http://zemirco.github.io/json2csv",
+  "homepage": "http://juanjodiaz.github.io/json2csv",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "test": "node test | tap-spec",
-    "lint": "eslint bin lib test",
-    "test-with-coverage": "nyc --reporter=text --reporter=lcov node test | tap-spec",
-    "prepublishOnly": "npm test && npm run build",
-    "release": "standard-version"
-  },
-  "dependencies": {
-    "@streamparser/json": "^0.0.6",
-    "commander": "^6.2.0",
-    "lodash.get": "^4.4.2"
+    "lint": "npm run lint -ws",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run test:raw -w @json2csv/cli -w @json2csv/parsers -w @json2csv/node -w @json2csv/whatwg | tap-spec",
+    "test-with-coverage": "c8 --include 'packages/*/src' --include 'packages/*/bin' --reporter=text --reporter=lcov npm test"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.15",
-    "@babel/preset-env": "^7.13.15",
-    "eslint": "^7.24.0",
-    "jest": "^27.4.5",
-    "nyc": "^15.1.0",
-    "rollup": "^2.45.2",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-polyfills": "^0.2.1",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "standard-version": "^9.2.0",
+    "@babel/eslint-parser": "^7.18.2",
+    "@babel/plugin-syntax-import-assertions": "^7.17.12",
+    "c8": "^7.11.3",
+    "eslint": "^8.17.0",
     "tap-spec": "^5.0.0",
     "tape": "^5.2.2"
   },
   "engines": {
-    "node": ">= 12",
-    "npm": ">= 6.13.0"
+    "node": ">=14.17.0",
+    "npm": ">=7.0.0"
   },
   "volta": {
-    "node": "12.20.0"
-  }
+    "node": "14.17.0"
+  },
+  "workspaces": [
+    "packages/cli",
+    "packages/formatters",
+    "packages/node",
+    "packages/parsers",
+    "packages/test-helpers",
+    "packages/transforms",
+    "packages/whatwg"
+  ]
 }

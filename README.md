@@ -9,7 +9,7 @@ Can be used as a module and from the command line.
 
 See the [CHANGELOG] for details about the latest release.
 
-> :construction: The documentation seen here is for the upcoming v6 which is a work in progress, see https://www.npmjs.com/package/json2csv for the documentation for the latest published version. See [v5 branch](https://github.com/zemirco/json2csv/tree/v5) for code for v5+.
+> :construction: The documentation seen here is for the upcoming v6 which is a work in progress, see https://www.npmjs.com/package/json2csv for the documentation for the latest published version. See [v5 branch](https://github.com/juanjodiaz/json2csv/tree/v5) for code for v5+.
 
 Features
 
@@ -26,7 +26,7 @@ Features
 ## How to install
 
 You can install json2csv as a dependency using NPM.  
-Requires **Node v12** or higher.
+Requires **Node v14** or higher.
 
 ```sh
 # Global so it can be called from anywhere
@@ -791,7 +791,7 @@ const json2csvParser = new Parser({
 const csv = json2csvParser.parse(myData);
 ```
 
-You can se the documentation for json2csv v4.X.X [here](https://github.com/zemirco/json2csv/blob/v4/README.md).
+You can se the documentation for json2csv v4.X.X [here](https://github.com/juanjodiaz/json2csv/blob/v4/README.md).
 
 ### Upgrading from 3.X to 4.X
 
@@ -818,7 +818,7 @@ const csv = json2csv.parse(myData, { fields: myFields, unwind: paths, ... });
 ```
 
 Please note that many of the configuration parameters have been slightly renamed. Please check one by one that all your parameters are correct.
-You can se the documentation for json2csv 3.11.5 [here](https://github.com/zemirco/json2csv/blob/v3.11.5/README.md).
+You can se the documentation for json2csv 3.11.5 [here](https://github.com/juanjodiaz/json2csv/blob/v3.11.5/README.md).
 
 ## Known Gotchas
 
@@ -905,9 +905,9 @@ See [LICENSE.md].
 
 [npm-badge]: https://badge.fury.io/js/json2csv.svg
 [npm-badge-url]: http://badge.fury.io/js/json2csv
-[travis-badge]: https://travis-ci.org/zemirco/json2csv.svg
-[travis-badge-url]: https://travis-ci.org/zemirco/json2csv
-[coveralls-badge]: https://coveralls.io/repos/zemirco/json2csv/badge.svg?branch=master
-[coveralls-badge-url]: https://coveralls.io/r/zemirco/json2csv?branch=master
-[changelog]: https://github.com/zemirco/json2csv/blob/master/CHANGELOG.md
-[license.md]: https://github.com/zemirco/json2csv/blob/master/LICENSE.md
+[travis-badge]: https://travis-ci.org/juanjodiaz/json2csv.svg
+[travis-badge-url]: https://travis-ci.org/juanjodiaz/json2csv
+[coveralls-badge]: https://coveralls.io/repos/juanjodiaz/json2csv/badge.svg?branch=master
+[coveralls-badge-url]: https://coveralls.io/r/juanjodiaz/json2csv?branch=master
+[changelog]: https://github.com/juanjodiaz/json2csv/blob/master/CHANGELOG.md
+[license.md]: https://github.com/juanjodiaz/json2csv/blob/master/LICENSE.md
