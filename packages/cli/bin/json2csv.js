@@ -25,16 +25,18 @@ program
   .option('-n, --ndjson', 'Treat the input as NewLine-Delimited JSON.')
   .option('-s, --no-streaming', 'Process the whole JSON array in memory instead of doing it line by line.')
   .option('-f, --fields <fields>', 'List of fields to process. Defaults to field auto-detection.')
+  // CSV customizations
   .option('-v, --default-value <defaultValue>', 'Default value to use for missing fields.')
-  .option('-q, --quote <quote>', 'Character(s) to use as quote mark. Defaults to \'"\'.')
-  .option('-Q, --escaped-quote <escapedQuote>', 'Character(s) to use as a escaped quote. Defaults to a double `quote`, \'""\'.')
   .option('-d, --delimiter <delimiter>', 'Character(s) to use as delimiter. Defaults to \',\'.', ',')
   .option('-e, --eol <eol>', 'Character(s) to use as End-of-Line for separating rows. Defaults to \'\\n\'.', os.EOL)
-  .option('-E, --excel-strings','Wraps string data to force Excel to interpret it as string even if it contains a number.')
   .option('-H, --no-header', 'Disable the column name header.')
   .option('-a, --include-empty-rows', 'Includes empty rows in the resulting CSV output.')
   .option('-b, --with-bom', 'Includes BOM character at the beginning of the CSV.')
   .option('-p, --pretty', 'Print output as a pretty table. Use only when printing to console.')
+  // Built-in formatters
+  .option('-q, --quote <quote>', 'Character(s) to use as quote mark. Defaults to \'"\'.')
+  .option('-Q, --escaped-quote <escapedQuote>', 'Character(s) to use as a escaped quote. Defaults to a double `quote`, \'""\'.')
+  .option('-E, --excel-strings','Wraps string data to force Excel to interpret it as string even if it contains a number.')
   // Built-in transforms
   .option('--unwind [paths]', 'Creates multiple rows from a single JSON document similar to MongoDB unwind.')
   .option('--unwind-blank', 'When unwinding, blank out instead of repeating data. Defaults to false.', false)
