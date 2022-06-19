@@ -15,12 +15,6 @@
     "email": "juanjo.diazmo@gmail.com"
   },
   "license": "MIT",
-  "bin": {
-    "json2csv": "./bin/json2csv.js"
-  },
-  "main": "lib/json2csv.js",
-  "module": "dist/json2csv.esm.js",
-  "browser": "dist/json2csv.umd.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/juanjodiaz/json2csv"
