@@ -13,23 +13,27 @@ export default class JSON2CSVParser extends JSON2CSVBase {
   parse(data) {
     const processedData = this.preprocessData(data, this.opts.fields);
 
-    const fields = this.opts.fields || this.preprocessFieldsInfo(processedData
-      .reduce((fields, item) => {
-        Object.keys(item).forEach((field) => {
-          if (!fields.includes(field)) {
-            fields.push(field)
-          }
-        });
+    const fields =
+      this.opts.fields ||
+      this.preprocessFieldsInfo(
+        processedData.reduce((fields, item) => {
+          Object.keys(item).forEach((field) => {
+            if (!fields.includes(field)) {
+              fields.push(field);
+            }
+          });
 
-        return fields
-      }, []));
+          return fields;
+        }, [])
+      );
 
     const header = this.opts.header ? this.getHeader(fields) : '';
     const rows = this.processData(processedData, fields);
-    const csv = (this.opts.withBOM ? '\ufeff' : '')
-      + header
-      + ((header && rows) ? this.opts.eol : '')
-      + rows;
+    const csv =
+      (this.opts.withBOM ? '\ufeff' : '') +
+      header +
+      (header && rows ? this.opts.eol : '') +
+      rows;
 
     return csv;
   }
@@ -43,14 +47,18 @@ export default class JSON2CSVParser extends JSON2CSVBase {
   preprocessData(data, fields) {
     const processedData = Array.isArray(data) ? data : [data];
 
-    if (!fields && (processedData.length === 0 || typeof processedData[0] !== 'object')) {
-      throw new Error('Data should not be empty or the "fields" option should be included');
+    if (
+      !fields &&
+      (processedData.length === 0 || typeof processedData[0] !== 'object')
+    ) {
+      throw new Error(
+        'Data should not be empty or the "fields" option should be included'
+      );
     }
 
     if (this.opts.transforms.length === 0) return processedData;
 
-    return processedData
-      .flatMap(row => this.preprocessRow(row));
+    return processedData.flatMap((row) => this.preprocessRow(row));
   }
 
   /**
@@ -61,8 +69,8 @@ export default class JSON2CSVParser extends JSON2CSVBase {
    */
   processData(data, fields) {
     return data
-      .map(row => this.processRow(row, fields))
-      .filter(row => row) // Filter empty rows
+      .map((row) => this.processRow(row, fields))
+      .filter((row) => row) // Filter empty rows
       .join(this.opts.eol);
   }
 }

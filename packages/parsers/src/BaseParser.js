@@ -21,13 +21,18 @@ export default class JSON2CSVBase {
     const processedOpts = Object.assign({}, opts);
 
     if (processedOpts.fields) {
-      processedOpts.fields = this.preprocessFieldsInfo(processedOpts.fields, processedOpts.defaultValue);
+      processedOpts.fields = this.preprocessFieldsInfo(
+        processedOpts.fields,
+        processedOpts.defaultValue
+      );
     }
 
     processedOpts.transforms = processedOpts.transforms || [];
 
-    const stringFormatter = (processedOpts.formatters && processedOpts.formatters['string']) || stringFormatterCtor();
-    const objectFormatter = objectFormatterCtor({ stringFormatter });    
+    const stringFormatter =
+      (processedOpts.formatters && processedOpts.formatters['string']) ||
+      stringFormatterCtor();
+    const objectFormatter = objectFormatterCtor({ stringFormatter });
     const defaultFormatters = {
       header: stringFormatter,
       undefined: defaultFormatter,
@@ -37,7 +42,7 @@ export default class JSON2CSVBase {
       string: stringFormatter,
       symbol: symbolFormatterCtor({ stringFormatter }),
       function: objectFormatter,
-      object: objectFormatter
+      object: objectFormatter,
     };
 
     processedOpts.formatters = {
@@ -66,23 +71,24 @@ export default class JSON2CSVBase {
       if (typeof fieldInfo === 'string') {
         return {
           label: fieldInfo,
-          value: (fieldInfo.includes('.') || fieldInfo.includes('['))
-            ? row => lodashGet(row, fieldInfo, globalDefaultValue)
-            : row => getProp(row, fieldInfo, globalDefaultValue),
+          value:
+            fieldInfo.includes('.') || fieldInfo.includes('[')
+              ? (row) => lodashGet(row, fieldInfo, globalDefaultValue)
+              : (row) => getProp(row, fieldInfo, globalDefaultValue),
         };
       }
 
       if (typeof fieldInfo === 'object') {
-        const defaultValue = 'default' in fieldInfo
-          ? fieldInfo.default
-          : globalDefaultValue;
+        const defaultValue =
+          'default' in fieldInfo ? fieldInfo.default : globalDefaultValue;
 
         if (typeof fieldInfo.value === 'string') {
           return {
             label: fieldInfo.label || fieldInfo.value,
-            value: (fieldInfo.value.includes('.') || fieldInfo.value.includes('['))
-              ? row => lodashGet(row, fieldInfo.value, defaultValue)
-              : row => getProp(row, fieldInfo.value, defaultValue),
+            value:
+              fieldInfo.value.includes('.') || fieldInfo.value.includes('[')
+                ? (row) => lodashGet(row, fieldInfo.value, defaultValue)
+                : (row) => getProp(row, fieldInfo.value, defaultValue),
           };
         }
 
@@ -93,15 +99,17 @@ export default class JSON2CSVBase {
             label,
             value(row) {
               const value = fieldInfo.value(row, field);
-              return (value === null || value === undefined)
+              return value === null || value === undefined
                 ? defaultValue
                 : value;
             },
-          }
+          };
         }
       }
 
-      throw new Error('Invalid field info option. ' + JSON.stringify(fieldInfo));
+      throw new Error(
+        'Invalid field info option. ' + JSON.stringify(fieldInfo)
+      );
     });
   }
 
@@ -112,7 +120,7 @@ export default class JSON2CSVBase {
    */
   getHeader(fields) {
     return fields
-      .map(fieldInfo => this.opts.formatters.header(fieldInfo.label))
+      .map((fieldInfo) => this.opts.formatters.header(fieldInfo.label))
       .join(this.opts.delimiter);
   }
 
@@ -121,8 +129,8 @@ export default class JSON2CSVBase {
    * @param {Object} row JSON object to be converted in a CSV row
    */
   preprocessRow(row) {
-    return this.opts.transforms.reduce((rows, transform) =>
-      rows.flatMap(row => transform(row)),
+    return this.opts.transforms.reduce(
+      (rows, transform) => rows.flatMap((row) => transform(row)),
       [row]
     );
   }
@@ -138,9 +146,14 @@ export default class JSON2CSVBase {
       return undefined;
     }
 
-    const processedRow = fields.map(fieldInfo => this.processCell(row, fieldInfo));
+    const processedRow = fields.map((fieldInfo) =>
+      this.processCell(row, fieldInfo)
+    );
 
-    if (!this.opts.includeEmptyRows && processedRow.every(field => field === '')) {
+    if (
+      !this.opts.includeEmptyRows &&
+      processedRow.every((field) => field === '')
+    ) {
       return undefined;
     }
 

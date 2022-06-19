@@ -1,16 +1,16 @@
 module.exports = {
   fields: [
     {
-      value: 'carModel'
+      value: 'carModel',
     },
     {
       label: 'price',
-      value: row => row.price,
-      default: 1
+      value: (row) => row.price,
+      default: 1,
     },
     {
       label: 'color',
-      value: row => row.color
-    }
-  ]
+      value: (row) => row.color,
+    },
+  ],
 };

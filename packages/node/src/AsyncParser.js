@@ -17,15 +17,22 @@ export default class JSON2CSVNodeAsyncParser {
     if (typeof data === 'string' || ArrayBuffer.isView(data)) {
       data = Readable.from(data, { objectMode: false });
     } else if (Array.isArray(data)) {
-      data = Readable.from(data.filter(item => item !== null));
+      data = Readable.from(data.filter((item) => item !== null));
     } else if (typeof data === 'object' && !(data instanceof Readable)) {
       data = Readable.from([data]);
     }
-    
+
     if (!(data instanceof Readable)) {
-      throw new Error('Data should be a JSON object, JSON array, typed array, string or stream');
+      throw new Error(
+        'Data should be a JSON object, JSON array, typed array, string or stream'
+      );
     }
 
-    return data.pipe(new JSON2CSVNodeTransform(this.opts, { objectMode: data.readableObjectMode, ...this.transformOpts }));
+    return data.pipe(
+      new JSON2CSVNodeTransform(this.opts, {
+        objectMode: data.readableObjectMode,
+        ...this.transformOpts,
+      })
+    );
   }
 }

@@ -6,11 +6,11 @@ function replaceSeparator(value, separator) {
   return value.replace('.', separator);
 }
 
-
 export default function numberFormatter(opts = {}) {
   if (opts.separator) {
     if (opts.decimals) {
-      return (value) => replaceSeparator(toFixedDecimals(value, opts.decimals), opts.separator);
+      return (value) =>
+        replaceSeparator(toFixedDecimals(value, opts.decimals), opts.separator);
     }
 
     return (value) => replaceSeparator(value.toString(), opts.separator);

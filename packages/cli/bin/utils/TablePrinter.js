@@ -35,36 +35,45 @@ export default class TablePrinter {
   setColumnWidths(line) {
     this.colWidths = line
       .split(this.opts.delimiter)
-      .map(elem => Math.max(elem.length * 2, MIN_CELL_WIDTH));
+      .map((elem) => Math.max(elem.length * 2, MIN_CELL_WIDTH));
 
-    this.topLine = `┌${this.colWidths.map(i => '─'.repeat(i)).join('┬')}┐`;
-    this.middleLine = `├${this.colWidths.map(i => '─'.repeat(i)).join('┼')}┤`;
-    this.bottomLine = `└${this.colWidths.map(i => '─'.repeat(i)).join('┴')}┘`;
+    this.topLine = `┌${this.colWidths.map((i) => '─'.repeat(i)).join('┬')}┐`;
+    this.middleLine = `├${this.colWidths.map((i) => '─'.repeat(i)).join('┼')}┤`;
+    this.bottomLine = `└${this.colWidths.map((i) => '─'.repeat(i)).join('┴')}┘`;
   }
 
   print(top, lines, bottom) {
-    const table = `${top}${os.EOL}`
-      + lines
-        .map(row => this.formatRow(row))
-        .join(`${os.EOL}${this.middleLine}${os.EOL}`)
-      + os.EOL
-      + (bottom ? bottom : '');
+    const table =
+      `${top}${os.EOL}` +
+      lines
+        .map((row) => this.formatRow(row))
+        .join(`${os.EOL}${this.middleLine}${os.EOL}`) +
+      os.EOL +
+      (bottom ? bottom : '');
 
-    process.stdout.write(table);  
+    process.stdout.write(table);
   }
 
   formatRow(row) {
     const wrappedRow = row
       .split(this.opts.delimiter)
-      .map((cell, i) => cell.match(new RegExp(`(.{1,${this.colWidths[i] - 2}})`, 'g')) || []);
+      .map(
+        (cell, i) =>
+          cell.match(new RegExp(`(.{1,${this.colWidths[i] - 2}})`, 'g')) || []
+      );
 
-    const height = wrappedRow.reduce((acc, cell) => Math.max(acc, cell.length), 0);
+    const height = wrappedRow.reduce(
+      (acc, cell) => Math.max(acc, cell.length),
+      0
+    );
 
-    const processedCells = wrappedRow
-      .map((cell, i) => this.formatCell(cell, height, this.colWidths[i]));
+    const processedCells = wrappedRow.map((cell, i) =>
+      this.formatCell(cell, height, this.colWidths[i])
+    );
 
-    return Array(height).fill('')
-      .map((_, i) => `│${processedCells.map(cell => cell[i]).join('│')}│`)
+    return Array(height)
+      .fill('')
+      .map((_, i) => `│${processedCells.map((cell) => cell[i]).join('│')}│`)
       .join(os.EOL);
   }
 
@@ -82,7 +91,7 @@ export default class TablePrinter {
     return [
       ...Array(vertPadTop).fill(emptyLine),
       ...content,
-      ...Array(vertPadBottom).fill(emptyLine)
+      ...Array(vertPadBottom).fill(emptyLine),
     ];
   }
 
@@ -108,7 +117,7 @@ export default class TablePrinter {
       },
       final() {
         table.end(csv);
-      }
+      },
     });
   }
 }

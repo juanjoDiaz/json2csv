@@ -1,5 +1,5 @@
 import { Tokenizer, TokenParser, TokenType } from '@streamparser/json';
-import JSON2CSVBase from "./BaseParser.js";
+import JSON2CSVBase from './BaseParser.js';
 
 export default class JSON2CSVStreamParser extends JSON2CSVBase {
   constructor(opts, asyncOpts) {
@@ -51,7 +51,11 @@ export default class JSON2CSVStreamParser extends JSON2CSVBase {
 
   getNdJsonTokenizer(asyncOpts) {
     const tokenizer = new Tokenizer({ ...asyncOpts, separator: this.opts.eol });
-    this.tokenParser = new TokenParser({ paths: ['$'], keepStack: false, separator: this.opts.eol });
+    this.tokenParser = new TokenParser({
+      paths: ['$'],
+      keepStack: false,
+      separator: this.opts.eol,
+    });
     this.configureCallbacks(tokenizer, this.tokenParser);
     return tokenizer;
   }
@@ -60,7 +64,10 @@ export default class JSON2CSVStreamParser extends JSON2CSVBase {
     const tokenizer = new Tokenizer(asyncOpts);
     tokenizer.onToken = (token, value, offset) => {
       if (token === TokenType.LEFT_BRACKET) {
-        this.tokenParser = new TokenParser({ paths: ['$.*'], keepStack: false });
+        this.tokenParser = new TokenParser({
+          paths: ['$.*'],
+          keepStack: false,
+        });
       } else if (token === TokenType.LEFT_BRACE) {
         this.tokenParser = new TokenParser({ paths: ['$'], keepStack: false });
       } else {
@@ -72,12 +79,17 @@ export default class JSON2CSVStreamParser extends JSON2CSVBase {
 
       this.tokenParser.write(token, value, offset);
     };
-    tokenizer.onError = () => this.onError(new Error('Data should be a JSON object or array'));
+    tokenizer.onError = () =>
+      this.onError(new Error('Data should be a JSON object or array'));
     tokenizer.onEnd = () => {
-      this.onError(new Error('Data should not be empty or the "fields" option should be included'));
+      this.onError(
+        new Error(
+          'Data should not be empty or the "fields" option should be included'
+        )
+      );
       this.onEnd();
     };
-  
+
     return tokenizer;
   }
 
@@ -92,7 +104,11 @@ export default class JSON2CSVStreamParser extends JSON2CSVBase {
   pushHeaderIfNotWritten() {
     if (this._hasWritten) return;
     if (!this.opts.fields) {
-      this.onError(new Error('Data should not be empty or the "fields" option should be included'));
+      this.onError(
+        new Error(
+          'Data should not be empty or the "fields" option should be included'
+        )
+      );
       return;
     }
 
@@ -106,7 +122,7 @@ export default class JSON2CSVStreamParser extends JSON2CSVBase {
     if (this.opts.withBOM) {
       this.onData('\ufeff');
     }
-  
+
     if (this.opts.header) {
       const header = this.getHeader(this.opts.fields);
       this.onHeader(header);
@@ -122,13 +138,15 @@ export default class JSON2CSVStreamParser extends JSON2CSVBase {
    */
   pushLine(data) {
     const processedData = this.preprocessRow(data);
-    
+
     if (!this._hasWritten) {
-      this.opts.fields = this.preprocessFieldsInfo(this.opts.fields || Object.keys(processedData[0]));
+      this.opts.fields = this.preprocessFieldsInfo(
+        this.opts.fields || Object.keys(processedData[0])
+      );
       this.pushHeader(this.opts.fields);
     }
 
-    processedData.forEach(row => {
+    processedData.forEach((row) => {
       const line = this.processRow(row, this.opts.fields);
       if (line === undefined) return;
       this.onLine(line);

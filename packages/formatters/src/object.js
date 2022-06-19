@@ -1,6 +1,8 @@
 import defaulStringFormatter from './string.js';
 
-export default function objectFormatter(opts = { stringFormatter: defaulStringFormatter() }) {
+export default function objectFormatter(
+  opts = { stringFormatter: defaulStringFormatter() }
+) {
   return (value) => {
     if (value === null) return '';
 
@@ -8,8 +10,8 @@ export default function objectFormatter(opts = { stringFormatter: defaulStringFo
 
     if (value === undefined) return '';
 
-    if (value[0] === '"') value = value.replace(/^"(.+)"$/,'$1');
+    if (value[0] === '"') value = value.replace(/^"(.+)"$/, '$1');
 
     return opts.stringFormatter(value);
-  }
+  };
 }

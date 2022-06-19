@@ -1,5 +1,8 @@
 const os = require('os');
-const { promises: { readdir, readFile }, createReadStream } = require('fs');
+const {
+  promises: { readdir, readFile },
+  createReadStream,
+} = require('fs');
 const path = require('path');
 const { Readable } = require('stream');
 
@@ -10,46 +13,50 @@ function parseToJson(fixtures) {
   return fixtures.reduce((data, fixture) => {
     data[fixture.name] = fixture.content;
     return data;
-  } ,{});
+  }, {});
 }
 
 async function loadJSON() {
   const filenames = await readdir(jsonDirectory);
-  const fixtures = await Promise.all(filenames
-    .filter(filename => !filename.startsWith('.'))
-    .map(async (filename) => {
-      const name = path.parse(filename).name;
-      const filePath = path.join(jsonDirectory, filename);
-      let content;
-      try {
-        content = require(filePath);
-      } catch (e) {
-        content = await readFile(filePath, 'utf-8');
-      }
+  const fixtures = await Promise.all(
+    filenames
+      .filter((filename) => !filename.startsWith('.'))
+      .map(async (filename) => {
+        const name = path.parse(filename).name;
+        const filePath = path.join(jsonDirectory, filename);
+        let content;
+        try {
+          content = require(filePath);
+        } catch (e) {
+          content = await readFile(filePath, 'utf-8');
+        }
 
-      return {
-        name,
-        content: () => content,
-      };
-    }));
-  
+        return {
+          name,
+          content: () => content,
+        };
+      })
+  );
+
   return parseToJson(fixtures);
 }
 
 async function loadJSONStreams() {
   const filenames = await readdir(jsonDirectory);
   const fixtures = filenames
-    .filter(filename => !filename.startsWith('.'))
-    .map(filename => {
+    .filter((filename) => !filename.startsWith('.'))
+    .map((filename) => {
       return {
         name: path.parse(filename).name,
         content: ({ objectMode } = { objectMode: false }) => {
           if (objectMode) {
             return Readable.from(require(path.join(jsonDirectory, filename)));
           }
-          return createReadStream(path.join(jsonDirectory, filename), { highWaterMark: 175 });
+          return createReadStream(path.join(jsonDirectory, filename), {
+            highWaterMark: 175,
+          });
         },
-      }
+      };
     });
 
   return parseToJson(fixtures);
@@ -59,7 +66,7 @@ async function loadCSV() {
   const filenames = await readdir(csvDirectory);
   const fixtures = await Promise.all(
     filenames
-      .filter(filename => !filename.startsWith('.'))
+      .filter((filename) => !filename.startsWith('.'))
       .map(async (filename) => ({
         name: path.parse(filename).name,
         content: await readFile(path.join(csvDirectory, filename), 'utf-8'),
@@ -73,36 +80,23 @@ async function loadAllFixtures() {
   const [jsonFixtures, jsonFixturesStreams, csvFixtures] = await Promise.all([
     loadJSON(),
     loadJSONStreams(),
-    loadCSV()
+    loadCSV(),
   ]);
 
-  // const jsonFixturesWithOsEol = Object.entries(jsonFixtures)
-  // .reduce((obj, [key, value]) => ({
-  //   ...obj,
-  //   // eslint-disable-next-line no-control-regex
-  //   [key]: () => value().replace(new RegExp('(?<!\r)\n', 'g'), os.EOL)
-  // }), {});
-
-  // const jsonFixturesStreamsWithOsEol = Object.entries(jsonFixturesStreams)
-  // .reduce((obj, [key, value]) => ({
-  //   ...obj,
-  //   // eslint-disable-next-line no-control-regex
-  //   [key]: () => value().pipe(new Transform({
-
-  //   }))
-  // }), {});
-
-  const csvFixturesWithLinuxEol = Object.entries(csvFixtures)
-  .reduce((obj, [key, value]) => ({
-    ...obj,
-    [key]: os.EOL !== '\n' ? value.replace(new RegExp(os.EOL, 'g'), '\n') : value
-  }), {});
+  const csvFixturesWithLinuxEol = Object.entries(csvFixtures).reduce(
+    (obj, [key, value]) => ({
+      ...obj,
+      [key]:
+        os.EOL !== '\n' ? value.replace(new RegExp(os.EOL, 'g'), '\n') : value,
+    }),
+    {}
+  );
 
   return {
     jsonFixtures,
     jsonFixturesStreams,
     csvFixtures,
-    csvFixturesWithLinuxEol
+    csvFixturesWithLinuxEol,
   };
 }
 

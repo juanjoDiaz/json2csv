@@ -11,7 +11,7 @@ class TestRunner {
   add(name, test) {
     this.tests.push({
       name: this.name ? `${this.name} - ${name}` : this.name,
-      test
+      test,
     });
   }
 
@@ -25,15 +25,17 @@ class TestRunner {
 
   async run() {
     try {
-      await Promise.all(this.before.map(before => before()));
-      this.tests.forEach(({ name, test }) => tape(name, async (t) => {
-        try {
-          await test(t);
-        } catch (err) {
-          t.fail(err);
-        }
-      }));
-      this.after.forEach(after => tape.onFinish(after));
+      await Promise.all(this.before.map((before) => before()));
+      this.tests.forEach(({ name, test }) =>
+        tape(name, async (t) => {
+          try {
+            await test(t);
+          } catch (err) {
+            t.fail(err);
+          }
+        })
+      );
+      this.after.forEach((after) => tape.onFinish(after));
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err);

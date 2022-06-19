@@ -39,6 +39,11 @@
     "c8": "^7.11.3",
     "docsify-cli": "^4.4.4",
     "eslint": "^8.17.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.7.1",
     "tap-spec": "^5.0.0",
     "tape": "^5.2.2"
   },

@@ -11,9 +11,12 @@ export default class JSON2CSVNodeTransform extends Transform {
     this.endUnderlayingParser = StreamParser.prototype.end;
     this.opts = this.preprocessOpts({
       ...opts,
-      eol: opts.eol || os.EOL
+      eol: opts.eol || os.EOL,
     });
-    this.initTokenizer(opts, { ...asyncOptions, objectMode: transformOpts.objectMode || transformOpts.readableObjectMode });
+    this.initTokenizer(opts, {
+      ...asyncOptions,
+      objectMode: transformOpts.objectMode || transformOpts.readableObjectMode,
+    });
     if (this.opts.fields) this.preprocessFieldsInfo(this.opts.fields);
   }
 
@@ -65,10 +68,9 @@ export default class JSON2CSVNodeTransform extends Transform {
   promise() {
     return new Promise((resolve, reject) => {
       const csvBuffer = [];
-      this
-        .on('data', chunk => csvBuffer.push(chunk.toString()))
+      this.on('data', (chunk) => csvBuffer.push(chunk.toString()))
         .on('finish', () => resolve(csvBuffer.join('')))
-        .on('error', err => reject(err));
+        .on('error', (err) => reject(err));
     });
   }
 }

@@ -11,5 +11,15 @@
       ]
     }
   },
-  "extends": "eslint:recommended"
+  "plugins": ["prettier"],
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "prettier/prettier": ["error", {
+      "endOfLine": "auto"
+    }]
+  }
 }

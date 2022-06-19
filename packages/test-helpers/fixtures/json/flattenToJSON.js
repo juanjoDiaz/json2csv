@@ -2,13 +2,13 @@ module.exports = {
   hello: {
     world: {
       again: 'good morning',
-      toJSON: () =>'good afternoon'
-    }
+      toJSON: () => 'good afternoon',
+    },
   },
   lorem: {
     ipsum: {
       dolor: 'good evening',
-      value: null
-    }
-  }
+      value: null,
+    },
+  },
 };

@@ -20,15 +20,17 @@ export default class JSON2CSVNodeAsyncParser {
         start(controller) {
           controller.enqueue(data);
           controller.close();
-        }
+        },
       });
     } else if (Array.isArray(data)) {
       this.asyncOpts.objectMode = true;
       data = new ReadableStream({
         start(controller) {
-          data.filter(item => item !== null).forEach(item => controller.enqueue(item));
+          data
+            .filter((item) => item !== null)
+            .forEach((item) => controller.enqueue(item));
           controller.close();
-        }
+        },
       });
     } else if (typeof data === 'object' && !(data instanceof ReadableStream)) {
       this.asyncOpts.objectMode = true;
@@ -36,12 +38,14 @@ export default class JSON2CSVNodeAsyncParser {
         start(controller) {
           controller.enqueue(data);
           controller.close();
-        }
+        },
       });
     }
-    
+
     if (!(data instanceof ReadableStream)) {
-      throw new Error('Data should be a JSON object, JSON array, typed array, string or stream');
+      throw new Error(
+        'Data should be a JSON object, JSON array, typed array, string or stream'
+      );
     }
 
     const transform = new JSON2CSVWHATWGTransformStream(

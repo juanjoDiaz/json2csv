@@ -3,7 +3,8 @@ export function setProp(obj, path, value) {
   const [key, ...restPath] = pathArray;
   return {
     ...obj,
-    [key]: pathArray.length > 1 ? setProp(obj[key] || {}, restPath, value) : value
+    [key]:
+      pathArray.length > 1 ? setProp(obj[key] || {}, restPath, value) : value,
   };
 }
 
@@ -19,13 +20,15 @@ export function unsetProp(obj, path) {
 
   if (pathArray.length === 1) {
     return Object.keys(obj)
-      .filter(prop => prop !== key)
+      .filter((prop) => prop !== key)
       .reduce((acc, prop) => ({ ...acc, [prop]: obj[prop] }), {});
   }
 
-  return Object.keys(obj)
-    .reduce((acc, prop) => ({
+  return Object.keys(obj).reduce(
+    (acc, prop) => ({
       ...acc,
       [prop]: prop !== key ? obj[prop] : unsetProp(obj[key], restPath),
-    }), {});
+    }),
+    {}
+  );
 }

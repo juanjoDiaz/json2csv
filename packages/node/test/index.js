@@ -4,7 +4,6 @@ import AsyncParser from './AsyncParser.js';
 import AsyncParserInMemory from './AsyncParserInMemory.js';
 import Transform from './Transform.js';
 
-
 async function run() {
   const { jsonFixtures, jsonFixturesStreams, csvFixtures } = await fixtures;
 

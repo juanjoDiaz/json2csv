@@ -1,6 +1,6 @@
 /* global TransformStream */
 
-import { StreamParser } from "@json2csv/parsers";
+import { StreamParser } from '@json2csv/parsers';
 
 class Transformer extends StreamParser {
   constructor(opts, asyncOpts) {
@@ -40,9 +40,10 @@ export default class JSON2CSVWHATWGTransformStream extends TransformStream {
     // Implement the EventTarget interface when running on a browser
     if (typeof document === 'object') {
       const delegate = document.createDocumentFragment();
-      ['addEventListener', 'dispatchEvent', 'removeEventListener']
-        .forEach(f => this[f] = (...args) => delegate[f](...args));
-      
+      ['addEventListener', 'dispatchEvent', 'removeEventListener'].forEach(
+        (f) => (this[f] = (...args) => delegate[f](...args))
+      );
+
       transformer.onHeader = (header) => this.dispatchEvent('header', header);
       transformer.onLine = (line) => this.dispatchEvent('line', line);
       const origOnData = transformer.onData.bind(transformer);
@@ -57,7 +58,7 @@ export default class JSON2CSVWHATWGTransformStream extends TransformStream {
       const outputStream = new WritableStream({
         write(chunk) {
           csv += chunk;
-        }
+        },
       });
 
       await this.readable.pipeTo(outputStream);

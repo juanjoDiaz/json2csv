@@ -5,7 +5,8 @@ import AsyncParserInMemory from './AsyncParserInMemory.js';
 import TransformStream from './TransformStream.js';
 
 async function run() {
-  const { jsonFixtures, jsonFixturesStreams, csvFixturesWithLinuxEol } = await fixtures;
+  const { jsonFixtures, jsonFixturesStreams, csvFixturesWithLinuxEol } =
+    await fixtures;
 
   AsyncParser(jsonFixturesStreams, csvFixturesWithLinuxEol).run();
   AsyncParserInMemory(jsonFixtures, csvFixturesWithLinuxEol).run();
