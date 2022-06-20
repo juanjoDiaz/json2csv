@@ -5,7 +5,6 @@ To facilitate usage, `NodeAsyncParser` wraps `NodeTransform` exposing a single `
 
 `NodeAsyncParser` also exposes a convenience `promise` method which turns the stream into a promise that resolves to the whole CSV.
 
-
 ## Installation
 
 <!-- tabs:start -->
@@ -13,7 +12,6 @@ To facilitate usage, `NodeAsyncParser` wraps `NodeTransform` exposing a single `
 ### **NPM**
 
 You can install json2csv as a dependency using NPM.
-Requires **Node v14** or higher.
 
 ```bash
 $ npm install --save @json2csv/node
@@ -22,7 +20,6 @@ $ npm install --save @json2csv/node
 ### **Yarn**
 
 You can install json2csv as a dependency using Yarn.
-Requires **Node v14** or higher.
 
 ```bash
 $ yarn add --save @json2csv/node
@@ -36,16 +33,16 @@ If your browser supports modules, you can loading json2csv directly on the brows
 You can import the latest version:
 
 ```html
-<script type="module">    
-     import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/node/src/AsyncParser.js';
+<script type="module">
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/node/src/AsyncParser.js';
 </script>
 ```
 
 You can also select a specific version:
 
 ```html
-<script type="module">    
-     import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/node@6.0.0/src/AsyncParser.js';
+<script type="module">
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/node@6.0.0/src/AsyncParser.js';
 </script>
 ```
 
@@ -53,7 +50,7 @@ You can also select a specific version:
 
 ## Usage
 
-```js;
+```js
 import { AsyncParser } from '@json2csv/node';
 
 const opts = {};
@@ -84,8 +81,6 @@ const csv = await parser.parse(data).promise();
 See the [Duplex stream options](https://nodejs.org/api/stream.html#new-streamduplexoptions) for more details.
 
 #### Async Options
-
-TODO this is not supported yet.
 
 Options used by the underlying parsing library to process the binary or text stream.
 Not relevant when running in `objectMode`.

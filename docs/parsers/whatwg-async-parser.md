@@ -1,6 +1,6 @@
 # WHATWG Async Parser
 
-To facilitate usage, `WHATWGAsyncParser` wraps `WHATWGTransform` exposing a single `parse` method similar to the sync API. This method accepts JSON arrays/objects, TypedArrays, strings and readable streams as input and returns a stream that produces the CSV.
+To facilitate usage, `WHATWGAsyncParser` wraps `WHATWGTransformStream` exposing a single `parse` method similar to the sync API. This method accepts JSON arrays/objects, TypedArrays, strings and readable streams as input and returns a stream that produces the CSV.
 
 `WHATWGAsyncParser` also exposes a convenience `promise` method which turns the stream into a promise that resolves to the whole CSV.
 
@@ -11,7 +11,6 @@ To facilitate usage, `WHATWGAsyncParser` wraps `WHATWGTransform` exposing a sing
 ### **NPM**
 
 You can install json2csv as a dependency using NPM.
-Requires **Node v14** or higher.
 
 ```bash
 $ npm install --save @json2csv/whatwg
@@ -20,7 +19,6 @@ $ npm install --save @json2csv/whatwg
 ### **Yarn**
 
 You can install json2csv as a dependency using Yarn.
-Requires **Node v14** or higher.
 
 ```bash
 $ yarn add --save @json2csv/whatwg
@@ -34,16 +32,16 @@ If your browser supports modules, you can loading json2csv directly on the brows
 You can import the latest version:
 
 ```html
-<script type="module">    
-     import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg/src/AsyncParser.js';
+<script type="module">
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg/src/AsyncParser.js';
 </script>
 ```
 
 You can also select a specific version:
 
 ```html
-<script type="module">    
-     import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg@6.0.0/src/AsyncParser.js';
+<script type="module">
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg@6.0.0/src/AsyncParser.js';
 </script>
 ```
 

@@ -12,7 +12,6 @@ This loads the entire JSON in memory and do the whole processing in-memory while
 ### **NPM**
 
 You can install json2csv as a dependency using NPM.
-Requires **Node v14** or higher.
 
 ```bash
 $ npm install --save @json2csv/parsers
@@ -21,7 +20,6 @@ $ npm install --save @json2csv/parsers
 ### **Yarn**
 
 You can install json2csv as a dependency using Yarn.
-Requires **Node v14** or higher.
 
 ```bash
 $ yarn add --save @json2csv/parsers
@@ -35,16 +33,16 @@ If your browser supports modules, you can loading json2csv directly on the brows
 You can import the latest version:
 
 ```html
-<script type="module">    
-     import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers/src/Parser.js';
+<script type="module">
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers/src/Parser.js';
 </script>
 ```
 
 You can also select a specific version:
 
 ```html
-<script type="module">    
-     import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers@6.0.0/src/Parser.js';
+<script type="module">
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers@6.0.0/src/Parser.js';
 </script>
 ```
 

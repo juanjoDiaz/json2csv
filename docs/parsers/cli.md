@@ -1,8 +1,6 @@
 # CLI
 
-`json2csv` can be called from the command line if installed globally (using the `-g` flag).
-
-
+`@json2csv/cli` makes `json2csv` usable as a command line tool.
 
 ## Installation
 
@@ -11,7 +9,6 @@
 ### **NPM**
 
 You can install json2csv as a dependency using NPM.
-Requires **Node v14** or higher.
 
 It's advisable to install it as a global dependency so it can be called from anywhere.
 
@@ -22,7 +19,6 @@ $ npm install -g @json2csv/cli
 ### **Yarn**
 
 You can install json2csv using Yarn.
-Requires **Node v14** or higher.
 
 It's advisable to install it as a global dependency so it can be called from anywhere.
 
