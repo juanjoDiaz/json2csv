@@ -18,9 +18,9 @@ jobs:
           - '@json2csv/whatwg'
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
           # Needs to be explicitly specified for auth to work
