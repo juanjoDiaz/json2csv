@@ -55,6 +55,7 @@
     "packages/parsers",
     "packages/test-helpers",
     "packages/transforms",
-    "packages/whatwg"
+    "packages/whatwg",
+    "packages/test-performance"
   ]
 }
