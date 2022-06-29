@@ -124,7 +124,7 @@ export default class JSON2CSVStreamParser extends JSON2CSVBase {
     }
 
     if (this.opts.header) {
-      const header = this.getHeader(this.opts.fields);
+      const header = this.getHeader();
       this.onHeader(header);
       this.onData(header);
       this._hasWritten = true;
@@ -147,7 +147,7 @@ export default class JSON2CSVStreamParser extends JSON2CSVBase {
     }
 
     processedData.forEach((row) => {
-      const line = this.processRow(row, this.opts.fields);
+      const line = this.processRow(row);
       if (line === undefined) return;
       this.onLine(line);
       this.onData(this._hasWritten ? this.opts.eol + line : line);

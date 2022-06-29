@@ -1,5 +1,5 @@
 import lodashGet from 'lodash.get';
-import { setProp, unsetProp } from './utils.js';
+import { setProp, unsetProp, flattenReducer } from './utils.js';
 
 function getUnwindablePaths(obj, currentPath) {
   return Object.keys(obj).reduce((unwindablePaths, key) => {
@@ -20,7 +20,8 @@ function getUnwindablePaths(obj, currentPath) {
       unwindablePaths.push(newPath);
       unwindablePaths = unwindablePaths.concat(
         value
-          .flatMap((arrObj) => getUnwindablePaths(arrObj, newPath))
+          .map((arrObj) => getUnwindablePaths(arrObj, newPath))
+          .reduce(flattenReducer, [])
           .filter((item, index, arr) => arr.indexOf(item) !== index)
       );
     }

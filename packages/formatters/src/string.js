@@ -5,7 +5,7 @@ export default function stringFormatter(opts = {}) {
       ? opts.escapedQuote
       : `${quote}${quote}`;
 
-  if (!quote) {
+  if (!quote || quote === escapedQuote) {
     return (value) => value;
   }
 

@@ -1,10 +1,10 @@
 import lodashGet from 'lodash.get';
-import { getProp } from './utils.js';
 import defaultFormatter from '@json2csv/formatters/default';
 import numberFormatterCtor from '@json2csv/formatters/number';
 import stringFormatterCtor from '@json2csv/formatters/string';
 import symbolFormatterCtor from '@json2csv/formatters/symbol';
 import objectFormatterCtor from '@json2csv/formatters/object';
+import { getProp, flattenReducer, fastJoin } from './utils.js';
 
 export default class JSON2CSVBase {
   constructor(opts) {
@@ -118,10 +118,13 @@ export default class JSON2CSVBase {
    *
    * @returns {String} titles as a string
    */
-  getHeader(fields) {
-    return fields
-      .map((fieldInfo) => this.opts.formatters.header(fieldInfo.label))
-      .join(this.opts.delimiter);
+  getHeader() {
+    return fastJoin(
+      this.opts.fields.map((fieldInfo) =>
+        this.opts.formatters.header(fieldInfo.label)
+      ),
+      this.opts.delimiter
+    );
   }
 
   /**
@@ -130,7 +133,8 @@ export default class JSON2CSVBase {
    */
   preprocessRow(row) {
     return this.opts.transforms.reduce(
-      (rows, transform) => rows.flatMap((row) => transform(row)),
+      (rows, transform) =>
+        rows.map((row) => transform(row)).reduce(flattenReducer, []),
       [row]
     );
   }
@@ -141,12 +145,12 @@ export default class JSON2CSVBase {
    * @param {Object} row JSON object to be converted in a CSV row
    * @returns {String} CSV string (row)
    */
-  processRow(row, fields) {
+  processRow(row) {
     if (!row) {
       return undefined;
     }
 
-    const processedRow = fields.map((fieldInfo) =>
+    const processedRow = this.opts.fields.map((fieldInfo) =>
       this.processCell(row, fieldInfo)
     );
 
@@ -157,7 +161,7 @@ export default class JSON2CSVBase {
       return undefined;
     }
 
-    return processedRow.join(this.opts.delimiter);
+    return fastJoin(processedRow, this.opts.delimiter);
   }
 
   /**
