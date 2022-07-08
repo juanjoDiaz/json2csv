@@ -21,6 +21,7 @@
   },
   "homepage": "http://juanjodiaz.github.io/json2csv",
   "scripts": {
+    "docs:prebuild": "esbuild docs/docs-export.js --bundle --outfile=docs/json2csv.js",
     "docs:preview": "docsify serve docs",
     "lint": "npm run lint -ws",
     "lint:fix": "npm run lint -- --fix",
@@ -32,6 +33,7 @@
     "@babel/plugin-syntax-import-assertions": "^7.17.12",
     "c8": "^7.11.3",
     "docsify-cli": "^4.4.4",
+    "esbuild": "^0.14.48",
     "eslint": "^8.17.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",

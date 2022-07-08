@@ -1,5 +1,9 @@
 # Quick start
 
+## Try it live!
+
+[live](components/live.md ':include')
+
 ## Types of JSON2CSV parsers
 
 This library offers a few json2csv parsers:

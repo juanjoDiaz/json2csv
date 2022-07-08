@@ -4,9 +4,17 @@
   <meta charset="UTF-8">
   <title>json2csv documentation</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
+  <meta name="description" content="Documentation of json2csv, the most configurable JSON to CSV parser out there.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/buble.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma/css/bulma.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.css" />
+  <link rel="stylesheet"  href="https://cdn.jsdelivr.net/gh/Wikiki/bulma-switch@master/dist/css/bulma-switch.min.css" />
+  <style>
+    .panel-heading, .panel-tabs {
+      margin: 0 !important;
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>
@@ -18,6 +26,110 @@
       auto2top: true,
       maxLevel: 4,
       subMaxLevel: 2,
+      vueMounts: {
+        '#live-parser': {
+          data() {
+            return {
+              showOptions: false,
+              showOptionsForm: true,
+              inputOptions: {
+                ndjson: undefined,
+                fields: undefined,
+              },
+              formattersOptions: {},
+              transformsOptions: {
+                unwind: {},
+                flatten: {},
+              },
+              csvOptions: {
+                defaultValue: undefined,
+                delimiter: undefined,
+                eol: undefined,
+                header: undefined,
+                includeEmptyRows: undefined,
+                withBOM: undefined,
+              },
+              inputJSON: '',
+              outputCSV: '',
+            };
+          },
+          computed: {
+            includeHeader: {
+              get() {
+                return this.csvOptions.header || true;
+              },
+              set(value) {
+                this.csvOptions.header = value;
+              }
+            },
+            unwindConfig() {
+              if (!this.transformsOptions.unwind.paths) return;
+              return {
+                paths: this.transformsOptions.unwind.paths.split(','),
+                blankOut: this.transformsOptions.unwind.blankOut,
+              };
+            },
+            flattenConfig() {
+              if (!this.transformsOptions.flatten.objects && !this.transformsOptions.flatten.arrays) return;
+              return {
+                objects: this.transformsOptions.flatten.objects,
+                arrays: this.transformsOptions.flatten.arrays,
+                separator: this.transformsOptions.flatten.separator,
+              };
+            },
+            configJSON() {
+              const transforms = [];
+              if (this.unwindConfig) {
+                transforms.push(new Json2csvTransforms.unwind(this.unwindConfig));
+              }
+
+              if (this.flattenConfig) {
+                transforms.push(new Json2csvTransforms.flatten(this.flattenConfig));
+              }
+
+              return {
+                ...this.inputOptions,
+                transforms: transforms.length > 0 ? transforms : undefined,
+                fields: this.inputOptions.fields && this.inputOptions.fields.split(','),
+                ...this.csvOptions,
+              };
+            },
+            configText() {
+              let config = JSON.stringify({
+                ...this.inputOptions,
+                transforms: this.unwindConfig || this.flattenConfig ? 'placeholder' : undefined,
+                fields: this.inputOptions.fields && this.inputOptions.fields.split(','),
+                ...this.csvOptions,
+              }, null, 4);
+
+              config = config.replace(/"(\s*)transforms": "placeholder"/m, `"transforms": [
+        ${[
+          this.unwindConfig ? `unwind(${JSON.stringify(this.unwindConfig, null, 4).replace(/\n/g, '\n        ')})` : '',
+          this.flattenConfig ? `flatten(${JSON.stringify(this.flattenConfig, null, 4).replace(/\n/g, '\n        ')})` : ''
+        ].filter(t => t).join(',\n        ')}
+    ]`);
+
+              return config;
+            }
+          },
+          methods: {
+            formatJSON() {
+              this.inputJSON = JSON.stringify(JSON.parse(this.inputJSON), null, 4);
+              // TODO error
+            },
+            parseJSON() {
+              const parser = new Json2csvStreamParser(this.configJSON);
+              this.outputCSV = '';
+              parser.onData = data => {
+                this.outputCSV += data;
+              };
+              parser.onError = console.error; // TODO
+              parser.write(this.inputJSON);
+              parser.end();
+            }
+          }
+        },
+      },
       tabs: {
         sync: true
       }
@@ -28,5 +140,7 @@
   <!-- docsify plugins -->
   <script src="//cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+  <script src="./json2csv.js"></script>
 </body>
 </html>
