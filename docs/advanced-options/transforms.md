@@ -2,7 +2,7 @@
 # Transforms
 
 A transform is a function to preprocess data before it is converted into CSV.
-Each transformer receives each data record, performs some processing and returns a transformed record.
+Each transform receives each data record, performs some processing and returns a transformed record.
 
 ## Built-in transforms
 

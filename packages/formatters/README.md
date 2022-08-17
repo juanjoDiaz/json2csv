@@ -1,6 +1,6 @@
 # Formatters
 
-A formater is a function to convert javascript values into plain text before adding it into the CSV as a cell.
+A formater is function a used by json2csv (in any of its flavours) to convert javascript values into plain text before adding it into the CSV as a cell.
 Supported formatter tare given by the types returned by `typeof`:
 * `undefined`
 * `boolean`
@@ -237,9 +237,7 @@ const fixedLengthStringFormatter = (stringLength, ellipsis = '...', stringFormat
 
 Formatters are configured in the `formatters` option when creating a parser.
 
-<!-- tabs:start -->
-
-#### **Parser**
+### Programmatic APIs
 
 ```js
 import { Parser } from '@json2csv/parsers';
@@ -261,118 +259,7 @@ try {
 }
 ```
 
-#### **Stream Parser**
-
-```js
-import { StreamParser } from '@json2csv/parsers';
-import { number: numberFormatter } from '@json2csv/formatters';
-import { fixedLengthStringFormatter } from './custom-formatters';
-
-
-const opts = {
-  formatters: {
-    number: numberFormatter({ decimals: 3, separator: ',' }),
-    string: fixedLengthStringFormatter(20)
-  }
-};
-const parser = new StreamParser(opts);
-
-let csv = '';
-parser.onData = (chunk) => (csv += chunk.toString()));
-parser.onEnd = () => console.log(csv));
-parser.onError = (err) => console.error(err));
-
-// You can also listen for events on the conversion and see how the header or the lines are coming out.
-parser.onHeader = (header) => console.log(header));
-parser.onLine = (line) => console.log(line));
-```
-
-#### **Node Transform**
-
-```js
-import { createReadStream, createWriteStream } from 'fs';
-import { Transform } from '@json2csv/ node';
-import { number: numberFormatter } from '@json2csv/formatters';
-import { fixedLengthStringFormatter } from './custom-formatters';
-
-const input = createReadStream(inputPath, { encoding: 'utf8' });
-const output = createWriteStream(outputPath, { encoding: 'utf8' });
-const opts = {
-  formatters: {
-    number: numberFormatter({ decimals: 3, separator: ',' }),
-    string: fixedLengthStringFormatter(20)
-  }
-};
-const parser = new Transform(ops);
-
-const processor = input.pipe(parser).pipe(output);
-
-// You can also listen for events on the conversion and see how the header or the lines are coming out.
-json2csv
-  .on('header', (header) => console.log(header))
-  .on('line', (line) => console.log(line));
-```
-
-#### **Node Async Parser**
-
-```js
-import { AsyncParser } from '@json2csv/node';
-import { number: numberFormatter } from '@json2csv/formatters';
-import { fixedLengthStringFormatter } from './custom-formatters';
-
-const opts = {
-  formatters: {
-    number: numberFormatter({ decimals: 3, separator: ',' }),
-    string: fixedLengthStringFormatter(20)
-  }
-};
-const parser = new AsyncParser(opts);
-
-let csv = await parser.parse(data).promise();
-```
-
-#### **WHATWG Transform Stream**
-
-```js
-import { TransformStream } from '@json2csv/whatwg';
-import { number: numberFormatter } from '@json2csv/formatters';
-import { fixedLengthStringFormatter } from './custom-formatters';
-
-const opts = {
-  formatters: {
-    number: numberFormatter({ decimals: 3, separator: ',' }),
-    string: fixedLengthStringFormatter(20)
-  }
-};
-const parser = new TransformStream(opts);
-
-await sourceStream.pipeThrough(parser).pipeTo(writableStream);
-
-// You can also listen for events on the conversion and see how the header or the lines are coming out.
-parser
-  .addEventListener('header', (header) => console.log(header))
-  .addEventListener('line', (line) => console.log(line));
-```
-
-#### **WHATWG Async Parser**
-
-```js
-import { AsyncParser } from '@json2csv/whatwg';
-import { number: numberFormatter } from '@json2csv/formatters';
-import { fixedLengthStringFormatter } from './custom-formatters';
-
-const opts = {
-  formatters: {
-    number: numberFormatter({ decimals: 3, separator: ',' }),
-    string: fixedLengthStringFormatter(20)
-  }
-};
-const parser = new AsyncParser(opts);
-
-let csv = await parser.parse(data).promise();
-```
-
-#### **CLI**
+### CLI
 At the moment, only some options of the `string` built-in formatters are supported by the CLI interface.
 
 ```bash
@@ -385,4 +272,10 @@ or if you want to use the `String Excel` instead:
 $ json2csv -i input.json --excel-strings
 ``` 
 
-<!-- tabs:end -->
+### Complete Documentation
+
+See [https://juanjodiaz.github.io/json2csv/#/advanced-options/formatters](https://juanjodiaz.github.io/json2csv/#/advanced-options/formatters).
+
+## License
+
+See [LICENSE.md](https://github.com/juanjoDiaz/json2csv/blob/main/LICENSE.md).

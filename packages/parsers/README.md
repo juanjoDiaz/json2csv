@@ -11,14 +11,14 @@ It fully support conversion following the [RFC4180](https://datatracker.ietf.org
 
 ## Requirements
 
-- Node v16
+- None
 
 ## Features
 
 - Fast and lightweight
 - Support for standard JSON as well as NDJSON
 - Scalable to infinitely large datasets (using stream processing)
-- Advanced data selection (automatic field discovery, underscore-like selectors, custom data getters, default values for missing fields, 
+- Advanced data selection (automatic field discovery, underscore-like selectors, custom data getters, default values for missing fields, ...)
 - Support for custom input data transformation
 - Support for custom csv cell formatting.
 - Highly customizable (supportting custom quotation marks, delimiters, eol values, etc.)
@@ -163,7 +163,7 @@ See [@streamparser/json](https://github.com/juanjoDiaz/streamparser-json#bufferi
 
 ### Complete Documentation
 
-See https://juanjodiaz.github.io/json2csv/#/parsers/parser.
+See [https://juanjodiaz.github.io/json2csv/#/parsers/parser](https://juanjodiaz.github.io/json2csv/#/parsers/parser).
 
 ## License
 

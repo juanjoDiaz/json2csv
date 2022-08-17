@@ -1,7 +1,7 @@
 {
   "name": "@json2csv/formatters",
   "version": "6.0.0",
-  "description": "Built-in formatters. A formatter is a function that receives the raw js value of a given type and formats it as a valid CSV cell.",
+  "description": "json2csv built-in formatters. A formatter is a function that receives the raw js value of a given type and formats it as a valid CSV cell.",
   "keywords": [ "json", "to", "csv", "export", "convert", "parse"],
   "type": "module",
   "main": "src/index.js",
@@ -17,10 +17,13 @@
     "type": "git",
     "url": "git+https://github.com/juanjoDiaz/json2csv.git"
   },
-  "author": "Juanjo Díaz",
+  "author": {
+    "name": "Juanjo Díaz",
+    "email": "juanjo.diazmo@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/juanjoDiaz/json2csv/issues"
   },
-  "homepage": "https://github.com/juanjoDiaz/json2csv#readme"
+  "homepage": "http://juanjodiaz.github.io/json2csv",
 }

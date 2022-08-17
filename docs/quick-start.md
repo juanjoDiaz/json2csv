@@ -1,12 +1,8 @@
 # Quick start
 
-## Try it live!
-
-[live](components/live.md ':include')
-
 ## Types of JSON2CSV parsers
 
-This library offers a few json2csv parsers:
+json2csv parsers are offered in vorious flavours:
 
 * **[Parser](parsers/parser.md):** Pure Javascript synchronous parser. High-performant and runs both node.js and the browser. It´s the fastes but loads both the JSON and the resulting CSV in memory, and block the event loop while processing. Not recommended unless the JSON data is small.
 * **[Stream Parser](parsers/stream-parser.md):** Pure Javascript stream parser. High-performant and runs both node.js and the browser. It keeps a consistent memory footprint and doesn't block the event loop. It's the base of all other parsers. Recommended to build your own parser.

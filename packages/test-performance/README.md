@@ -11,7 +11,7 @@ It fully support conversion following the [RFC4180](https://datatracker.ietf.org
 
 ## Requirements
 
-- Node v16
+- Node v16+
 
 ## Usage
 
@@ -33,4 +33,4 @@ $ npm run flamegraph -w @json2csv/test-performance
 
 ## License
 
-See [LICENSE.md].
+See [LICENSE.md](https://github.com/juanjoDiaz/json2csv/blob/main/LICENSE.md).

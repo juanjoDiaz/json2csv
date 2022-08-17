@@ -11,10 +11,13 @@
     "type": "git",
     "url": "git+https://github.com/juanjoDiaz/json2csv.git"
   },
-  "author": "Juanjo Díaz",
+  "author": {
+    "name": "Juanjo Díaz",
+    "email": "juanjo.diazmo@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/juanjoDiaz/json2csv/issues"
   },
-  "homepage": "https://github.com/juanjoDiaz/json2csv#readme"
+  "homepage": "http://juanjodiaz.github.io/json2csv",
 }

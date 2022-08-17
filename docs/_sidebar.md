@@ -1,6 +1,7 @@
 - Getting started
 
   - [Quick start](quick-start.md)
+  - [Try it live!](live.md)
 
 - Parsers
 

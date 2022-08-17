@@ -11,14 +11,14 @@ It fully support conversion following the [RFC4180](https://datatracker.ietf.org
 
 ## Requirements
 
-- Node v16
+- Node v16+
 
 ## Features
 
 - Fast and lightweight
 - Support for standard JSON as well as NDJSON
 - Scalable to infinitely large datasets (using stream processing)
-- Advanced data selection (automatic field discovery, underscore-like selectors, custom data getters, default values for missing fields, 
+- Advanced data selection (automatic field discovery, underscore-like selectors, custom data getters, default values for missing fields, ...)
 - Support for custom input data transformation
 - Support for custom csv cell formatting.
 - Highly customizable (supportting custom quotation marks, delimiters, eol values, etc.)
@@ -106,15 +106,15 @@ carModel,price,color
 $ json2csv -i input.json -f carModel,price,color -p
 
 ┌────────────────────┬───────────────┬───────────────┐
-│ "carModel"             │ "price"          │ "color"          │
+│ "carModel"         │ "price"       │ "color"       │
 ├────────────────────┼───────────────┼───────────────┤
-│ "Audi"                 │ 10000            │ "blue"           │
+│ "Audi"             │ 10000         │ "blue"        │
 ├────────────────────┼───────────────┼───────────────┤
-│ "BMW"                  │ 15000            │ "red"            │
+│ "BMW"              │ 15000         │ "red"         │
 ├────────────────────┼───────────────┼───────────────┤
-│ "Mercedes"             │ 20000            │ "yellow"         │
+│ "Mercedes"         │ 20000         │ "yellow"      │
 ├────────────────────┼───────────────┼───────────────┤
-│ "Porsche"              │ 30000            │ "green"          │
+│ "Porsche"          │ 30000         │ "green"       │
 └────────────────────┴───────────────┴───────────────┘
 ```
 
@@ -174,7 +174,7 @@ $ json2csv -i test2.json -f name,version --no-header >> test.csv
 
 ## Complete Documentation
 
-See https://juanjodiaz.github.io/json2csv/#/parsers/cli.
+See [https://juanjodiaz.github.io/json2csv/#/parsers/cli](https://juanjodiaz.github.io/json2csv/#/parsers/cli).
 
 ## License
 
