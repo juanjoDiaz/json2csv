@@ -1,12 +1,12 @@
 
 # @json2csv/transforms
 
-A transform is a function to preprocess data before it is converted into CSV by json2csv (in any of its flavours).
+A transform is a function to preprocess data before it is converted into CSV by `json2csv` (in any of its flavours).
 Each transform receives each data record, performs some processing and returns a transformed record.
 
 ## Built-in transforms
 
-There is a number of built-in transform provider by the library.
+There is a number of built-in transform provided by this package.
 
 ```js
 import { unwind, flatten } from '@json2csv/transforms';

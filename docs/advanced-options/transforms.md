@@ -6,7 +6,7 @@ Each transform receives each data record, performs some processing and returns a
 
 ## Built-in transforms
 
-There is a number of built-in transform provider by the library.
+There is a number of built-in transform provided by this package.
 
 ```js
 import { unwind, flatten } from '@json2csv/transforms';

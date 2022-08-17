@@ -12,9 +12,9 @@ Please follow the instructions below so we can help you best.
 
 ## Filing an issue
 
-1. Include the version of json2csv used.
+1. Include the version of json2csv used and the interface that you are using (parsers, node or whatwg).
 2. Include your node version or your browser vendor and version.
 3. Include the command or code you used.
 4. Include a sample dataset that we can test against.
-5. Include your output/error.
+5. Include your expected output and the actual output/error.
 -->

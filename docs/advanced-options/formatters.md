@@ -18,7 +18,7 @@ Pay special attention to the `string` formatter since other formatters like the 
 
 ## Built-in formatters
 
-There is a number of built-in formatters provider by the library.
+There is a number of built-in formatters provided by this package.
 
 ```js
 import {
