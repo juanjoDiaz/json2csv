@@ -2,30 +2,37 @@
   "name": "@json2csv/transforms",
   "version": "6.0.0",
   "description": "json2csv built-in transforms. A transform is a function that receives a data recod and returns a transformed record. Transforms are executed in order before converting the data record into a CSV row.",
-  "keywords": [ "json", "to", "csv", "export", "convert", "parse"],
-  "type": "module",
-  "main": "src/index.js",
-  "exports": {
-    "./*": "./src/*.js",
-    ".": "./src/index.js"
-  },
-  "scripts": {
-    "lint": "eslint src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "keywords": [
+    "json",
+    "to",
+    "csv",
+    "export",
+    "convert",
+    "parse"
+  ],
+  "homepage": "http://juanjodiaz.github.io/json2csv",
+  "bugs": {
+    "url": "https://github.com/juanjoDiaz/json2csv/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/juanjoDiaz/json2csv.git"
   },
+  "license": "MIT",
   "author": {
     "name": "Juanjo Díaz",
     "email": "juanjo.diazmo@gmail.com"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/juanjoDiaz/json2csv/issues"
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.js",
+    ".": "./src/index.js"
   },
-  "homepage": "http://juanjodiaz.github.io/json2csv",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "lodash.get": "^4.4.2"
   }

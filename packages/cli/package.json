@@ -2,30 +2,37 @@
   "name": "@json2csv/cli",
   "version": "6.0.0",
   "description": "Command Line Interface to convert JSON to CSV.",
-  "keywords": [ "json", "to", "csv", "export", "convert", "parse"],
+  "keywords": [
+    "json",
+    "to",
+    "csv",
+    "export",
+    "convert",
+    "parse"
+  ],
+  "homepage": "http://juanjodiaz.github.io/json2csv",
+  "bugs": {
+    "url": "https://github.com/juanjoDiaz/json2csv/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanjoDiaz/json2csv.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Juanjo Díaz",
+    "email": "juanjo.diazmo@gmail.com"
+  },
   "type": "module",
   "bin": {
     "json2csv": "./bin/json2csv.js"
   },
   "scripts": {
     "lint": "eslint bin test",
-    "test:raw": "node test",
     "test": "npm run test:raw | tap-spec",
-    "test-with-coverage": "c8 --reporter=text npm test"
+    "test-with-coverage": "c8 --reporter=text npm test",
+    "test:raw": "node test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/juanjoDiaz/json2csv.git"
-  },
-  "author": {
-    "name": "Juanjo Díaz",
-    "email": "juanjo.diazmo@gmail.com"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/juanjoDiaz/json2csv/issues"
-  },
-  "homepage": "http://juanjodiaz.github.io/json2csv",
   "dependencies": {
     "commander": "^9.3.0"
   }

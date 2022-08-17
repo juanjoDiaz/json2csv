@@ -2,32 +2,39 @@
   "name": "@json2csv/parsers",
   "version": "6.0.0",
   "description": "Pure Javascript JSON to CSV converter.",
-  "keywords": [ "json", "to", "csv", "export", "convert", "parse"],
-  "type": "module",
-  "main": "src/index.js",
-  "exports": {
-    "./*": "./src/*.js",
-    ".": "./src/index.js"
-  },
-  "scripts": {
-    "lint": "eslint src test",
-    "test:raw": "node test",
-    "test": "npm run test:raw | tap-spec",
-    "test-with-coverage": "c8 --reporter=text npm test"
+  "keywords": [
+    "json",
+    "to",
+    "csv",
+    "export",
+    "convert",
+    "parse"
+  ],
+  "homepage": "http://juanjodiaz.github.io/json2csv",
+  "bugs": {
+    "url": "https://github.com/juanjoDiaz/json2csv/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/juanjoDiaz/json2csv.git"
   },
+  "license": "MIT",
   "author": {
     "name": "Juanjo Díaz",
     "email": "juanjo.diazmo@gmail.com"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/juanjoDiaz/json2csv/issues"
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.js",
+    ".": "./src/index.js"
   },
-  "homepage": "http://juanjodiaz.github.io/json2csv",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint src test",
+    "test": "npm run test:raw | tap-spec",
+    "test-with-coverage": "c8 --reporter=text npm test",
+    "test:raw": "node test"
+  },
   "dependencies": {
     "@streamparser/json": "^0.0.7",
     "lodash.get": "^4.4.2"

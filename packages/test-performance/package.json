@@ -10,26 +10,26 @@
     "convert",
     "parse"
   ],
-  "type": "module",
-  "main": "index.js",
-  "devDependencies": {
-    "0x": "^5.3.1",
-    "benchmark": "^2.1.4"
-  },
-  "scripts": {
-    "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "benchmark": "cd benchmarks && node",
-    "flamegraph": "0x --output-dir flamegraphs/results --open flamegraphs/flamegraph.js"
+  "homepage": "http://juanjodiaz.github.io/json2csv",
+  "bugs": {
+    "url": "https://github.com/juanjoDiaz/json2csv/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/juanjoDiaz/json2csv.git"
   },
-  "author": "",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/juanjoDiaz/json2csv/issues"
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "benchmark": "cd benchmarks && node",
+    "flamegraph": "0x --output-dir flamegraphs/results --open flamegraphs/flamegraph.js",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "http://juanjodiaz.github.io/json2csv",
+  "devDependencies": {
+    "0x": "^5.3.1",
+    "benchmark": "^2.1.4"
+  }
 }
