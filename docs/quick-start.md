@@ -1,16 +1,16 @@
 # Quick start
 
-## Types of JSON2CSV parsers
+## Types of JSON2CSV plainjs
 
-json2csv parsers are offered in vorious flavours:
+json2csv plainjs are offered in vorious flavours:
 
-* **[Parser](parsers/parser.md):** Pure Javascript synchronous parser. High-performant and runs both node.js and the browser. It´s the fastes but loads both the JSON and the resulting CSV in memory, and block the event loop while processing. Not recommended unless the JSON data is small.
-* **[Stream Parser](parsers/stream-parser.md):** Pure Javascript stream parser. High-performant and runs both node.js and the browser. It keeps a consistent memory footprint and doesn't block the event loop. It's the base of all other parsers. Recommended to build your own parser.
-* **[Node Transform](parsers/node-transform.md):** Wraps the `Stream Parser` in a Node.js Transform Stream. Recommended for Node.js users using stream.
-* **[Node Async Parser](parsers/node-async-parser.md):** Wraps the `Node Transform` to offer a friendly promise-based API similar to the synchronous `Parser`. Recommended for Node.js users that want a higher abstraction level.
-* **[WHATWG Transform Stream](parsers/whatwg-transform-stream.md):** Wraps the `Stream Parser` in a WHATWG Transform Stream. Recommended for browser users using web streams.
-* **[WHATWG Async Parser](parsers/whatwg-async-parser.md):** Wraps the `WHATWG Transform Stream` to offer a friendly promise-based API similar to the synchronous `Parser`. Recommended for browser users that want a higher abstraction level.
-* **[CLI](parsers/cli.md):** Makes the node.js interfaces accesible through the command line. Recommended from CLI (sh/bash/zsh/...) users and CLI scripts.
+* **[Parser](plainjs/parser.md):** Pure Javascript synchronous parser. High-performant and runs both node.js and the browser. It´s the fastes but loads both the JSON and the resulting CSV in memory, and block the event loop while processing. Not recommended unless the JSON data is small.
+* **[Stream Parser](plainjs/stream-parser.md):** Pure Javascript stream parser. High-performant and runs both node.js and the browser. It keeps a consistent memory footprint and doesn't block the event loop. It's the base of all other plainjs. Recommended to build your own parser.
+* **[Node Transform](plainjs/node-transform.md):** Wraps the `Stream Parser` in a Node.js Transform Stream. Recommended for Node.js users using stream.
+* **[Node Async Parser](plainjs/node-async-parser.md):** Wraps the `Node Transform` to offer a friendly promise-based API similar to the synchronous `Parser`. Recommended for Node.js users that want a higher abstraction level.
+* **[WHATWG Transform Stream](plainjs/whatwg-transform-stream.md):** Wraps the `Stream Parser` in a WHATWG Transform Stream. Recommended for browser users using web streams.
+* **[WHATWG Async Parser](plainjs/whatwg-async-parser.md):** Wraps the `WHATWG Transform Stream` to offer a friendly promise-based API similar to the synchronous `Parser`. Recommended for browser users that want a higher abstraction level.
+* **[CLI](plainjs/cli.md):** Makes the node.js interfaces accesible through the command line. Recommended from CLI (sh/bash/zsh/...) users and CLI scripts.
 
 ## Basic usage
 
@@ -27,13 +27,13 @@ This loads the entire JSON in memory and do the whole processing in-memory while
 #### Installation
 
 ```bash
-$ npm install --save @json2csv/parsers
+$ npm install --save @json2csv/plainjs
 ```
 
 #### Usage
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 
 try {
   const parser = new Parser();
@@ -57,13 +57,13 @@ The streaming API support multiple callbacks to get the resulting CSV, errors, e
 #### Installation
 
 ```bash
-$ npm install --save @json2csv/parsers
+$ npm install --save @json2csv/plainjs
 ```
 
 #### Usage
 
 ```js
-import { StreamParser } from '@json2csv/parsers';
+import { StreamParser } from '@json2csv/plainjs';
 
 const parser = new StreamParser();
 

@@ -1,5 +1,5 @@
 import { Parser as LegacyParser } from 'json2csv';
-import { Parser, StreamParser } from '@json2csv/parsers';
+import { Parser, StreamParser } from '@json2csv/plainjs';
 import stringFormatter from '@json2csv/formatters/string';
 // import Papa from 'papaparse'
 // import json2csv2 from 'json-2-csv';

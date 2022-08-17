@@ -129,7 +129,7 @@ See [@streamparser/json](https://github.com/juanjoDiaz/streamparser-json#bufferi
 
 ### Complete Documentation
 
-See https://juanjodiaz.github.io/json2csv/#/parsers/node-transform.
+See [https://juanjodiaz.github.io/json2csv/#/parsers/node-transform](https://juanjodiaz.github.io/json2csv/#/parsers/node-transform).
 
 ## Node Async Parser
 
@@ -181,7 +181,7 @@ See [@streamparser/json](https://github.com/juanjoDiaz/streamparser-json#bufferi
 
 ### Complete Documentation
 
-See [https://juanjodiaz.github.io/json2csv/#/parsers/node-async-parser](https://juanjodiaz.github.io/json2csv/#/parsers/node-async-parser).
+See [https://juanjodiaz.github.io/json2csv/#/plainjs/node-async-parser](https://juanjodiaz.github.io/json2csv/#/plainjs/node-async-parser).
 
 ## License
 

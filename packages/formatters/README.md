@@ -240,7 +240,7 @@ Formatters are configured in the `formatters` option when creating a parser.
 ### Programmatic APIs
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 import { number: numberFormatter } from '@json2csv/formatters';
 import { fixedLengthStringFormatter } from './custom-formatters';
 

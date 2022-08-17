@@ -28,7 +28,7 @@
     "packages/cli",
     "packages/formatters",
     "packages/node",
-    "packages/parsers",
+    "packages/plainjs",
     "packages/test-helpers",
     "packages/transforms",
     "packages/whatwg",
@@ -39,7 +39,7 @@
     "docs:preview": "docsify serve docs",
     "lint": "npm run lint -ws",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run test:raw -w @json2csv/cli -w @json2csv/parsers -w @json2csv/node -w @json2csv/whatwg | tap-spec",
+    "test": "npm run test:raw -w @json2csv/cli -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg | tap-spec",
     "test-with-coverage": "c8 --include 'packages/*/src' --include 'packages/*/bin' --reporter=text --reporter=lcov npm test"
   },
   "devDependencies": {

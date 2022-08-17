@@ -5,13 +5,13 @@
 
 - Parsers
 
-  - [Parser](parsers/parser.md)
-  - [Stream Parser](parsers/stream-parser.md)
-  - [Node Transform](parsers/node-transform.md)
-  - [Node Async Parser](parsers/node-async-parser.md)
-  - [WHATWG Transform Stream](parsers/whatwg-transform-stream.md)
-  - [WHATWG Async Parser](parsers/whatwg-async-parser.md)
-  - [CLI](parsers/cli.md)
+  - [Parser](plainjs/parser.md)
+  - [Stream Parser](plainjs/stream-parser.md)
+  - [Node Transform](plainjs/node-transform.md)
+  - [Node Async Parser](plainjs/node-async-parser.md)
+  - [WHATWG Transform Stream](plainjs/whatwg-transform-stream.md)
+  - [WHATWG Async Parser](plainjs/whatwg-async-parser.md)
+  - [CLI](plainjs/cli.md)
 
 - Advanced Options
 

@@ -14,7 +14,7 @@ import {
   string as stringFormatter,
   stringExcel as stringExcelFormatter,
 } from '@json2csv/formatters';
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 import { Transform as Json2csvTransform } from '@json2csv/node';
 
 import pkg from '../package.json' assert { type: 'json' };

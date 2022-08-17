@@ -1329,10 +1329,10 @@
     }
   });
 
-  // packages/parsers/src/StreamParser.js
+  // packages/plainjs/src/StreamParser.js
   var import_json = __toESM(require_umd(), 1);
 
-  // packages/parsers/src/BaseParser.js
+  // packages/plainjs/src/BaseParser.js
   var import_lodash = __toESM(require_lodash(), 1);
 
   // packages/formatters/src/default.js
@@ -1390,7 +1390,7 @@
     };
   }
 
-  // packages/parsers/src/utils.js
+  // packages/plainjs/src/utils.js
   function getProp(obj, path, defaultValue) {
     const value = obj[path];
     return value === void 0 ? defaultValue : value;
@@ -1417,7 +1417,7 @@
     }, "");
   }
 
-  // packages/parsers/src/BaseParser.js
+  // packages/plainjs/src/BaseParser.js
   var JSON2CSVBase = class {
     constructor(opts) {
       this.opts = this.preprocessOpts(opts);
@@ -1507,7 +1507,7 @@
     }
   };
 
-  // packages/parsers/src/StreamParser.js
+  // packages/plainjs/src/StreamParser.js
   var JSON2CSVStreamParser = class extends JSON2CSVBase {
     constructor(opts, asyncOpts) {
       super(opts);

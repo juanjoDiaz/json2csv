@@ -1,4 +1,4 @@
-# @json2csv/parsers
+# @json2csv/plainjs
 
 [![npm version](https://badge.fury.io/js/json2csv.svg)](http://badge.fury.io/js/json2csv)
 [![Node.js CI](https://github.com/juanjoDiaz/json2csv/actions/workflows/on-push.yaml/badge.svg)](https://github.com/juanjoDiaz/json2csv/actions/workflows/on-push.yaml)
@@ -7,7 +7,7 @@
 Fast and highly configurable JSON to CSV converter.
 It fully support conversion following the [RFC4180](https://datatracker.ietf.org/doc/html/rfc4180) specification as well as other similar text delimited formats as TSV.
 
-`@json2csv/parsers` exposes plain JavasScript modules of `json2csv` which can be used in Node.js, the browser or Deno.
+`@json2csv/plainjs` exposes plain JavasScript modules of `json2csv` which can be used in Node.js, the browser or Deno.
 
 ## Requirements
 
@@ -34,7 +34,7 @@ It fully support conversion following the [RFC4180](https://datatracker.ietf.org
 You can install json2csv as a dependency using NPM.
 
 ```bash
-$ npm install --save @json2csv/parsers
+$ npm install --save @json2csv/plainjs
 ```
 
 ### **Yarn**
@@ -42,7 +42,7 @@ $ npm install --save @json2csv/parsers
 You can install json2csv as a dependency using Yarn.
 
 ```bash
-$ yarn add --save @json2csv/parsers
+$ yarn add --save @json2csv/plainjs
 ```
 
 ### **CDN**
@@ -54,8 +54,8 @@ You can import the latest version:
 
 ```html
 <script type="module">
-  import { Parser } from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers/src/Parser.js';
-  import { StreamParser } from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers/src/StreamParser.js';
+  import { Parser } from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs/src/Parser.js';
+  import { StreamParser } from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs/src/StreamParser.js';
 </script>
 ```
 
@@ -63,8 +63,8 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import { Parser } from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers@6.0.0/src/Parser.js';
-  import { StreamParser } from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers@6.0.0/src/StreamParser.js';
+  import { Parser } from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs@6.0.0/src/Parser.js';
+  import { StreamParser } from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs@6.0.0/src/StreamParser.js';
 </script>
 ```
 
@@ -77,7 +77,7 @@ This loads the entire JSON in memory and do the whole processing in-memory while
 ### Usage
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 
 try {
   const opts = {};
@@ -105,7 +105,7 @@ try {
 
 ### Complete Documentation
 
-See https://juanjodiaz.github.io/json2csv/#/parsers/stream-parser.
+See https://juanjodiaz.github.io/json2csv/#/plainjs/stream-parser.
 
 ## Stream Parser
 
@@ -120,7 +120,7 @@ The streaming API support multiple callbacks to get the resulting CSV, errors, e
 ### Usage
 
 ```js
-import { StreamParser } from '@json2csv/parsers';
+import { StreamParser } from '@json2csv/plainjs';
 
 const opts = {};
 const asyncOpts = {};

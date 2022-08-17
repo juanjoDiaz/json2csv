@@ -1,5 +1,5 @@
 import Benchmark from 'benchmark';
-import { fastJoin } from '@json2csv/parsers/utils';
+import { fastJoin } from '@json2csv/plainjs/utils';
 
 function test(sampleSize) {
   const data = Array(sampleSize).fill((() => 'blue')());

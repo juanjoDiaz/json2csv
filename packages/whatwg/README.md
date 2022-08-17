@@ -141,7 +141,7 @@ See [Readable Strategy in MDN](https://developer.mozilla.org/en-US/docs/Web/API/
 
 ### Complete Documentation
 
-See https://juanjodiaz.github.io/json2csv/#/parsers/whatwg-transform-stream.
+See [https://juanjodiaz.github.io/json2csv/#/parsers/whatwg-transform-stream](https://juanjodiaz.github.io/json2csv/#/parsers/whatwg-transform-stream).
 
 ## WHATWG Async Parser
 

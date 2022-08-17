@@ -1,5 +1,5 @@
 import Benchmark from 'benchmark';
-import { flattenReducer } from '@json2csv/parsers/utils';
+import { flattenReducer } from '@json2csv/plainjs/utils';
 
 function test(sampleSize) {
   const data = Array(sampleSize).fill((() => ['blue', 'red', 'green'])());

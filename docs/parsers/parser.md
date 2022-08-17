@@ -14,7 +14,7 @@ This loads the entire JSON in memory and do the whole processing in-memory while
 You can install json2csv as a dependency using NPM.
 
 ```bash
-$ npm install --save @json2csv/parsers
+$ npm install --save @json2csv/plainjs
 ```
 
 ### **Yarn**
@@ -22,7 +22,7 @@ $ npm install --save @json2csv/parsers
 You can install json2csv as a dependency using Yarn.
 
 ```bash
-$ yarn add --save @json2csv/parsers
+$ yarn add --save @json2csv/plainjs
 ```
 
 ### **CDN**
@@ -34,7 +34,7 @@ You can import the latest version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers/src/Parser.js';
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs/src/Parser.js';
 </script>
 ```
 
@@ -42,7 +42,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers@6.0.0/src/Parser.js';
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs@6.0.0/src/Parser.js';
 </script>
 ```
 
@@ -51,7 +51,7 @@ You can also select a specific version:
 ## Usage
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 
 try {
   const opts = {};

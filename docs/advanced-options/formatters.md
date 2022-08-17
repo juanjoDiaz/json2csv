@@ -242,7 +242,7 @@ Formatters are configured in the `formatters` option when creating a parser.
 #### **Parser**
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 import { number: numberFormatter } from '@json2csv/formatters';
 import { fixedLengthStringFormatter } from './custom-formatters';
 
@@ -264,7 +264,7 @@ try {
 #### **Stream Parser**
 
 ```js
-import { StreamParser } from '@json2csv/parsers';
+import { StreamParser } from '@json2csv/plainjs';
 import { number: numberFormatter } from '@json2csv/formatters';
 import { fixedLengthStringFormatter } from './custom-formatters';
 

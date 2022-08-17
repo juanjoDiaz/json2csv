@@ -13,7 +13,7 @@ jobs:
           - '@json2csv/cli'
           - '@json2csv/formatters'
           - '@json2csv/node'
-          - '@json2csv/parsers'
+          - '@json2csv/plainjs'
           - '@json2csv/transforms'
           - '@json2csv/whatwg'
 

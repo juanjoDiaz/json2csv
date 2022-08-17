@@ -1,6 +1,6 @@
 import Benchmark from 'benchmark';
 import { Parser as LegacyParser } from 'json2csv';
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 import { string as stringFormatter } from '@json2csv/formatters';
 import Papa from 'papaparse';
 import json2csv2 from 'json-2-csv';

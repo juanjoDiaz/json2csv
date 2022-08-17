@@ -1,6 +1,6 @@
 /* global TransformStream */
 
-import { StreamParser } from '@json2csv/parsers';
+import { StreamParser } from '@json2csv/plainjs';
 
 class Transformer extends StreamParser {
   constructor(opts, asyncOpts) {

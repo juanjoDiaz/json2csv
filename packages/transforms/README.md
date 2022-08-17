@@ -29,7 +29,7 @@ The transform needs to be instantiated and takes an options object as arguments 
 ###### Programmatic APIs
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 import { unwind } from '@json2csv/transforms';
 
 const data = [
@@ -126,7 +126,7 @@ They are applied in the order in which they are declared.
 ### Programmatic APIs
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 import { unwind, flatten } from '@json2csv/transforms';
 import { addCounter } from './custom-transforms';
 
@@ -160,7 +160,7 @@ $ json2csv -i input.json \
 
 ### Complete Documentation
 
-See [https://juanjodiaz.github.io/json2csv/#/parsers/whatwg-async-parser](https://juanjodiaz.github.io/json2csv/#/parsers/whatwg-async-parser).
+See [https://juanjodiaz.github.io/json2csv/#/advanced-options/transforms](https://juanjodiaz.github.io/json2csv/#/advanced-options/transforms).
 
 ## License
 

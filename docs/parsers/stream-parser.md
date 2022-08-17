@@ -18,7 +18,7 @@ The streaming API support multiple callbacks to get the resulting CSV, errors, e
 You can install json2csv as a dependency using NPM.
 
 ```bash
-$ npm install --save @json2csv/parsers
+$ npm install --save @json2csv/plainjs
 ```
 
 ### **Yarn**
@@ -26,7 +26,7 @@ $ npm install --save @json2csv/parsers
 You can install json2csv as a dependency using Yarn.
 
 ```bash
-$ yarn add --save @json2csv/parsers
+$ yarn add --save @json2csv/plainjs
 ```
 
 ### **CDN**
@@ -38,7 +38,7 @@ You can import the latest version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers/src/StreamParser.js';
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs/src/StreamParser.js';
 </script>
 ```
 
@@ -46,7 +46,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/parsers@6.0.0/src/StreamParser.js';
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs@6.0.0/src/StreamParser.js';
 </script>
 ```
 
@@ -55,7 +55,7 @@ You can also select a specific version:
 ## Usage
 
 ```js
-import { StreamParser } from '@json2csv/parsers';
+import { StreamParser } from '@json2csv/plainjs';
 
 const opts = {};
 const asyncOpts = {};

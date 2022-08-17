@@ -24,8 +24,8 @@ Fast and highly configurable JSON to CSV converter.
 
 json2csv parsers are offered in vorious flavours:
 
-* **[Parser](packages/parsers/README.md#parser):** Pure Javascript synchronous parser. High-performant and runs both node.js and the browser. It´s the fastes but loads both the JSON and the resulting CSV in memory, and block the event loop while processing. Not recommended unless the JSON data is small.
-* **[Stream Parser](packages/parsers/README.md#stream-parser):** Pure Javascript stream parser. High-performant and runs both node.js and the browser. It keeps a consistent memory footprint and doesn't block the event loop. It's the base of all other parsers. Recommended to build your own parser.
+* **[Parser](packages/plainjs/README.md#parser):** Pure Javascript synchronous parser. High-performant and runs both node.js and the browser. It´s the fastes but loads both the JSON and the resulting CSV in memory, and block the event loop while processing. Not recommended unless the JSON data is small.
+* **[Stream Parser](packages/plainjs/README.md#stream-parser):** Pure Javascript stream parser. High-performant and runs both node.js and the browser. It keeps a consistent memory footprint and doesn't block the event loop. It's the base of all other parsers. Recommended to build your own parser.
 * **[Node Transform](packages/node/README.md#node-transform):** Wraps the `Stream Parser` in a Node.js Transform Stream. Recommended for Node.js users using stream.
 * **[Node Async Parser](packages/node/README.md#node-async-parser):** Wraps the `Node Transform` to offer a friendly promise-based API similar to the synchronous `Parser`. Recommended for Node.js users that want a higher abstraction level.
 * **[WHATWG Transform Stream](packages/whatwg/README.md#whatwg-transform-stream):** Wraps the `Stream Parser` in a WHATWG Transform Stream. Recommended for browser users using web streams.
@@ -34,7 +34,7 @@ json2csv parsers are offered in vorious flavours:
 
 ## Documentation
 
-See https://juanjodiaz.github.io/json2csv/.
+See [https://juanjodiaz.github.io/json2csv](https://juanjodiaz.github.io/json2csv).
 
 ## License
 

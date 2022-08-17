@@ -1,6 +1,6 @@
 import os from 'os';
 import { Transform } from 'stream';
-import { StreamParser } from '@json2csv/parsers';
+import { StreamParser } from '@json2csv/plainjs';
 import { fakeInherit } from './utils.js';
 
 export default class JSON2CSVNodeTransform extends Transform {

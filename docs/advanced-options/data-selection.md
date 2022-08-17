@@ -45,7 +45,7 @@ The fields option is an array representing all the columns that will result in t
 #### **Parser**
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 
 const data = [
   { "carModel": "Audi", "price": 0, "color": "blue" },
@@ -63,7 +63,7 @@ console.log(csv);
 #### **Stream Parser**
 
 ```js
-import { StreamParser } from '@json2csv/parsers';
+import { StreamParser } from '@json2csv/plainjs';
 
 const data = [
   { "carModel": "Audi", "price": 0, "color": "blue" },
@@ -195,7 +195,7 @@ $ json2csv -i data.json -f carModel,color
 #### **Parser**
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 
 const data = [
   { "carModel": "Audi", "price": 0, "color": "blue" },
@@ -217,7 +217,7 @@ console.log(csv);
 #### **Stream Parser**
 
 ```js
-import { StreamParser } from '@json2csv/parsers';
+import { StreamParser } from '@json2csv/plainjs';
 
 const data = [
   { "carModel": "Audi", "price": 0, "color": "blue" },
@@ -367,7 +367,7 @@ $ json2csv -i data.json -f carModel,color
 #### **Parser**
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 
 const data = [
   { "carModel": "Audi", "price": 0, "color": "blue" },
@@ -407,7 +407,7 @@ console.log(csv);
 #### **Stream Parser**
 
 ```js
-import { StreamParser } from '@json2csv/parsers';
+import { StreamParser } from '@json2csv/plainjs';
 
 const data = [
   { "carModel": "Audi", "price": 0, "color": "blue" },

@@ -31,7 +31,7 @@ The transform needs to be instantiated and takes an options object as arguments 
 #### **Parser**
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 import { unwind } from '@json2csv/transforms';
 
 const data = [
@@ -59,7 +59,7 @@ try {
 #### **Stream Parser**
 
 ```js
-import { StreamParser } from '@json2csv/parsers';
+import { StreamParser } from '@json2csv/plainjs';
 import { unwind } from '@json2csv/transforms';
 
 const data = [
@@ -230,7 +230,7 @@ They are applied in the order in which they are declared.
 #### **Parser**
 
 ```js
-import { Parser } from '@json2csv/parsers';
+import { Parser } from '@json2csv/plainjs';
 import { unwind, flatten } from '@json2csv/transforms';
 import { addCounter } from './custom-transforms';
 
@@ -253,7 +253,7 @@ try {
 #### **Stream Parser**
 
 ```js
-import { StreamParser } from '@json2csv/parsers';
+import { StreamParser } from '@json2csv/plainjs';
 import { unwind, flatten } from '@json2csv/transforms';
 import { addCounter } from './custom-transforms';
 
