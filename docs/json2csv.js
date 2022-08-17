@@ -16,7 +16,10 @@
     }
     return to;
   };
-  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target, mod));
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
 
   // node_modules/@streamparser/json/dist/umd/index.js
   var require_umd = __commonJS({
@@ -817,7 +820,12 @@
               delete this.value[this.key];
             }
             if (emit) {
-              this.onValue(value, this.key, this.value, this.stack);
+              this.onValue(
+                value,
+                this.key,
+                this.value,
+                this.stack
+              );
             }
             if (this.stack.length === 0) {
               if (this.separator) {
@@ -1069,7 +1077,9 @@
       var funcToString = funcProto.toString;
       var hasOwnProperty = objectProto.hasOwnProperty;
       var objectToString = objectProto.toString;
-      var reIsNative = RegExp("^" + funcToString.call(hasOwnProperty).replace(reRegExpChar, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$");
+      var reIsNative = RegExp(
+        "^" + funcToString.call(hasOwnProperty).replace(reRegExpChar, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$"
+      );
       var Symbol = root.Symbol;
       var splice = arrayProto.splice;
       var Map = getNative(root, "Map");
@@ -1425,7 +1435,10 @@
     preprocessOpts(opts) {
       const processedOpts = Object.assign({}, opts);
       if (processedOpts.fields) {
-        processedOpts.fields = this.preprocessFieldsInfo(processedOpts.fields, processedOpts.defaultValue);
+        processedOpts.fields = this.preprocessFieldsInfo(
+          processedOpts.fields,
+          processedOpts.defaultValue
+        );
       }
       processedOpts.transforms = processedOpts.transforms || [];
       const stringFormatter2 = processedOpts.formatters && processedOpts.formatters["string"] || stringFormatter();
@@ -1480,20 +1493,32 @@
             };
           }
         }
-        throw new Error("Invalid field info option. " + JSON.stringify(fieldInfo));
+        throw new Error(
+          "Invalid field info option. " + JSON.stringify(fieldInfo)
+        );
       });
     }
     getHeader() {
-      return fastJoin(this.opts.fields.map((fieldInfo) => this.opts.formatters.header(fieldInfo.label)), this.opts.delimiter);
+      return fastJoin(
+        this.opts.fields.map(
+          (fieldInfo) => this.opts.formatters.header(fieldInfo.label)
+        ),
+        this.opts.delimiter
+      );
     }
     preprocessRow(row) {
-      return this.opts.transforms.reduce((rows, transform) => rows.map((row2) => transform(row2)).reduce(flattenReducer, []), [row]);
+      return this.opts.transforms.reduce(
+        (rows, transform) => rows.map((row2) => transform(row2)).reduce(flattenReducer, []),
+        [row]
+      );
     }
     processRow(row) {
       if (!row) {
         return void 0;
       }
-      const processedRow = this.opts.fields.map((fieldInfo) => this.processCell(row, fieldInfo));
+      const processedRow = this.opts.fields.map(
+        (fieldInfo) => this.processCell(row, fieldInfo)
+      );
       if (!this.opts.includeEmptyRows && processedRow.every((field) => field === "")) {
         return void 0;
       }
@@ -1580,7 +1605,11 @@
       };
       tokenizer.onError = () => this.onError(new Error("Data should be a JSON object or array"));
       tokenizer.onEnd = () => {
-        this.onError(new Error('Data should not be empty or the "fields" option should be included'));
+        this.onError(
+          new Error(
+            'Data should not be empty or the "fields" option should be included'
+          )
+        );
         this.onEnd();
       };
       return tokenizer;
@@ -1596,7 +1625,11 @@
       if (this._hasWritten)
         return;
       if (!this.opts.fields) {
-        this.onError(new Error('Data should not be empty or the "fields" option should be included'));
+        this.onError(
+          new Error(
+            'Data should not be empty or the "fields" option should be included'
+          )
+        );
         return;
       }
       this.pushHeader();
@@ -1615,7 +1648,9 @@
     pushLine(data) {
       const processedData = this.preprocessRow(data);
       if (!this._hasWritten) {
-        this.opts.fields = this.preprocessFieldsInfo(this.opts.fields || Object.keys(processedData[0]));
+        this.opts.fields = this.preprocessFieldsInfo(
+          this.opts.fields || Object.keys(processedData[0])
+        );
         this.pushHeader(this.opts.fields);
       }
       processedData.forEach((row) => {
@@ -1685,10 +1720,13 @@
     if (pathArray.length === 1) {
       return Object.keys(obj).filter((prop) => prop !== key).reduce((acc, prop) => ({ ...acc, [prop]: obj[prop] }), {});
     }
-    return Object.keys(obj).reduce((acc, prop) => ({
-      ...acc,
-      [prop]: prop !== key ? obj[prop] : unsetProp(obj[key], restPath)
-    }), {});
+    return Object.keys(obj).reduce(
+      (acc, prop) => ({
+        ...acc,
+        [prop]: prop !== key ? obj[prop] : unsetProp(obj[key], restPath)
+      }),
+      {}
+    );
   }
   function flattenReducer2(acc, arr) {
     try {
@@ -1705,10 +1743,14 @@
       const newPath = currentPath ? `${currentPath}.${key}` : key;
       const value = obj[key];
       if (typeof value === "object" && value !== null && !Array.isArray(value) && Object.prototype.toString.call(value.toJSON) !== "[object Function]" && Object.keys(value).length) {
-        unwindablePaths = unwindablePaths.concat(getUnwindablePaths(value, newPath));
+        unwindablePaths = unwindablePaths.concat(
+          getUnwindablePaths(value, newPath)
+        );
       } else if (Array.isArray(value)) {
         unwindablePaths.push(newPath);
-        unwindablePaths = unwindablePaths.concat(value.map((arrObj) => getUnwindablePaths(arrObj, newPath)).reduce(flattenReducer2, []).filter((item, index, arr) => arr.indexOf(item) !== index));
+        unwindablePaths = unwindablePaths.concat(
+          value.map((arrObj) => getUnwindablePaths(arrObj, newPath)).reduce(flattenReducer2, []).filter((item, index, arr) => arr.indexOf(item) !== index)
+        );
       }
       return unwindablePaths;
     }, []);
@@ -1727,7 +1769,9 @@
         const [firstRow, ...restRows] = unwindArray;
         return [
           setProp(row, unwindPath, firstRow),
-          ...restRows.map((unwindRow) => setProp(baseNewRow, unwindPath, unwindRow))
+          ...restRows.map(
+            (unwindRow) => setProp(baseNewRow, unwindPath, unwindRow)
+          )
         ];
       });
     }
