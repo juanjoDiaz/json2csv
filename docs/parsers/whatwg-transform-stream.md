@@ -1,6 +1,6 @@
 # WHATWG Transform Stream
 
-For browser users, the Streaming API is wrapped in a WHATWG Transform Stream. This approach ensures a consistent memory footprint and avoid blocking JavaScript's event loop.
+For browser users, `WHATWGTransformStream` Streaming API is wrapped in a WHATWG Transform Stream. This approach ensures a consistent memory footprint and avoids blocking JavaScript's event loop.
 
 The async API takes a second options arguments that is directly passed to the underlying streams accepts the same options as the `Stream Parser`. It also support a third and fourth options equivalent to the `writableStrategy` and 
 `readableStrategy` of a [WHATWG Transform Stream](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream/TransformStream) respectively.
@@ -13,7 +13,7 @@ This Transform uses the `StreamParser` under the hood and support similar events
 
 ### **NPM**
 
-You can install json2csv as a dependency using NPM.
+You can install json2csv `WHATWGTransformStream` as a dependency using NPM.
 
 ```bash
 $ npm install --save @json2csv/whatwg
@@ -21,7 +21,7 @@ $ npm install --save @json2csv/whatwg
 
 ### **Yarn**
 
-You can install json2csv as a dependency using Yarn.
+You can install json2csv `WHATWGTransformStream` as a dependency using Yarn.
 
 ```bash
 $ yarn add --save @json2csv/whatwg
@@ -29,8 +29,8 @@ $ yarn add --save @json2csv/whatwg
 
 ### **CDN**
 
-json2csv is package as ES6 modules.
-If your browser supports modules, you can loading json2csv directly on the browser from the CDN.
+json2csv `WHATWGTransformStream` is packaged as an ES6 modules.
+If your browser supports modules, you can load json2csv `WHATWGTransformStream` directly on the browser from the CDN.
 
 You can import the latest version:
 

@@ -24,6 +24,7 @@
     "name": "Juanjo Díaz",
     "email": "juanjo.diazmo@gmail.com"
   },
+  "type": "module",
   "workspaces": [
     "packages/cli",
     "packages/formatters",
@@ -35,6 +36,8 @@
     "packages/test-performance"
   ],
   "scripts": {
+    "build": "node build.js",
+    "prepublishOnly": "npm run build",
     "docs:prebuild": "esbuild docs/docs-export.js --bundle --outfile=docs/json2csv.js",
     "docs:preview": "docsify serve docs",
     "lint": "npm run lint -ws",
@@ -55,7 +58,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.7.1",
     "tap-spec": "^5.0.0",
-    "tape": "^5.2.2"
+    "tape": "^5.2.2",
+    "tiny-glob": "^0.2.9"
   },
   "engines": {
     "node": ">=14.17.0",

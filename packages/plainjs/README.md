@@ -47,8 +47,8 @@ $ yarn add --save @json2csv/plainjs
 
 ### **CDN**
 
-json2csv is package as ES6 modules.
-If your browser supports modules, you can loading json2csv directly on the browser from the CDN.
+json2csv plainjs modules is packaged as an ES6 modules.
+If your browser supports modules, you can load json2csv plainjs modules directly on the browser from the CDN.
 
 You can import the latest version:
 

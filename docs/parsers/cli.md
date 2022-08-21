@@ -8,7 +8,7 @@
 
 ### **NPM**
 
-You can install json2csv as a dependency using NPM.
+You can install json2csv `CLI` as a dependency using NPM.
 
 It's advisable to install it as a global dependency so it can be called from anywhere.
 
@@ -18,7 +18,7 @@ $ npm install -g @json2csv/cli
 
 ### **Yarn**
 
-You can install json2csv using Yarn.
+You can install json2csv `CLI` using Yarn.
 
 It's advisable to install it as a global dependency so it can be called from anywhere.
 

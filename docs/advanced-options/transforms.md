@@ -1,16 +1,63 @@
 
 # Transforms
 
-A transform is a function to preprocess data before it is converted into CSV.
-Each transform receives each data record, performs some processing and returns a transformed record.
+A `transform` is a function to preprocess data before it is converted into CSV.
+Each `transform` receives each data record, performs some processing and returns a transformed record.
 
 ## Built-in transforms
 
 There is a number of built-in transform provided by this package.
 
+### Installation
+
+<!-- tabs:start -->
+
+### **NPM**
+
+You can install json2csv `transforms` as a dependency using NPM.
+
+```bash
+$ npm install --save @json2csv/transforms
+```
+
 ```js
 import { unwind, flatten } from '@json2csv/transforms';
 ```
+
+### **Yarn**
+
+You can install json2csv `transforms` as a dependency using Yarn.
+
+```bash
+$ yarn add --save @json2csv/transforms
+```
+
+```js
+import { unwind, flatten } from '@json2csv/transforms';
+```
+
+### **CDN**
+
+json2csv `transforms` are packaged as an ES6 modules.
+If your browser supports modules, you can load json2csv `transforms` directly on the browser from the CDN.
+
+You can import the latest version:
+
+```html
+<script type="module">
+  import unwind from 'https://cdn.jsdelivr.net/npm/@json2csv/transforms/src/unwind.js';
+</script>
+```
+
+You can also select a specific version:
+
+```html
+<script type="module">
+  import unwind from 'https://cdn.jsdelivr.net/npm/@json2csv/transforms@6.0.0/src/unwind.js';
+</script>
+```
+
+<!-- tabs:end -->
 
 ### Unwind
 

@@ -45,32 +45,9 @@ You can install json2csv as a dependency using Yarn.
 $ yarn add --save @json2csv/node
 ```
 
-### **CDN**
-
-json2csv is package as ES6 modules.
-If your browser supports modules, you can loading json2csv directly on the browser from the CDN.
-
-You can import the latest version:
-
-```html
-<script type="module">
-  import AsyncParser from 'https://cdn.jsdelivr.net/npm/@json2csv/node/src/AsyncParser.js';
-  import Transform from 'https://cdn.jsdelivr.net/npm/@json2csv/node/src/Transform.js';
-</script>
-```
-
-You can also select a specific version:
-
-```html
-<script type="module">
-  import AsyncParser from 'https://cdn.jsdelivr.net/npm/@json2csv/node@6.0.0/src/AsyncParser.js';
-  import Transform from 'https://cdn.jsdelivr.net/npm/@json2csv/node@6.0.0/src/Transform.js';
-</script>
-```
-
 ## Node Transform
 
-For Node.js users, the Streaming API is wrapped in a Node.js Stream Transform. This approach ensures a consistent memory footprint and avoid blocking JavaScript's event loop.
+For Node.js users, the Streaming API is wrapped in a Node.js Stream Transform. This approach ensures a consistent memory footprint and avoids blocking JavaScript's event loop.
 
 The async API takes a second options arguments that is directly passed to the underlying streams and accepts the same options as the standard [Node.js streams](https://nodejs.org/api/stream.html#stream_new_stream_duplex_options), plus the options supported by the `Stream Parser`.
 

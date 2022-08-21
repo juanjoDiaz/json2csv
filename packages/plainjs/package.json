@@ -36,7 +36,7 @@
     "test:raw": "node test"
   },
   "dependencies": {
-    "@streamparser/json": "^0.0.7",
+    "@streamparser/json": "^0.0.8",
     "lodash.get": "^4.4.2"
   }
 }

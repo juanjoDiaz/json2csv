@@ -11,7 +11,7 @@ To facilitate usage, `NodeAsyncParser` wraps `NodeTransform` exposing a single `
 
 ### **NPM**
 
-You can install json2csv as a dependency using NPM.
+You can install json2csv `NodeAsyncParser` as a dependency using NPM.
 
 ```bash
 $ npm install --save @json2csv/node
@@ -19,31 +19,10 @@ $ npm install --save @json2csv/node
 
 ### **Yarn**
 
-You can install json2csv as a dependency using Yarn.
+You can install json2csv `NodeAsyncParser` as a dependency using Yarn.
 
 ```bash
 $ yarn add --save @json2csv/node
-```
-
-### **CDN**
-
-json2csv is package as ES6 modules.
-If your browser supports modules, you can loading json2csv directly on the browser from the CDN.
-
-You can import the latest version:
-
-```html
-<script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/node/src/AsyncParser.js';
-</script>
-```
-
-You can also select a specific version:
-
-```html
-<script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/node@6.0.0/src/AsyncParser.js';
-</script>
 ```
 
 <!-- tabs:end -->

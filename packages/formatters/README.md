@@ -1,6 +1,6 @@
 # Formatters
 
-A formater is function a used by `json2csv` (in any of its flavours) to convert javascript values into plain text before adding it into the CSV as a cell.
+A formatter is function a used by `json2csv` (in any of its flavours) to convert javascript values into plain text before adding it into the CSV as a cell.
 Supported formatters are given by the types returned by `typeof`:
 * `undefined`
 * `boolean`

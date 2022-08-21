@@ -3,7 +3,7 @@
 
 The synchronous API has the downside of loading the entire JSON array in memory and blocking JavaScript's event loop while processing the data. This means that your server won't be able to process more request or your UI will become irresponsive while data is being processed. For those reasons, it is rarely a good reason to use it unless your data is very small or your application doesn't do anything else.
 
-The async parser processes the data as a it comes in so you don't need the entire input data set loaded in memory and you can avoid blocking the event loop for too long. Thus, it's better suited for large datasets or system with high concurrency.
+`StreamParser` processes the data as a it comes in so you don't need the entire input data set loaded in memory and you can avoid blocking the event loop for too long. Thus, it's better suited for large datasets or system with high concurrency.
 
 The streaming API takes a second options argument to configure `objectMode` and `ndjson` mode. These options also support fine-tunning the underlying [JSON parser](https://github.com/juanjoDiaz/streamparser-json).
 
@@ -15,7 +15,7 @@ The streaming API support multiple callbacks to get the resulting CSV, errors, e
 
 ### **NPM**
 
-You can install json2csv as a dependency using NPM.
+You can install json2csv `StreamParser` as a dependency using NPM.
 
 ```bash
 $ npm install --save @json2csv/plainjs
@@ -23,7 +23,7 @@ $ npm install --save @json2csv/plainjs
 
 ### **Yarn**
 
-You can install json2csv as a dependency using Yarn.
+You can install json2csv `StreamParser` as a dependency using Yarn.
 
 ```bash
 $ yarn add --save @json2csv/plainjs
@@ -31,8 +31,8 @@ $ yarn add --save @json2csv/plainjs
 
 ### **CDN**
 
-json2csv is package as ES6 modules.
-If your browser supports modules, you can loading json2csv directly on the browser from the CDN.
+json2csv `StreamParser` is packaged as an ES6 modules.
+If your browser supports modules, you can load json2csv `StreamParser` directly on the browser from the CDN.
 
 You can import the latest version:
 

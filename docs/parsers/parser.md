@@ -11,7 +11,7 @@ This loads the entire JSON in memory and do the whole processing in-memory while
 
 ### **NPM**
 
-You can install json2csv as a dependency using NPM.
+You can install json2csv `parser` as a dependency using NPM.
 
 ```bash
 $ npm install --save @json2csv/plainjs
@@ -19,7 +19,7 @@ $ npm install --save @json2csv/plainjs
 
 ### **Yarn**
 
-You can install json2csv as a dependency using Yarn.
+You can install json2csv `parser` as a dependency using Yarn.
 
 ```bash
 $ yarn add --save @json2csv/plainjs
@@ -27,8 +27,8 @@ $ yarn add --save @json2csv/plainjs
 
 ### **CDN**
 
-json2csv is package as ES6 modules.
-If your browser supports modules, you can loading json2csv directly on the browser from the CDN.
+json2csv `parser` is packaged as an ES6 modules.
+If your browser supports modules, you can load json2csv `parser` directly on the browser from the CDN.
 
 You can import the latest version:
 

@@ -47,8 +47,8 @@ $ yarn add --save @json2csv/whatwg
 
 ### **CDN**
 
-json2csv is package as ES6 modules.
-If your browser supports modules, you can loading json2csv directly on the browser from the CDN.
+json2csv WHATWG modules are packaged as ES6 modules.
+If your browser supports modules, you can load json2csv WHATWG modules directly on the browser from the CDN.
 
 You can import the latest version:
 
@@ -70,7 +70,7 @@ You can also select a specific version:
 
 ## WHATWG Transform Stream
 
-For browser users, the Streaming API is wrapped in a WHATWG Transform Stream. This approach ensures a consistent memory footprint and avoid blocking JavaScript's event loop.
+For browser users, the Streaming API is wrapped in a WHATWG Transform Stream. This approach ensures a consistent memory footprint and avoids blocking JavaScript's event loop.
 
 The async API takes a second options arguments that is directly passed to the underlying streams accepts the same options as the `Stream Parser`. It also support a third and fourth options equivalent to the `writableStrategy` and 
 `readableStrategy` of a [WHATWG Transform Stream](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream/TransformStream) respectively.

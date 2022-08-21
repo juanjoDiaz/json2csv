@@ -79,7 +79,7 @@ parser.onLine = (line) => console.log(line);
 
 #### **Node Transform**
 
-For Node.js users, the Streaming API is wrapped in a Node.js Stream Transform. This approach ensures a consistent memory footprint and avoid blocking JavaScript's event loop.
+For Node.js users, the Streaming API is wrapped in a Node.js Stream Transform. This approach ensures a consistent memory footprint and avoids blocking JavaScript's event loop.
 
 The async API takes a second options arguments that is directly passed to the underlying streams and accepts the same options as the standard [Node.js streams](https://nodejs.org/api/stream.html#stream_new_stream_duplex_options), plus the options supported by the `Stream Parser`.
 
@@ -133,7 +133,7 @@ const csv = await parser.parse(data).promise();
 
 #### **WHATWG Transform Stream**
 
-For browser users, the Streaming API is wrapped in a WHATWG Transform Stream. This approach ensures a consistent memory footprint and avoid blocking JavaScript's event loop.
+For browser users, the Streaming API is wrapped in a WHATWG Transform Stream. This approach ensures a consistent memory footprint and avoids blocking JavaScript's event loop.
 
 The async API takes a second options arguments that is directly passed to the underlying streams accepts the same options as the `Stream Parser`. It also support a third and fourth options equivalent to the `writableStrategy` and 
 `readableStrategy` of a [WHATWG Transform Stream](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream/TransformStream) respectively.

@@ -1,6 +1,6 @@
 # Formatters
 
-A formater is a function to convert javascript values into plain text before adding it into the CSV as a cell.
+A formatter is a function to convert javascript values into plain text before adding it into the CSV as a cell.
 Supported formatter tare given by the types returned by `typeof`:
 * `undefined`
 * `boolean`
@@ -20,6 +20,18 @@ Pay special attention to the `string` formatter since other formatters like the 
 
 There is a number of built-in formatters provided by this package.
 
+### Installation
+
+<!-- tabs:start -->
+
+### **NPM**
+
+You can install json2csv `formatters` as a dependency using NPM.
+
+```bash
+$ npm install --save @json2csv/formatters
+```
+
 ```js
 import {
   default: defaultFormatter,
@@ -31,6 +43,49 @@ import {
   object: objectFormatter,
 } from '@json2csv/formatters';
 ```
+
+### **Yarn**
+
+You can install json2csv `formatters` as a dependency using Yarn.
+
+```bash
+$ yarn add --save @json2csv/formatters
+```
+
+```js
+import {
+  default: defaultFormatter,
+  number: numberFormatter,
+  string: stringFormatter,
+  stringQuoteOnlyIfNecessary: stringQuoteOnlyIfNecessaryFormatter,
+  stringExcel: stringExcelFormatter,
+  symbol: symbolFormatter,
+  object: objectFormatter,
+} from '@json2csv/formatters';
+```
+
+### **CDN**
+
+json2csv `formatters` are packaged as an ES6 modules.
+If your browser supports modules, you can load json2csv `formatters` directly on the browser from the CDN.
+
+You can import the latest version:
+
+```html
+<script type="module">
+  import default from 'https://cdn.jsdelivr.net/npm/@json2csv/formatters/src/default.js';
+</script>
+```
+
+You can also select a specific version:
+
+```html
+<script type="module">
+  import default from 'https://cdn.jsdelivr.net/npm/@json2csv/formatters@6.0.0/src/default.js';
+</script>
+```
+
+<!-- tabs:end -->
 
 ### Default
 
