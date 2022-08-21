@@ -22,7 +22,7 @@ Fast and highly configurable JSON to CSV converter.
 
 ## Types of JSON2CSV parsers
 
-json2csv parsers are offered in vorious flavours:
+json2csv parsers are offered in various flavours:
 
 * **[Parser](packages/plainjs/README.md#parser):** Pure Javascript synchronous parser. High-performant and runs both node.js and the browser. It´s the fastes but loads both the JSON and the resulting CSV in memory, and block the event loop while processing. Not recommended unless the JSON data is small.
 * **[Stream Parser](packages/plainjs/README.md#stream-parser):** Pure Javascript stream parser. High-performant and runs both node.js and the browser. It keeps a consistent memory footprint and doesn't block the event loop. It's the base of all other parsers. Recommended to build your own parser.

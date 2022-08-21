@@ -105,7 +105,7 @@ try {
 
 ### Complete Documentation
 
-See https://juanjodiaz.github.io/json2csv/#/plainjs/stream-parser.
+See [https://juanjodiaz.github.io/json2csv/#/parsers/parser](https://juanjodiaz.github.io/json2csv/#/parsers/parser).
 
 ## Stream Parser
 
@@ -163,7 +163,7 @@ See [@streamparser/json](https://github.com/juanjoDiaz/streamparser-json#bufferi
 
 ### Complete Documentation
 
-See [https://juanjodiaz.github.io/json2csv/#/parsers/parser](https://juanjodiaz.github.io/json2csv/#/parsers/parser).
+See [https://juanjodiaz.github.io/json2csv/#/parsers/stream-parser](https://juanjodiaz.github.io/json2csv/#/parsers/stream-parser).
 
 ## License
 
