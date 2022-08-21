@@ -1,9 +1,9 @@
 import lodashGet from 'lodash.get';
-import defaultFormatter from '@json2csv/formatters/default';
-import numberFormatterCtor from '@json2csv/formatters/number';
-import stringFormatterCtor from '@json2csv/formatters/string';
-import symbolFormatterCtor from '@json2csv/formatters/symbol';
-import objectFormatterCtor from '@json2csv/formatters/object';
+import defaultFormatter from '@json2csv/formatters/default.js';
+import numberFormatterCtor from '@json2csv/formatters/number.js';
+import stringFormatterCtor from '@json2csv/formatters/string.js';
+import symbolFormatterCtor from '@json2csv/formatters/symbol.js';
+import objectFormatterCtor from '@json2csv/formatters/object.js';
 import { getProp, flattenReducer, fastJoin } from './utils.js';
 
 export default class JSON2CSVBase {

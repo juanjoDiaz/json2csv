@@ -1,10 +1,10 @@
 // packages/plainjs/src/BaseParser.js
 import lodashGet from "https://cdn.jsdelivr.net/npm/lodash.get@4.4.2/index.js";
-import defaultFormatter from "../formatters/default";
-import numberFormatterCtor from "../formatters/number";
-import stringFormatterCtor from "../formatters/string";
-import symbolFormatterCtor from "../formatters/symbol";
-import objectFormatterCtor from "../formatters/object";
+import defaultFormatter from "../formatters/default.js";
+import numberFormatterCtor from "../formatters/number.js";
+import stringFormatterCtor from "../formatters/string.js";
+import symbolFormatterCtor from "../formatters/symbol.js";
+import objectFormatterCtor from "../formatters/object.js";
 import { getProp, flattenReducer, fastJoin } from "./utils.js";
 var JSON2CSVBase = class {
   constructor(opts) {
