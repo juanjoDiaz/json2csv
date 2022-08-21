@@ -37,7 +37,6 @@
   ],
   "scripts": {
     "build": "node build.js",
-    "docs:prebuild": "esbuild docs/docs-export.js --bundle --outfile=docs/json2csv.js",
     "docs:preview": "docsify serve docs",
     "lint": "npm run lint -ws",
     "lint:fix": "npm run lint -- --fix",
