@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/whatwg",
-  "version": "6.0.0",
+  "version": "6.0.0-alpha.2",
   "description": "WHATWG Transform and Async interface to convert JSON into CSV.",
   "keywords": [
     "json",
