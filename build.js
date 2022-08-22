@@ -28,7 +28,7 @@ const replaceDependenciesByJsdelivr = {
 
     const dependencies = {
       '@streamparser/json': 'https://cdn.jsdelivr.net/npm/@streamparser/json@0.0.8',
-      'lodash.get': 'https://cdn.jsdelivr.net/npm/lodash.get@4.4.2/index.js'
+      'lodash.get': '//cdn.jsdelivr.net/gh/lodash/lodash@master/get.js'
     };
 
     build.onResolve({ namespace: 'file', filter: new RegExp(`(?:${Object.keys(dependencies).join('|')})`) }, (args) => {

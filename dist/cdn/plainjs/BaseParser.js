@@ -1,5 +1,5 @@
 // packages/plainjs/src/BaseParser.js
-import lodashGet from "https://cdn.jsdelivr.net/npm/lodash.get@4.4.2/index.js";
+import lodashGet from "//cdn.jsdelivr.net/gh/lodash/lodash@master/get.js";
 import defaultFormatter from "../formatters/default.js";
 import numberFormatterCtor from "../formatters/number.js";
 import stringFormatterCtor from "../formatters/string.js";

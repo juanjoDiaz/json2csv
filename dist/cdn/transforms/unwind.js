@@ -1,5 +1,5 @@
 // packages/transforms/src/unwind.js
-import lodashGet from "https://cdn.jsdelivr.net/npm/lodash.get@4.4.2/index.js";
+import lodashGet from "//cdn.jsdelivr.net/gh/lodash/lodash@master/get.js";
 import { setProp, unsetProp, flattenReducer } from "./utils.js";
 function getUnwindablePaths(obj, currentPath) {
   return Object.keys(obj).reduce((unwindablePaths, key) => {
