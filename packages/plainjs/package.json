@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/plainjs",
-  "version": "6.0.0-alpha.2",
+  "version": "6.0.0-alpha.3",
   "description": "Pure Javascript JSON to CSV converter.",
   "keywords": [
     "json",

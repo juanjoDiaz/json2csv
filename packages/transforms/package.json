@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/transforms",
-  "version": "6.0.0-alpha.2",
+  "version": "6.0.0-alpha.3",
   "description": "json2csv built-in transforms. A transform is a function that receives a data recod and returns a transformed record. Transforms are executed in order before converting the data record into a CSV row.",
   "keywords": [
     "json",
