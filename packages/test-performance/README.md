@@ -1,13 +1,4 @@
-# @json2csv/whatwg
-
-[![npm version](https://badge.fury.io/js/json2csv.svg)](http://badge.fury.io/js/json2csv)
-[![Node.js CI](https://github.com/juanjoDiaz/json2csv/actions/workflows/on-push.yaml/badge.svg)](https://github.com/juanjoDiaz/json2csv/actions/workflows/on-push.yaml)
-[![Coverage Status](https://coveralls.io/repos/github/juanjoDiaz/json2csv/badge.svg?branch=main)](https://coveralls.io/github/juanjoDiaz/json2csv?branch=main)
-
-Fast and highly configurable JSON to CSV converter.
-It fully support conversion following the [RFC4180](https://datatracker.ietf.org/doc/html/rfc4180) specification as well as other similar text delimited formats as TSV.
-
-`@json2csv/test-performnance` include utilities to run performance tests around `json2csv`.
+# @json2csv Performance tests
 
 ## Requirements
 

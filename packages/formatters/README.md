@@ -1,4 +1,10 @@
-# Formatters
+# @json2csv/formatters
+
+[![npm version](https://badge.fury.io/js/@json2csv%2Fformatters.svg)](https://badge.fury.io/js/@json2csv%2Fformatters)
+[![npm monthly downloads](https://img.shields.io/npm/dm/@json2csv/transforms.svg)](https://badge.fury.io/js/@json2csv%2Fformatters)
+[![Node.js CI](https://github.com/juanjoDiaz/json2csv/actions/workflows/on-push.yaml/badge.svg)](https://github.com/juanjoDiaz/json2csv/actions/workflows/on-push.yaml)
+[![Coverage Status](https://coveralls.io/repos/github/juanjoDiaz/json2csv/badge.svg?branch=main)](https://coveralls.io/github/juanjoDiaz/json2csv?branch=main)
+[![license](https://img.shields.io/npm/l/@json2csv/plainjs)](https://raw.githubusercontent.com/juanjoDiaz/json2csv/main/LICENSE.md)
 
 A formatter is function a used by `json2csv` (in any of its flavours) to convert javascript values into plain text before adding it into the CSV as a cell.
 Supported formatters are given by the types returned by `typeof`:
@@ -15,6 +21,15 @@ And a special type that only applies to headers:
 * `headers`
 
 Pay special attention to the `string` formatter since other formatters like the `headers` or `object` formatters, rely on the `string` formatter for the stringification of their value..
+
+### json2csv ecosystem
+
+There are multiple flavours of json2csv where you can use formatters:
+
+* **[Plainjs](https://www.npmjs.com/package/@json2csv/plainjs):** Includes the `Parser` API and a new `StreamParser` API which doesn't the conversion in a streaming fashion in pure js.
+* **[Node](https://www.npmjs.com/package/@json2csv/node):** Includes the `Node Transform` and `Node Async Parser` APIs for Node users.
+* **[WHATWG](https://www.npmjs.com/package/@json2csv/whatwg):** Includes the `WHATWG Transform Stream` and `WHATWG Async Parser` APIs for users of WHATWG streams (browser, Node or Deno).
+* **[CLI](https://www.npmjs.com/package/@json2csv/cli):** Includes the `CLI` interface.
 
 ## Built-in formatters
 

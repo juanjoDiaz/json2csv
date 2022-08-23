@@ -1,19 +1,21 @@
 # @json2csv/plainjs
 
-[![npm version](https://badge.fury.io/js/json2csv.svg)](http://badge.fury.io/js/json2csv)
+[![npm version](https://badge.fury.io/js/@json2csv%2Fplainjs.svg)](https://badge.fury.io/js/@json2csv%2Fplainjs)
+[![npm monthly downloads](https://img.shields.io/npm/dm/@json2csv/plainjs.svg)](https://badge.fury.io/js/@json2csv%2Fplainjs)
 [![Node.js CI](https://github.com/juanjoDiaz/json2csv/actions/workflows/on-push.yaml/badge.svg)](https://github.com/juanjoDiaz/json2csv/actions/workflows/on-push.yaml)
 [![Coverage Status](https://coveralls.io/repos/github/juanjoDiaz/json2csv/badge.svg?branch=main)](https://coveralls.io/github/juanjoDiaz/json2csv?branch=main)
+[![license](https://img.shields.io/npm/l/@json2csv/plainjs)](https://raw.githubusercontent.com/juanjoDiaz/json2csv/main/LICENSE.md)
 
 Fast and highly configurable JSON to CSV converter.
 It fully support conversion following the [RFC4180](https://datatracker.ietf.org/doc/html/rfc4180) specification as well as other similar text delimited formats as TSV.
 
 `@json2csv/plainjs` exposes plain JavasScript modules of `json2csv` which can be used in Node.js, the browser or Deno.
 
-## Requirements
+This package includes two modules:
+  * **[Parser](#parser):** A synchronous JSON to CSV converter written in plain js. It's fast and simple, but it loads the entire dataset in memory and block the event loop. So it's not advisable for big dataset or the browser.
+  * **[Stream Parser](#stream-parser):** An asynchronous JSON to CSV converter written in plain js. Ideal for large dataset and the browser.
 
-- None
-
-## Features
+### Features
 
 - Fast and lightweight
 - Support for standard JSON as well as NDJSON
@@ -26,6 +28,24 @@ It fully support conversion following the [RFC4180](https://datatracker.ietf.org
 - Optional headers
 - Unicode encoding support
 - Pretty printing in table format to stdout
+
+### Other json2csv packages
+
+There are multiple flavours of json2csv:
+
+* **[Plainjs](https://www.npmjs.com/package/@json2csv/plainjs):** Includes the `Parser` API and a new `StreamParser` API which doesn't the conversion in a streaming fashion in pure js.
+* **[Node](https://www.npmjs.com/package/@json2csv/node):** Includes the `Node Transform` and `Node Async Parser` APIs for Node users.
+* **[WHATWG](https://www.npmjs.com/package/@json2csv/whatwg):** Includes the `WHATWG Transform Stream` and `WHATWG Async Parser` APIs for users of WHATWG streams (browser, Node or Deno).
+* **[CLI](https://www.npmjs.com/package/@json2csv/cli):** Includes the `CLI` interface.
+
+And a couple of libraries that enable additional configurations:
+
+* **[Transforms](https://www.npmjs.com/package/@json2csv/transforms):** Includes the built-in `transforms` for json2csv (unwind and flatten) allowing the using to transform data before is parsed.
+* **[Formatters](https://www.npmjs.com/package/@json2csv/formatters):** Includes the built-in `formatters` for json2csv (one for each data type, an excel-specific one, etc.). Formatters convert JSON data types into CSV-compatible strings.
+
+## Requirements
+
+- None
 
 ## Installation
 
