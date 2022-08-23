@@ -19,7 +19,12 @@
       position: fixed;
       bottom: 3rem;
       right: 2rem;
+      margin-left: 3rem;
       max-width: 30rem;
+    }
+
+    .alert h1 {
+      font-size: 1.5em;
     }
   </style>
 </head>
@@ -124,7 +129,7 @@
               try {
               this.inputJSON = JSON.stringify(JSON.parse(this.inputJSON), null, 4);
               } catch (err) {
-                this.showError(err);
+                this.showError('Error formatting your JSON', err);
               }
             },
             parseJSON() {
@@ -133,17 +138,22 @@
               parser.onData = data => {
                 this.outputCSV += data;
               };
-              parser.onError = this.showError;
+              parser.onError = err => this.showError('Error parsing your JSON', err.message);
               parser.write(this.inputJSON);
               parser.end();
             },
-            showError(err) {
+            showError(title, message) {
               const notification = document.createElement ('div');
               notification.classList.add('notification', 'is-danger', 'alert');
-              notification.innerText = err.message;
+              const titleEl = document.createElement ('h1');
+              titleEl.innerText = title;
+              notification.appendChild(titleEl);
+              const messageEl = document.createElement ('div');
+              messageEl.innerText = message;
+              notification.appendChild(messageEl);
               notification.addEventListener('click', () => document.body.removeChild(notification));
               document.body.appendChild(notification);
-              setTimeout(() => notification.dispatchEvent('click'), 2000);
+              setTimeout(() => notification.dispatchEvent(new Event('click')), 2000);
             }
           }
         },
