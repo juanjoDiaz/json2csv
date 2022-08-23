@@ -14,6 +14,13 @@
     .panel-heading, .panel-tabs {
       margin: 0 !important;
     }
+
+    .alert {
+      position: fixed;
+      bottom: 3rem;
+      right: 2rem;
+      max-width: 30rem;
+    }
   </style>
 </head>
 <body>
@@ -114,8 +121,11 @@
           },
           methods: {
             formatJSON() {
+              try {
               this.inputJSON = JSON.stringify(JSON.parse(this.inputJSON), null, 4);
-              // TODO error
+              } catch (err) {
+                this.showError(err);
+              }
             },
             parseJSON() {
               const parser = new Json2csvStreamParser(this.configJSON);
@@ -123,9 +133,17 @@
               parser.onData = data => {
                 this.outputCSV += data;
               };
-              parser.onError = console.error; // TODO
+              parser.onError = this.showError;
               parser.write(this.inputJSON);
               parser.end();
+            },
+            showError(err) {
+              const notification = document.createElement ('div');
+              notification.classList.add('notification', 'is-danger', 'alert');
+              notification.innerText = err.message;
+              notification.addEventListener('click', () => document.body.removeChild(notification));
+              document.body.appendChild(notification);
+              setTimeout(() => notification.dispatchEvent('click'), 2000);
             }
           }
         },
