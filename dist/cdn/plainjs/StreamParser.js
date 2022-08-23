@@ -1,5 +1,5 @@
 // packages/plainjs/src/StreamParser.js
-import { Tokenizer, TokenParser, TokenType } from "https://cdn.jsdelivr.net/npm/@streamparser/json@0.0.8";
+import { Tokenizer, TokenParser, TokenType } from "https://cdn.jsdelivr.net/npm/@streamparser/json@0.0.8/dist/mjs/index.mjs";
 import JSON2CSVBase from "./BaseParser.js";
 var JSON2CSVStreamParser = class extends JSON2CSVBase {
   constructor(opts, asyncOpts) {

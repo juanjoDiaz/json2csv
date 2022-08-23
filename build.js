@@ -27,8 +27,8 @@ const replaceDependenciesByJsdelivr = {
     });
 
     const dependencies = {
-      '@streamparser/json': 'https://cdn.jsdelivr.net/npm/@streamparser/json@0.0.8',
-      'lodash.get': '//cdn.jsdelivr.net/gh/lodash/lodash@master/get.js'
+      '@streamparser/json': 'https://cdn.jsdelivr.net/npm/@streamparser/json@0.0.8/dist/mjs/index.mjs',
+      'lodash.get': 'https://cdn.jsdelivr.net/gh/lodash/lodash@master/get.js'
     };
 
     build.onResolve({ namespace: 'file', filter: new RegExp(`(?:${Object.keys(dependencies).join('|')})`) }, (args) => {
