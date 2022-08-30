@@ -34,6 +34,7 @@
     "test:raw": "node test"
   },
   "dependencies": {
+    "@json2csv/node": "^6.0.0-alpha.3",
     "commander": "^9.3.0"
   }
 }
