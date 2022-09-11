@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/plainjs",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Pure Javascript JSON to CSV converter.",
   "keywords": [
     "json",
@@ -33,10 +33,11 @@
     "lint": "eslint src test",
     "test": "npm run test:raw | tap-spec",
     "test-with-coverage": "c8 --reporter=text npm test",
-    "test:raw": "node test"
+    "test:raw": "node test",
+    "deprendencies:update-internal": "npm uninstall @json2csv/formatters && npm install @json2csv/formatters"
   },
   "dependencies": {
-    "@json2csv/formatters": "^6.0.0-alpha.3",
+    "@json2csv/formatters": "^6.0.0-alpha.4",
     "@streamparser/json": "^0.0.8",
     "lodash.get": "^4.4.2"
   }

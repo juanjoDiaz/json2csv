@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/node",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Node.js Transform and Async interface to convert JSON into CSV.",
   "keywords": [
     "json",
@@ -33,9 +33,10 @@
     "lint": "eslint src test",
     "test": "npm run test:raw | tap-spec",
     "test-with-coverage": "c8 --reporter=text npm test",
-    "test:raw": "node test"
+    "test:raw": "node test",
+    "deprendencies:update-internal": "npm uninstall @json2csv/plainjs && npm install @json2csv/plainjs"
   },
   "dependencies": {
-    "@json2csv/plainjs": "^6.0.0-alpha.3"
+    "@json2csv/plainjs": "^6.0.0-alpha.4"
   }
 }

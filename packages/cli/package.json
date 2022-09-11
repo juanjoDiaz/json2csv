@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/cli",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "description": "Command Line Interface to convert JSON to CSV.",
   "keywords": [
     "json",
@@ -31,10 +31,11 @@
     "lint": "eslint bin test",
     "test": "npm run test:raw | tap-spec",
     "test-with-coverage": "c8 --reporter=text npm test",
-    "test:raw": "node test"
+    "test:raw": "node test",
+    "deprendencies:update-internal": "npm uninstall @json2csv/node && npm install @json2csv/node"
   },
   "dependencies": {
-    "@json2csv/node": "^6.0.0-alpha.3",
+    "@json2csv/node": "^6.0.0-alpha.4",
     "commander": "^9.3.0"
   }
 }
