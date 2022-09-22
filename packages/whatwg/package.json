@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/whatwg",
-  "version": "6.0.0-alpha.4",
+  "version": "6.0.0",
   "description": "WHATWG Transform and Async interface to convert JSON into CSV.",
   "keywords": [
     "json",
@@ -37,6 +37,6 @@
     "deprendencies:update-internal": "npm uninstall @json2csv/plainjs && npm install @json2csv/plainjs"
   },
   "dependencies": {
-    "@json2csv/plainjs": "^6.0.0-alpha.4"
+    "@json2csv/plainjs": "^6.0.0"
   }
 }

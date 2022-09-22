@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0](https://github.com/juanjodiaz/json2csv/compare/v6.0.0-alpha.4...v6.0.0) (2022-09-22)
+
+
+### Bug Fixes
+
+* handle exceptions in transforms properly in streaming APIs ([48eff4a](https://github.com/juanjodiaz/json2csv/commit/48eff4ab4b96ffd78bf9f1f5b48325dd79b3e435))
+
+## [6.0.0-alpha.4](https://github.com/juanjodiaz/json2csv/compare/v6.0.0-alpha.2...v6.0.0-alpha.4) (2022-09-11)
+
+
+### Features
+
+* add error handling to try it life! ([950c4e8](https://github.com/juanjodiaz/json2csv/commit/950c4e8dda171e36b4b0ab39d95c8bd57d9dff52))
+
+
+### Bug Fixes
+
+* add inter-package dependencies explicitely ([d3b38c1](https://github.com/juanjodiaz/json2csv/commit/d3b38c1f51d0db7c52a95142c3d60cbfb3a43a3a))
+* add js extension to formatters in BaseParser ([13ce920](https://github.com/juanjodiaz/json2csv/commit/13ce920915e37572a15d639cc1bdb7548809140a))
+* fix package exports adding .js extension wrongly ([bb228bc](https://github.com/juanjodiaz/json2csv/commit/bb228bc21a3341742d37d8501867097e5a0b4cb4))
+* pull CDN lodash from gh instead of npm so ti supports es6 imports ([3e28e55](https://github.com/juanjodiaz/json2csv/commit/3e28e55be2ad5ebd4e18c2c0f151e2c392f5505b))
+
+## [6.0.0-alpha.2](https://github.com/juanjodiaz/json2csv/compare/v6.0.0-alpha.1...v6.0.0-alpha.2)  (2022-08-21)
+
+
+### Bug Fixes
+
+* enforce \n EOL for backslashBeforeNewLine tests ([149507d](https://github.com/juanjodiaz/json2csv/commit/149507d7e6e445d50f5be2c4e6e319d936d03c3f))
+* enforce \n EOL for quoteOnlyIfNecessary tests ([0af4dcd](https://github.com/juanjodiaz/json2csv/commit/0af4dcd7f0c7b023ee450a3e138fa417e7a84311))
+* fix cache for Windows builds ([b4d1a60](https://github.com/juanjodiaz/json2csv/commit/b4d1a603a682f7c756b2c8ace400921e32fec0ed))
+* fix json packages and ensure consistent order of its fields ([0b0ce1e](https://github.com/juanjodiaz/json2csv/commit/0b0ce1ee96637b2731f8343aa69e60fb3ac1b262))
+* remove tests about preserving tabs since they are historical and don't make sense anymore ([6abb57a](https://github.com/juanjodiaz/json2csv/commit/6abb57a46930d435b570a862a721aad2cafe4acb))
+* typo in test name ([d05c5ae](https://github.com/juanjodiaz/json2csv/commit/d05c5ae701d5f4f674e283e91dae58c5c9499f62))
+* use correct line endings on windows when using prettyprint, ndjson or transforms ([3c27a69](https://github.com/juanjodiaz/json2csv/commit/3c27a693f3807649e71f39873856d67b84173615))
+
+
+### Performance Improvements
+
+* bring back v5 perf improvements and add some new ones ([288800b](https://github.com/juanjodiaz/json2csv/commit/288800bd4f3d5c5b9ba76129725b435eec3c1869))
+
 ## [6.0.0-alpha.1](https://github.com/zemirco/json2csv/compare/v6.0.0-alpha.0...v6.0.0-alpha.1) (2022-02-23)
 
 
