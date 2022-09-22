@@ -857,6 +857,33 @@ export default function (jsonFixtures, csvFixtures) {
     t.equal(csv, csvFixtures.defaultCustomTransform);
   });
 
+  testRunner.add('should handle errors in transforms correctly', async (t) => {
+    const opts = {
+      transforms: [
+        (row) => {
+          if (row.carModel === 'Mercedes') {
+            throw new Error('Mercerdes not allowed');
+          }
+
+          return row;
+        },
+      ],
+    };
+
+    const parser = new Parser(opts);
+
+    const promise = new Promise((res) => {
+      parser.onEnd = () => {
+        t.fail('Exception expected');
+        res();
+      };
+      parser.onError = (err) => res(err);
+    });
+
+    parser.write('{ "carModel": "Mercedes" }');
+    await promise;
+  });
+
   // Formatters
 
   // Number

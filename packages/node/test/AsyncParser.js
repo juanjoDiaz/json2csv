@@ -1,4 +1,5 @@
 import os from 'os';
+import { Writable } from 'stream';
 
 import TestRunner from '@json2csv/test-helpers/TestRunner.js';
 import { forceLfEol } from '@json2csv/test-helpers/utils.js';
@@ -888,6 +889,39 @@ export default function (jsonFixtures, csvFixtures) {
     const csv = await parseInput(parser, jsonFixtures.default());
 
     t.equal(csv, csvFixtures.defaultCustomTransform);
+  });
+
+  testRunner.add('should handle errors in transforms correctly', async (t) => {
+    const outputStream = new Writable({
+      write(chunk, encoding, callback) {
+        callback();
+      },
+    });
+
+    const opts = {
+      transforms: [
+        (row) => {
+          if (row.carModel === 'Mercedes') {
+            throw new Error('Mercerdes not allowed');
+          }
+
+          return row;
+        },
+      ],
+    };
+
+    const parser = new Parser(opts);
+    const transformation = parser.parse(jsonFixtures.default());
+    const promise = new Promise((res) => {
+      transformation.on('end', () => {
+        t.fail('Exception expected');
+        res();
+      });
+      transformation.on('error', (err) => res(err));
+    });
+
+    transformation.pipe(outputStream);
+    await promise;
   });
 
   // Formatters
