@@ -145,6 +145,10 @@ const asyncOpts = {};
 const parser = new AsyncParser(opts, transformOpts, asyncOpts);
 
 const csv = await parser.parse(data).promise();
+
+// The parse method return the transform stream.
+// So data can be passed to a writable stream (a file, http request, etc.)
+parser.parse(data).pipe(writableStream);
 ```
 
 #### Parameters

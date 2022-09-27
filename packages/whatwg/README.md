@@ -184,6 +184,10 @@ const response = await fetch('./my-file.json');
 
 await response.body.pipeThrough(parser).pipeTo(writableStream);
 
+// The parse method return the stream transform readable side.
+// So data can be passed to a writable stream (a file, http request, etc.)
+parser.parse(data).pipeTo(writableStream);
+
 // You can also listen for events on the conversion and see how the header or the lines are coming out.
 parser
   .addEventListener('header', (header) => console.log(header))
