@@ -42,11 +42,7 @@ jobs:
           flag-name: run-${{ matrix.node-version }}
           parallel: true
       - name: Test for missing changes
-        run: |
-          if [[ "$(git status --porcelain)" ]] ; then
-            echo "Repo is not pristine"
-            exit 1
-          fi
+        run: node -e "if ('$(git status --porcelain)') { console.log('Repo is not pristine'); process.exit(1); }" 
   finish:
     needs: test
     runs-on: ubuntu-latest
