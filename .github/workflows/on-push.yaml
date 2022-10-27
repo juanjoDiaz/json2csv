@@ -32,7 +32,9 @@ jobs:
       - name: Linting
         run: npm run lint
       - name: Unit tests
-        run: npm run test-with-coverage
+        run: |
+          npm run build:cjs
+          npm run test-with-coverage
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
         with:

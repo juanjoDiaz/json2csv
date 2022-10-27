@@ -36,13 +36,16 @@
     "packages/test-performance"
   ],
   "scripts": {
-    "build": "node build.js",
     "docs:preview": "docsify serve docs",
     "lint": "npm run lint -ws",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:raw -w @json2csv/cli -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg | tap-spec",
     "test-with-coverage": "c8 --include 'packages/*/src' --include 'packages/*/bin' --reporter=text --reporter=lcov npm test",
-    "deprendencies:update-internal": "npm run deprendencies:update-internal -w @json2csv/cli -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg"
+    "build:cdn": "node build-cdn.js",
+    "build:cjs": "npm run build -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg -w @json2csv/formatters -w @json2csv/transforms",
+    "build": "npm run build:cdn && npm run build:cjs",
+    "deprendencies:update-internal": "npm run deprendencies:update-internal -w @json2csv/cli -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg",
+    "prepublishOnly": "npm run build:cjs"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.18.2",

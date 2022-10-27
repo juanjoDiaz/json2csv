@@ -10,5 +10,6 @@ published
 _docpress
 .vscode
 
+packages/*/dist
 packages/test-helpers/fixtures/results
 packages/test-performance/flamegraphs/results

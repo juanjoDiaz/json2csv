@@ -25,13 +25,20 @@
   },
   "type": "module",
   "exports": {
-    "./*": "./src/*",
-    ".": "./src/index.js"
+    "./*": {
+      "import": "./src/*",
+      "require": "./dist/cjs/*"
+    },
+    ".": {
+      "import": "./src/index.js",
+      "require": "./dist/cjs/index.js"
+    }
   },
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ../../build-cjs.js transforms"
   },
   "dependencies": {
     "lodash.get": "^4.4.2"

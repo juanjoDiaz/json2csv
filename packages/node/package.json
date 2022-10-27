@@ -25,8 +25,14 @@
   },
   "type": "module",
   "exports": {
-    "./*": "./src/*",
-    ".": "./src/index.js"
+    "./*": {
+      "import": "./src/*",
+      "require": "./dist/cjs/*"
+    },
+    ".": {
+      "import": "./src/index.js",
+      "require": "./dist/cjs/index.js"
+    }
   },
   "main": "src/index.js",
   "scripts": {
@@ -34,6 +40,7 @@
     "test": "npm run test:raw | tap-spec",
     "test-with-coverage": "c8 --reporter=text npm test",
     "test:raw": "node test",
+    "build": "node ../../build-cjs.js node",
     "deprendencies:update-internal": "npm uninstall @json2csv/plainjs && npm install @json2csv/plainjs"
   },
   "dependencies": {
