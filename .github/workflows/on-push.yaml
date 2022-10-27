@@ -31,16 +31,22 @@ jobs:
         run: npm ci
       - name: Linting
         run: npm run lint
+      - name: Build
+        run: npm run build
       - name: Unit tests
-        run: |
-          npm run build:cjs
-          npm run test-with-coverage
+        run: npm run test-with-coverage
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.github_token }}
           flag-name: run-${{ matrix.node-version }}
           parallel: true
+      - name: Test for missing changes
+        run: |
+          if [[ "$(git status --porcelain)" ]] ; then
+            echo "Repo is not pristine"
+            exit 1
+          fi
   finish:
     needs: test
     runs-on: ubuntu-latest
