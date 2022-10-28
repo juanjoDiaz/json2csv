@@ -1,2 +1,3 @@
 * text=auto
 packages/test-helpers/fixtures/csv/eol.csv text eol=crlf
+dist/cdn/**/* text eol=lf
