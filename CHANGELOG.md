@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.1.0](https://github.com/juanjodiaz/json2csv/compare/v6.0.0...v6.1.0) (2022-10-30)
+
+
+### Features
+
+* add cjs support back ([80c0b2e](https://github.com/juanjodiaz/json2csv/commit/80c0b2ee55f8ca95acc57fe832fdb21bff5d4a38))
+
 ## [6.0.0](https://github.com/juanjodiaz/json2csv/compare/v6.0.0-alpha.4...v6.0.0) (2022-09-22)
 
 

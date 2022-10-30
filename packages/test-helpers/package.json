@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/test-helpers",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Test helper to test the json2csv libraries",
   "homepage": "http://juanjodiaz.github.io/json2csv",
   "bugs": {

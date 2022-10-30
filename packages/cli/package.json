@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/cli",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Command Line Interface to convert JSON to CSV.",
   "keywords": [
     "json",
@@ -35,7 +35,7 @@
     "deprendencies:update-internal": "npm uninstall @json2csv/node && npm install @json2csv/node"
   },
   "dependencies": {
-    "@json2csv/node": "^6.0.0",
+    "@json2csv/node": "^6.1.0",
     "commander": "^9.3.0"
   }
 }
