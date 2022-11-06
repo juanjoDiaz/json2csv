@@ -4,6 +4,10 @@ export function getProp(obj, path, defaultValue) {
 }
 
 export function flattenReducer(acc, arr) {
+  if (!Array.isArray(arr)) {
+    acc.push(arr);
+    return acc;
+  }
   try {
     // This is faster but susceptible to `RangeError: Maximum call stack size exceeded`
     acc.push(...arr);
