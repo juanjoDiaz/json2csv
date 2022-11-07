@@ -36,7 +36,7 @@ export function unsetProp(obj, path) {
 export function flattenReducer(acc, arr) {
   try {
     // This is faster but susceptible to `RangeError: Maximum call stack size exceeded`
-    acc.push(...arr);
+    Array.isArray(arr) ? acc.push(...arr) : acc.push(arr);
     return acc;
   } catch (err) {
     // Fallback to a slower but safer option
