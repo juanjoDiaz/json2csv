@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/node",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "Node.js Transform and Async interface to convert JSON into CSV.",
   "keywords": [
     "json",
@@ -44,6 +44,6 @@
     "deprendencies:update-internal": "npm uninstall @json2csv/plainjs && npm install @json2csv/plainjs"
   },
   "dependencies": {
-    "@json2csv/plainjs": "^6.1.0"
+    "@json2csv/plainjs": "^6.1.1"
   }
 }

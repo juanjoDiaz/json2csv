@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/plainjs",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "Pure Javascript JSON to CSV converter.",
   "keywords": [
     "json",
@@ -44,7 +44,7 @@
     "deprendencies:update-internal": "npm uninstall @json2csv/formatters && npm install @json2csv/formatters"
   },
   "dependencies": {
-    "@json2csv/formatters": "^6.1.0",
+    "@json2csv/formatters": "^6.1.1",
     "@streamparser/json": "^0.0.10",
     "lodash.get": "^4.4.2"
   }
