@@ -1,11 +1,8 @@
 
-import { argv } from 'process';
 import path from 'path';
 import { writeFile, rename, unlink } from 'fs/promises';
 import esbuild from 'esbuild';
 import glob from 'tiny-glob';
-
-const [, pathTothis, pkg] = argv;
 
 const pkgFolder = path.resolve();
 const distFolder = path.join(pkgFolder, 'dist/cjs/');
