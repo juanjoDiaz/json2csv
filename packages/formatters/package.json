@@ -38,6 +38,7 @@
   "scripts": {
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node ../../build-cjs.js formatters"
+    "build:cjs": "node ../../build-cjs.js formatters",
+    "prepublishOnly": "npm run build:cjs"
   }
 }
