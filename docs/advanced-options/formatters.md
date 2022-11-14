@@ -81,7 +81,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import default from 'https://cdn.jsdelivr.net/npm/@json2csv/formatters@6.1.0/src/default.js';
+  import default from 'https://cdn.jsdelivr.net/npm/@json2csv/formatters@6.1.1/src/default.js';
 </script>
 ```
 
