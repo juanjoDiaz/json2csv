@@ -10,7 +10,7 @@ import {
   stringExcel as stringExcelFormatter,
   stringQuoteOnlyIfNecessary as stringQuoteOnlyIfNecessaryFormatter,
 } from '@json2csv/formatters';
-import Parser from '../src/TransformStream.js';
+import Parser from '@json2csv/whatwg/TransformStream.js';
 
 async function parseInput(parser, nodeStream) {
   return await text(Readable.toWeb(nodeStream).pipeThrough(parser));
@@ -297,7 +297,12 @@ export default function (jsonFixtures, csvFixtures) {
 
   testRunner.add("should error on invalid 'fields' property", async (t) => {
     const opts = {
-      fields: [{ value: 'price' }, () => {}],
+      fields: [
+        { value: 'price' },
+        () => {
+          /* Do nothing */
+        },
+      ],
     };
 
     try {

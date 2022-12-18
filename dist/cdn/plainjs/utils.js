@@ -1,4 +1,4 @@
-// packages/plainjs/src/utils.js
+// packages/plainjs/src/utils.ts
 function getProp(obj, path, defaultValue) {
   const value = obj[path];
   return value === void 0 ? defaultValue : value;

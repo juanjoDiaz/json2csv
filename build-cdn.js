@@ -47,7 +47,7 @@ const replaceDependenciesByJsdelivr = {
 const pkgs = ['plainjs', 'whatwg', 'transforms', 'formatters'];
 
 pkgs.forEach(async (pkg) => {
-  const entryPoints = await glob(`packages/${pkg}/src/*`);
+  const entryPoints = await glob(`packages/${pkg}/src/*.ts`);
   esbuild.build({
     entryPoints,
     bundle: true,

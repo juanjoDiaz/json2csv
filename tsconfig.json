@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "es6",
+    "module": "esnext",
+    "moduleResolution": "nodenext",
+    "lib": ["es2020", "dom"],
+    "declaration": true,
+    "strict": true,
+    "outDir": "dist",
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "preserveConstEnums": true,
+    "noImplicitAny": true,
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

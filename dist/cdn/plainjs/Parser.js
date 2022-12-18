@@ -1,4 +1,4 @@
-// packages/plainjs/src/Parser.js
+// packages/plainjs/src/Parser.ts
 import JSON2CSVBase from "./BaseParser.js";
 import { flattenReducer, fastJoin } from "./utils.js";
 var JSON2CSVParser = class extends JSON2CSVBase {
@@ -21,7 +21,8 @@ var JSON2CSVParser = class extends JSON2CSVBase {
           }
         });
         return fields;
-      }, [])
+      }, []),
+      this.opts.defaultValue
     );
     const header = this.opts.header ? this.getHeader() : "";
     const rows = this.processData(preprocessedData);

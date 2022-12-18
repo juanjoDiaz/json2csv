@@ -1,4 +1,4 @@
-// packages/formatters/src/stringExcel.js
+// packages/formatters/src/stringExcel.ts
 var quote = '"';
 var escapedQuote = '""""';
 function stringExcel(value) {

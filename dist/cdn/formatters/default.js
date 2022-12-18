@@ -1,4 +1,4 @@
-// packages/formatters/src/default.js
+// packages/formatters/src/default.ts
 function defaultFormatter(value) {
   if (value === null || value === void 0)
     return "";

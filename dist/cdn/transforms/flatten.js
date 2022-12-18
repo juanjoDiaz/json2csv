@@ -1,4 +1,4 @@
-// packages/transforms/src/flatten.js
+// packages/transforms/src/flatten.ts
 function flatten({
   objects = true,
   arrays = false,

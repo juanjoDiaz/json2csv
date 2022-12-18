@@ -24,22 +24,34 @@
     "email": "juanjo.diazmo@gmail.com"
   },
   "type": "module",
-  "exports": {
-    "./*": {
-      "import": "./src/*",
-      "require": "./dist/cjs/*"
-    },
-    ".": {
-      "import": "./src/index.js",
-      "require": "./dist/cjs/index.js"
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
     }
   },
-  "main": "src/index.js",
+  "exports": {
+    "./*": {
+      "import": "./dist/mjs/*",
+      "require": "./dist/cjs/*",
+      "types": "./dist/types/*"
+    },
+    ".": {
+      "import": "./dist/mjs/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.js"
+    }
+  },
+  "main": "dist/mjs/index.js",
   "scripts": {
     "lint": "eslint src",
+    "build:cjs": "tsc --module commonjs --outDir ./dist/cjs && node ../../build-cjs.js",
+    "build:mjs": "tsc --module esnext --outDir ./dist/mjs",
+    "build": "npm run build:cjs && npm run build:mjs",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:cjs": "node ../../build-cjs.js transforms",
-    "prepublishOnly": "npm run build:cjs"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "lodash.get": "^4.4.2"

@@ -7,7 +7,7 @@ import {
   stringExcel as stringExcelFormatter,
   stringQuoteOnlyIfNecessary as stringQuoteOnlyIfNecessaryFormatter,
 } from '@json2csv/formatters';
-import Parser from '../src/StreamParser.js';
+import Parser from '@json2csv/plainjs/StreamParser.js';
 
 function parseInput(parser, nodeStream) {
   return new Promise((resolve, reject) => {
@@ -290,7 +290,12 @@ export default function (jsonFixtures, csvFixtures) {
 
   testRunner.add("should error on invalid 'fields' property", async (t) => {
     const opts = {
-      fields: [{ value: 'price' }, () => {}],
+      fields: [
+        { value: 'price' },
+        () => {
+          /* Do nothing */
+        },
+      ],
     };
 
     try {

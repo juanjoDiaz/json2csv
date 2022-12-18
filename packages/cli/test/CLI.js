@@ -541,8 +541,12 @@ export default function (jsonFixtures, csvFixtures) {
     const execution = execAsync(cli);
 
     // TODO Figure out how to make the stdin to error
-    execution.child.stdin._read = execution.child.stdin._write = () => {};
-    execution.child.stdin.on('error', () => {});
+    execution.child.stdin._read = execution.child.stdin._write = () => {
+      /* Do nothing */
+    };
+    execution.child.stdin.on('error', () => {
+      /* Do nothing */
+    });
     execution.child.stdin.destroy(new Error('Test error'));
 
     try {

@@ -1,4 +1,4 @@
-// packages/formatters/src/stringQuoteOnlyIfNecessary.js
+// packages/formatters/src/stringQuoteOnlyIfNecessary.ts
 import defaulStringFormatter from "./string.js";
 function stringQuoteOnlyIfNecessaryFormatter(opts = {}) {
   const quote = typeof opts.quote === "string" ? opts.quote : '"';

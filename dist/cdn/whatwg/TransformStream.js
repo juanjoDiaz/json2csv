@@ -1,7 +1,30 @@
-// packages/whatwg/src/TransformStream.js
-import { StreamParser } from "../plainjs";
-var Transformer = class extends StreamParser {
-  constructor(opts, asyncOpts) {
+var __async = (__this, __arguments, generator) => {
+  return new Promise((resolve, reject) => {
+    var fulfilled = (value) => {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var rejected = (value) => {
+      try {
+        step(generator.throw(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+    step((generator = generator.apply(__this, __arguments)).next());
+  });
+};
+
+// packages/whatwg/src/TransformStream.ts
+import {
+  StreamParser
+} from "../plainjs";
+var JSON2CSVWHATWGTransformer = class extends StreamParser {
+  constructor(opts = {}, asyncOpts = {}) {
     super(opts, asyncOpts);
   }
   onData(data) {
@@ -24,32 +47,39 @@ var Transformer = class extends StreamParser {
   }
 };
 var JSON2CSVWHATWGTransformStream = class extends TransformStream {
-  constructor(opts, asyncOpts, writableStrategy, readableStrategy) {
-    const transformer = new Transformer(opts, asyncOpts);
+  constructor(opts = {}, asyncOpts = {}, writableStrategy, readableStrategy) {
+    const transformer = new JSON2CSVWHATWGTransformer(opts, asyncOpts);
     super(transformer, writableStrategy, readableStrategy);
     if (typeof document === "object") {
-      const delegate = document.createDocumentFragment();
-      ["addEventListener", "dispatchEvent", "removeEventListener"].forEach(
-        (f) => this[f] = (...args) => delegate[f](...args)
-      );
-      transformer.onHeader = (header) => this.dispatchEvent("header", header);
-      transformer.onLine = (line) => this.dispatchEvent("line", line);
+      this.delegate = document.createDocumentFragment();
+      transformer.onHeader = (header) => this.dispatchEvent(new CustomEvent("header", { detail: header }));
+      transformer.onLine = (line) => this.dispatchEvent(new CustomEvent("line", { detail: line }));
       const origOnData = transformer.onData.bind(transformer);
       transformer.onData = (data) => {
         origOnData(data);
-        this.dispatchEvent("data", data);
+        this.dispatchEvent(new CustomEvent("data", { detail: data }));
       };
     }
-    this.readable.promise = async () => {
+    this.readable.promise = () => __async(this, null, function* () {
       let csv = "";
       const outputStream = new WritableStream({
         write(chunk) {
           csv += chunk;
         }
       });
-      await this.readable.pipeTo(outputStream);
+      yield this.readable.pipeTo(outputStream);
       return csv;
-    };
+    });
+  }
+  addEventListener(type, callback, options) {
+    var _a;
+    (_a = this.delegate) == null ? void 0 : _a.addEventListener(type, callback, options);
+  }
+  dispatchEvent(event) {
+    return this.dispatchEvent(event);
+  }
+  removeEventListener(type, callback, options) {
+    this.removeEventListener(type, callback, options);
   }
 };
 export {

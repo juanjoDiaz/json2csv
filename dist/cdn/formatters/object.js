@@ -1,15 +1,15 @@
-// packages/formatters/src/object.js
+// packages/formatters/src/object.ts
 import defaulStringFormatter from "./string.js";
 function objectFormatter(opts = { stringFormatter: defaulStringFormatter() }) {
   return (value) => {
     if (value === null)
       return "";
-    value = JSON.stringify(value);
-    if (value === void 0)
+    let stringifiedValue = JSON.stringify(value);
+    if (stringifiedValue === void 0)
       return "";
-    if (value[0] === '"')
-      value = value.replace(/^"(.+)"$/, "$1");
-    return opts.stringFormatter(value);
+    if (stringifiedValue[0] === '"')
+      stringifiedValue = stringifiedValue.replace(/^"(.+)"$/, "$1");
+    return opts.stringFormatter(stringifiedValue);
   };
 }
 export {

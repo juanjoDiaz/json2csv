@@ -1,13 +1,14 @@
-// packages/formatters/src/number.js
+// packages/formatters/src/number.ts
 function numberFormatter(opts = {}) {
-  if (opts.separator) {
-    if (opts.decimals) {
-      return (value) => value.toFixed(opts.decimals).replace(".", opts.separator);
+  const { separator, decimals } = opts;
+  if (separator) {
+    if (decimals) {
+      return (value) => value.toFixed(decimals).replace(".", separator);
     }
-    return (value) => `${value}`.replace(".", opts.separator);
+    return (value) => `${value}`.replace(".", separator);
   }
-  if (opts.decimals) {
-    return (value) => value.toFixed(opts.decimals);
+  if (decimals) {
+    return (value) => value.toFixed(decimals);
   }
   return (value) => `${value}`;
 }

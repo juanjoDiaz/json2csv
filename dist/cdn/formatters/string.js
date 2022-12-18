@@ -1,4 +1,4 @@
-// packages/formatters/src/string.js
+// packages/formatters/src/string.ts
 function stringFormatter(opts = {}) {
   const quote = typeof opts.quote === "string" ? opts.quote : '"';
   const escapedQuote = typeof opts.escapedQuote === "string" ? opts.escapedQuote : `${quote}${quote}`;

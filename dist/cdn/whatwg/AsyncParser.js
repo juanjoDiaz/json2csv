@@ -1,7 +1,7 @@
-// packages/whatwg/src/AsyncParser.js
+// packages/whatwg/src/AsyncParser.ts
 import JSON2CSVWHATWGTransformStream from "./TransformStream.js";
 var JSON2CSVNodeAsyncParser = class {
-  constructor(opts, asyncOpts, writableStrategy, readableStrategy) {
+  constructor(opts = {}, asyncOpts = {}, writableStrategy, readableStrategy) {
     this.opts = opts;
     this.asyncOpts = asyncOpts || {};
     this.writableStrategy = writableStrategy;

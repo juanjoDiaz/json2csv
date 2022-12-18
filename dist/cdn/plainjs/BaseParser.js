@@ -1,4 +1,21 @@
-// packages/plainjs/src/BaseParser.js
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b ||= {})
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+
+// packages/plainjs/src/BaseParser.ts
 import lodashGet from "https://cdn.jsdelivr.net/gh/lodash/lodash@master/get.js";
 import defaultFormatter from "../formatters/default.js";
 import numberFormatterCtor from "../formatters/number.js";
@@ -6,6 +23,18 @@ import stringFormatterCtor from "../formatters/string.js";
 import symbolFormatterCtor from "../formatters/symbol.js";
 import objectFormatterCtor from "../formatters/object.js";
 import { getProp, flattenReducer, fastJoin } from "./utils.js";
+var FormatterTypes = /* @__PURE__ */ ((FormatterTypes2) => {
+  FormatterTypes2["header"] = "header";
+  FormatterTypes2["undefined"] = "undefined";
+  FormatterTypes2["boolean"] = "boolean";
+  FormatterTypes2["number"] = "number";
+  FormatterTypes2["bigint"] = "bigint";
+  FormatterTypes2["string"] = "string";
+  FormatterTypes2["symbol"] = "symbol";
+  FormatterTypes2["function"] = "function";
+  FormatterTypes2["object"] = "object";
+  return FormatterTypes2;
+})(FormatterTypes || {});
 var JSON2CSVBase = class {
   constructor(opts) {
     this.opts = this.preprocessOpts(opts);
@@ -17,7 +46,10 @@ var JSON2CSVBase = class {
    * delimiter, default value, quote mark, header, etc.
    */
   preprocessOpts(opts) {
-    const processedOpts = Object.assign({}, opts);
+    const processedOpts = Object.assign(
+      {},
+      opts
+    );
     if (processedOpts.fields) {
       processedOpts.fields = this.preprocessFieldsInfo(
         processedOpts.fields,
@@ -38,10 +70,7 @@ var JSON2CSVBase = class {
       function: objectFormatter,
       object: objectFormatter
     };
-    processedOpts.formatters = {
-      ...defaultFormatters,
-      ...processedOpts.formatters
-    };
+    processedOpts.formatters = __spreadValues(__spreadValues({}, defaultFormatters), processedOpts.formatters);
     processedOpts.delimiter = processedOpts.delimiter || ",";
     processedOpts.eol = processedOpts.eol || "\n";
     processedOpts.header = processedOpts.header !== false;
@@ -67,19 +96,21 @@ var JSON2CSVBase = class {
       if (typeof fieldInfo === "object") {
         const defaultValue = "default" in fieldInfo ? fieldInfo.default : globalDefaultValue;
         if (typeof fieldInfo.value === "string") {
+          const fieldPath = fieldInfo.value;
           return {
             label: fieldInfo.label || fieldInfo.value,
-            value: fieldInfo.value.includes(".") || fieldInfo.value.includes("[") ? (row) => lodashGet(row, fieldInfo.value, defaultValue) : (row) => getProp(row, fieldInfo.value, defaultValue)
+            value: fieldInfo.value.includes(".") || fieldInfo.value.includes("[") ? (row) => lodashGet(row, fieldPath, defaultValue) : (row) => getProp(row, fieldPath, defaultValue)
           };
         }
         if (typeof fieldInfo.value === "function") {
           const label = fieldInfo.label || fieldInfo.value.name || "";
           const field = { label, default: defaultValue };
+          const valueGetter = fieldInfo.value;
           return {
             label,
             value(row) {
-              const value = fieldInfo.value(row, field);
-              return value === null || value === void 0 ? defaultValue : value;
+              const value = valueGetter(row, field);
+              return value === void 0 ? defaultValue : value;
             }
           };
         }
@@ -147,9 +178,11 @@ var JSON2CSVBase = class {
    * @returns {String} Value stringified and processed
    */
   processValue(value) {
-    return this.opts.formatters[typeof value](value);
+    const formatter = this.opts.formatters[typeof value];
+    return formatter(value);
   }
 };
 export {
+  FormatterTypes,
   JSON2CSVBase as default
 };

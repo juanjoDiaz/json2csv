@@ -24,25 +24,38 @@
     "email": "juanjo.diazmo@gmail.com"
   },
   "type": "module",
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
   "exports": {
     "./*": {
-      "import": "./src/*",
-      "require": "./dist/cjs/*"
+      "import": "./dist/mjs/*",
+      "require": "./dist/cjs/*",
+      "types": "./dist/types/*"
     },
     ".": {
-      "import": "./src/index.js",
-      "require": "./dist/cjs/index.js"
+      "import": "./dist/mjs/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.js"
     }
   },
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src test",
+    "build:cjs": "tsc --module commonjs --outDir ./dist/cjs && node ../../build-cjs.js",
+    "build:mjs": "tsc --module esnext --outDir ./dist/mjs",
+    "build": "npm run build:cjs && npm run build:mjs",
+    "pretest": "npm run build",
     "test": "npm run test:raw | tap-spec",
     "test-with-coverage": "c8 --reporter=text npm test",
     "test:raw": "node test",
     "dependencies:update-internal": "npm uninstall @json2csv/plainjs && npm install @json2csv/plainjs",
-    "build:cjs": "node ../../build-cjs.js whatwg",
-    "prepublishOnly": "npm run build:cjs"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@json2csv/plainjs": "^6.1.3"
