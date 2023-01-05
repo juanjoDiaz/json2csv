@@ -27,7 +27,7 @@ This loads the entire JSON in memory and do the whole processing in-memory while
 #### Installation
 
 ```bash
-$ npm install --save @json2csv/parsers
+$ npm install --save @json2csv/plainjs
 ```
 
 #### Usage
