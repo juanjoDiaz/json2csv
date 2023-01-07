@@ -1,4 +1,9 @@
-import { Tokenizer, TokenParser, TokenType } from '@streamparser/json';
+import {
+  Tokenizer,
+  TokenParser,
+  TokenType,
+  TokenizerError,
+} from '@streamparser/json';
 import JSON2CSVBase, {
   Json2CSVBaseOptions,
   NormalizedJson2CSVBaseOptions,
@@ -99,7 +104,11 @@ export default class JSON2CSVStreamParser<
       } else if (token === TokenType.LEFT_BRACE) {
         this.tokenParser = new TokenParser({ paths: ['$'], keepStack: false });
       } else {
-        this.onError(new Error('Data should be a JSON object or array'));
+        this.onError(
+          new Error(
+            'Data items should be objects or the "fields" option should be included'
+          )
+        );
         return;
       }
 
@@ -107,8 +116,12 @@ export default class JSON2CSVStreamParser<
 
       this.tokenParser.write({ token, value });
     };
-    tokenizer.onError = () =>
-      this.onError(new Error('Data should be a JSON object or array'));
+    tokenizer.onError = (err) =>
+      this.onError(
+        err instanceof TokenizerError
+          ? new Error('Data should be a valid JSON object or array')
+          : err
+      );
     tokenizer.onEnd = () => {
       this.pushHeaderIfNotWritten();
       this.onEnd();
@@ -165,10 +178,17 @@ export default class JSON2CSVStreamParser<
     const processedData = this.preprocessRow(data);
 
     if (!this._hasWritten) {
-      this.opts.fields = this.preprocessFieldsInfo(
-        this.opts.fields || Object.keys(processedData[0]),
-        this.opts.defaultValue
-      );
+      if (!this.opts.fields) {
+        if (typeof processedData[0] !== 'object') {
+          throw new Error(
+            'Data items should be objects or the "fields" option should be included'
+          );
+        }
+        this.opts.fields = this.preprocessFieldsInfo(
+          Object.keys(processedData[0]),
+          this.opts.defaultValue
+        );
+      }
       this.pushHeader();
     }
 

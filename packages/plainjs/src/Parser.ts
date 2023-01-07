@@ -55,13 +55,17 @@ export default class JSON2CSVParser<
   preprocessData(data: Array<TRaw> | TRaw): Array<T> {
     const processedData = Array.isArray(data) ? data : [data];
 
-    if (
-      !this.opts.fields &&
-      (processedData.length === 0 || typeof processedData[0] !== 'object')
-    ) {
-      throw new Error(
-        'Data should not be empty or the "fields" option should be included'
-      );
+    if (!this.opts.fields) {
+      if (data === undefined || data === null || processedData.length === 0) {
+        throw new Error(
+          'Data should not be empty or the "fields" option should be included'
+        );
+      }
+      if (typeof processedData[0] !== 'object') {
+        throw new Error(
+          'Data items should be objects or the "fields" option should be included'
+        );
+      }
     }
 
     if (this.opts.transforms.length === 0)

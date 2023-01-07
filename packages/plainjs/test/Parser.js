@@ -54,16 +54,50 @@ export default function (jsonFixtures, csvFixtures) {
     t.deepEqual(opts, {});
   });
 
+  testRunner.add(
+    'should error if input data is empty and fields are not set',
+    async (t) => {
+      try {
+        const parser = new Parser();
+        await parseInput(parser, jsonFixtures.empty() || undefined);
+
+        t.fail('Exception expected');
+      } catch (err) {
+        t.equal(
+          err.message,
+          'Data should not be empty or the "fields" option should be included'
+        );
+      }
+    }
+  );
+
+  testRunner.add(
+    'should error if input data is single item and not an object',
+    async (t) => {
+      try {
+        const parser = new Parser();
+        await parseInput(parser, jsonFixtures.notObjectSingleItem());
+
+        t.fail('Exception expected');
+      } catch (err) {
+        t.equal(
+          err.message,
+          'Data items should be objects or the "fields" option should be included'
+        );
+      }
+    }
+  );
+
   testRunner.add('should error if input data is not an object', async (t) => {
     try {
       const parser = new Parser();
-      await parseInput(parser, jsonFixtures.notAnObject());
+      await parseInput(parser, jsonFixtures.notObjectArray());
 
       t.fail('Exception expected');
     } catch (err) {
       t.equal(
         err.message,
-        'Data should not be empty or the "fields" option should be included'
+        'Data items should be objects or the "fields" option should be included'
       );
     }
   });

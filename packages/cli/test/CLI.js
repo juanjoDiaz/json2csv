@@ -41,19 +41,21 @@ export default function (jsonFixtures, csvFixtures) {
   });
 
   testRunner.add(
-    'should error on invalid ndjson input path without streaming',
+    'should error if ndjson input data is empty and fields are not set',
     async (t) => {
-      const opts =
-        '--fields carModel,price,color,manual --ndjson --no-streaming';
+      const opts = '--ndjson';
 
       try {
         await execAsync(
-          `${cli} -i "${getFixturePath('/json2/ndjsonInvalid.json')}" ${opts}`
+          `${cli} -i "${getFixturePath('/json/empty.json')}" ${opts}`
         );
 
-        t.fail('Exception expected.');
+        t.fail('Exception expected');
       } catch (err) {
-        t.ok(err.message.includes('Invalid input file.'));
+        t.equal(
+          err.stderr.split('\n')[2].substring(7),
+          'Data should not be empty or the "fields" option should be included'
+        );
       }
     }
   );
@@ -89,6 +91,27 @@ export default function (jsonFixtures, csvFixtures) {
     t.equal(csv, csvFixtures.ndjson);
   });
 
+  testRunner.add(
+    'should error on invalid ndjson input path without streaming',
+    async (t) => {
+      const opts =
+        '--fields carModel,price,color,manual --ndjson --no-streaming';
+
+      try {
+        await execAsync(
+          `${cli} -i "${getFixturePath('/json/ndjsonInvalid.json')}" ${opts}`
+        );
+
+        t.fail('Exception expected.');
+      } catch (err) {
+        t.equal(
+          err.stderr.split('\n')[2].substring(7),
+          "Invalid ND-JSON couldn't be parsed"
+        );
+      }
+    }
+  );
+
   testRunner.add('should error on invalid input file path', async (t) => {
     try {
       await execAsync(`${cli} -i "${getFixturePath('/json2/default.json')}"`);
@@ -116,15 +139,36 @@ export default function (jsonFixtures, csvFixtures) {
     }
   );
 
+  testRunner.add(
+    'should error if input data is single item and not an object',
+    async (t) => {
+      try {
+        await execAsync(
+          `${cli} -i "${getFixturePath('/json/notObjectSingleItem.json')}"`
+        );
+
+        t.fail('Exception expected');
+      } catch (err) {
+        t.equal(
+          err.stderr.split('\n')[2].substring(7),
+          'Data items should be objects or the "fields" option should be included'
+        );
+      }
+    }
+  );
+
   testRunner.add('should error if input data is not an object', async (t) => {
     try {
       await execAsync(
-        `${cli} -i "${getFixturePath('/json2/notAnObject.json')}"`
+        `${cli} -i "${getFixturePath('/json/notObjectArray.json')}"`
       );
 
       t.fail('Exception expected.');
     } catch (err) {
-      t.ok(err.message.includes('Invalid input file.'));
+      t.equal(
+        err.stderr.split('\n')[2].substring(7),
+        'Data items should be objects or the "fields" option should be included'
+      );
     }
   });
 

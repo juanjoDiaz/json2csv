@@ -136,14 +136,34 @@ export default function (jsonFixtures, csvFixtures) {
     }
   );
 
+  testRunner.add(
+    'should error if input data is single item and not an object',
+    async (t) => {
+      try {
+        const parser = new Parser();
+        await parseInput(parser, `"${jsonFixtures.notObjectSingleItem()}"`);
+
+        t.fail('Exception expected');
+      } catch (err) {
+        t.equal(
+          err.message,
+          'Data items should be objects or the "fields" option should be included'
+        );
+      }
+    }
+  );
+
   testRunner.add('should error if input data is not an object', async (t) => {
     try {
       const parser = new Parser();
-      await parseInput(parser, `"${jsonFixtures.notAnObject()}"`);
+      await parseInput(parser, jsonFixtures.notObjectArray());
 
       t.fail('Exception expected');
     } catch (err) {
-      t.equal(err.message, 'Data should be a JSON object or array');
+      t.equal(
+        err.message,
+        'Data items should be objects or the "fields" option should be included'
+      );
     }
   });
 
@@ -175,7 +195,7 @@ export default function (jsonFixtures, csvFixtures) {
 
         t.fail('Exception expected');
       } catch (err) {
-        t.equal(err.message, 'Data should be a JSON object or array');
+        t.equal(err.message, 'Data should be a valid JSON object or array');
       }
     }
   );

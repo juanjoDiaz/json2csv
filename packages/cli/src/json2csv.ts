@@ -332,7 +332,7 @@ async function processStream<TRaw extends object, T extends object>(
       processedError = new Error(`Invalid config file. (${err.message})`);
     }
     // eslint-disable-next-line no-console
-    console.error('test', processedError);
+    console.error(processedError);
     process.exit(1);
   }
 })(programOpts);

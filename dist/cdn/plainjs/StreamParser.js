@@ -19,7 +19,12 @@ var __spreadValues = (a, b) => {
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 
 // packages/plainjs/src/StreamParser.ts
-import { Tokenizer, TokenParser, TokenType } from "https://cdn.jsdelivr.net/npm/@streamparser/json@0.0.12/dist/mjs/index.mjs";
+import {
+  Tokenizer,
+  TokenParser,
+  TokenType,
+  TokenizerError
+} from "https://cdn.jsdelivr.net/npm/@streamparser/json@0.0.12/dist/mjs/index.mjs";
 import JSON2CSVBase from "./BaseParser.js";
 var JSON2CSVStreamParser = class extends JSON2CSVBase {
   constructor(opts, asyncOpts) {
@@ -75,7 +80,7 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
     return tokenizer;
   }
   getBinaryModeTokenizer(asyncOpts) {
-    const tokenizer = new Tokenizer();
+    const tokenizer = new Tokenizer(asyncOpts);
     tokenizer.onToken = ({ token, value }) => {
       if (token === TokenType.LEFT_BRACKET) {
         this.tokenParser = new TokenParser({
@@ -85,13 +90,19 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
       } else if (token === TokenType.LEFT_BRACE) {
         this.tokenParser = new TokenParser({ paths: ["$"], keepStack: false });
       } else {
-        this.onError(new Error("Data should be a JSON object or array"));
+        this.onError(
+          new Error(
+            'Data items should be objects or the "fields" option should be included'
+          )
+        );
         return;
       }
       this.configureCallbacks(tokenizer, this.tokenParser);
       this.tokenParser.write({ token, value });
     };
-    tokenizer.onError = () => this.onError(new Error("Data should be a JSON object or array"));
+    tokenizer.onError = (err) => this.onError(
+      err instanceof TokenizerError ? new Error("Data should be a valid JSON object or array") : err
+    );
     tokenizer.onEnd = () => {
       this.pushHeaderIfNotWritten();
       this.onEnd();
@@ -140,10 +151,17 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
   pushLine(data) {
     const processedData = this.preprocessRow(data);
     if (!this._hasWritten) {
-      this.opts.fields = this.preprocessFieldsInfo(
-        this.opts.fields || Object.keys(processedData[0]),
-        this.opts.defaultValue
-      );
+      if (!this.opts.fields) {
+        if (typeof processedData[0] !== "object") {
+          throw new Error(
+            'Data items should be objects or the "fields" option should be included'
+          );
+        }
+        this.opts.fields = this.preprocessFieldsInfo(
+          Object.keys(processedData[0]),
+          this.opts.defaultValue
+        );
+      }
       this.pushHeader();
     }
     processedData.forEach((row) => {
