@@ -37,13 +37,13 @@ There is a number of built-in formatters provided by this package.
 
 ```js
 import {
-  default: defaultFormatter,
-  number: numberFormatter,
-  string: stringFormatter,
-  stringQuoteOnlyIfNecessary: stringQuoteOnlyIfNecessaryFormatter,
-  stringExcel: stringExcelFormatter,
-  symbol: symbolFormatter,
-  object: objectFormatter,
+  default as defaultFormatter,
+  number as numberFormatter,
+  string as stringFormatter,
+  stringQuoteOnlyIfNecessary as stringQuoteOnlyIfNecessaryFormatter,
+  stringExcel as stringExcelFormatter,
+  symbol as symbolFormatter,
+  object as objectFormatter,
 } from '@json2csv/formatters';
 ```
 
@@ -239,7 +239,7 @@ As with the sample transform in the previous section, the reason to wrap the act
 Keep in mind that the above example doesn't quote or escape the string which is problematic. A more realistic example could use our built-in string formatted to do the quoting and escaping like:
 
 ```js
-import { string: defaultStringFormatter } from 'json2csv/formatters';
+import { string as defaultStringFormatter } from 'json2csv/formatters';
 
 const fixedLengthStringFormatter = (stringLength, ellipsis = '...', stringFormatter = defaultStringFormatter()) =>
   (item) =>
@@ -256,7 +256,7 @@ Formatters are configured in the `formatters` option when creating a parser.
 
 ```js
 import { Parser } from '@json2csv/plainjs';
-import { number: numberFormatter } from '@json2csv/formatters';
+import { number as numberFormatter } from '@json2csv/formatters';
 import { fixedLengthStringFormatter } from './custom-formatters';
 
 try {
