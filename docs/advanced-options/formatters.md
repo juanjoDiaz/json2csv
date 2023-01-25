@@ -34,13 +34,13 @@ $ npm install --save @json2csv/formatters
 
 ```js
 import {
-  default: defaultFormatter,
-  number: numberFormatter,
-  string: stringFormatter,
-  stringQuoteOnlyIfNecessary: stringQuoteOnlyIfNecessaryFormatter,
-  stringExcel: stringExcelFormatter,
-  symbol: symbolFormatter,
-  object: objectFormatter,
+  default as defaultFormatter,
+  number as numberFormatter,
+  string as stringFormatter,
+  stringQuoteOnlyIfNecessary as stringQuoteOnlyIfNecessaryFormatter,
+  stringExcel as stringExcelFormatter,
+  symbol as symbolFormatter,
+  object as objectFormatter,
 } from '@json2csv/formatters';
 ```
 
@@ -54,13 +54,13 @@ $ yarn add --save @json2csv/formatters
 
 ```js
 import {
-  default: defaultFormatter,
-  number: numberFormatter,
-  string: stringFormatter,
-  stringQuoteOnlyIfNecessary: stringQuoteOnlyIfNecessaryFormatter,
-  stringExcel: stringExcelFormatter,
-  symbol: symbolFormatter,
-  object: objectFormatter,
+  default as defaultFormatter,
+  number as numberFormatter,
+  string as stringFormatter,
+  stringQuoteOnlyIfNecessary as stringQuoteOnlyIfNecessaryFormatter,
+  stringExcel as stringExcelFormatter,
+  symbol as symbolFormatter,
+  object as objectFormatter,
 } from '@json2csv/formatters';
 ```
 
@@ -279,7 +279,7 @@ As with the sample transform in the previous section, the reason to wrap the act
 Keep in mind that the above example doesn't quote or escape the string which is problematic. A more realistic example could use our built-in string formatted to do the quoting and escaping like:
 
 ```js
-import { string: defaultStringFormatter } from 'json2csv/formatters';
+import { string as defaultStringFormatter } from 'json2csv/formatters';
 
 const fixedLengthStringFormatter = (stringLength, ellipsis = '...', stringFormatter = defaultStringFormatter()) =>
   (item) =>
@@ -298,7 +298,7 @@ Formatters are configured in the `formatters` option when creating a parser.
 
 ```js
 import { Parser } from '@json2csv/plainjs';
-import { number: numberFormatter } from '@json2csv/formatters';
+import { number as numberFormatter } from '@json2csv/formatters';
 import { fixedLengthStringFormatter } from './custom-formatters';
 
 try {
@@ -320,7 +320,7 @@ try {
 
 ```js
 import { StreamParser } from '@json2csv/plainjs';
-import { number: numberFormatter } from '@json2csv/formatters';
+import { number as numberFormatter } from '@json2csv/formatters';
 import { fixedLengthStringFormatter } from './custom-formatters';
 
 
@@ -347,7 +347,7 @@ parser.onLine = (line) => console.log(line));
 ```js
 import { createReadStream, createWriteStream } from 'fs';
 import { Transform } from '@json2csv/ node';
-import { number: numberFormatter } from '@json2csv/formatters';
+import { number as numberFormatter } from '@json2csv/formatters';
 import { fixedLengthStringFormatter } from './custom-formatters';
 
 const input = createReadStream(inputPath, { encoding: 'utf8' });
@@ -372,7 +372,7 @@ json2csv
 
 ```js
 import { AsyncParser } from '@json2csv/node';
-import { number: numberFormatter } from '@json2csv/formatters';
+import { number as numberFormatter } from '@json2csv/formatters';
 import { fixedLengthStringFormatter } from './custom-formatters';
 
 const opts = {
@@ -390,7 +390,7 @@ let csv = await parser.parse(data).promise();
 
 ```js
 import { TransformStream } from '@json2csv/whatwg';
-import { number: numberFormatter } from '@json2csv/formatters';
+import { number as numberFormatter } from '@json2csv/formatters';
 import { fixedLengthStringFormatter } from './custom-formatters';
 
 const opts = {
@@ -413,7 +413,7 @@ parser
 
 ```js
 import { AsyncParser } from '@json2csv/whatwg';
-import { number: numberFormatter } from '@json2csv/formatters';
+import { number as numberFormatter } from '@json2csv/formatters';
 import { fixedLengthStringFormatter } from './custom-formatters';
 
 const opts = {
