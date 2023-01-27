@@ -104,7 +104,7 @@ const parser = new Transform();
 const processor = input.pipe(parser).pipe(output);
 
 // You can also listen for events on the conversion and see how the header or the lines are coming out.
-json2csv
+parser
   .on('header', (header) => console.log(header))
   .on('line', (line) => console.log(line));
 ```
