@@ -25,13 +25,6 @@
   },
   "type": "module",
   "types": "./dist/types/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
-  },
   "exports": {
     "./*": {
       "import": "./dist/mjs/*",
@@ -41,7 +34,7 @@
     ".": {
       "import": "./dist/mjs/index.js",
       "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.js"
+      "types": "./dist/types/index.d.ts"
     }
   },
   "main": "src/index.js",
