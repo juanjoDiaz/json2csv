@@ -1,6 +1,6 @@
-const tape = require('tape');
+import tape from 'tape';
 
-class TestRunner {
+export default class TestRunner {
   constructor(name) {
     this.name = name;
     this.tests = [];
@@ -42,5 +42,3 @@ class TestRunner {
     }
   }
 }
-
-module.exports = TestRunner;

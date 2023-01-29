@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   fields: [
     {
       label: 'Value1',

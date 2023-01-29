@@ -1,21 +1,5 @@
 {
   "env": {
-    "es6": true,
     "node": true
-  },
-  "parser": "espree",
-  "parserOptions": {
-    "ecmaVersion": 13
-  },
-  "plugins": [
-    "prettier"
-  ],
-  "extends": [
-    "eslint:recommended",
-    "prettier",
-    "plugin:prettier/recommended"
-  ],
-  "rules": {
-    "@typescript-eslint/no-var-requires": "off"
   }
 }

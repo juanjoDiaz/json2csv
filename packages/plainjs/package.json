@@ -44,7 +44,7 @@
     "build:mjs": "tsc --module esnext --outDir ./dist/mjs",
     "build": "npm run build:cjs && npm run build:mjs",
     "pretest": "npm run build",
-    "test": "npm run test:raw | tap-spec",
+    "test": "node test/CommonJS.cjs && npm run test:raw | tap-spec",
     "test-with-coverage": "c8 --reporter=text npm test",
     "test:raw": "node test",
     "dependencies:update-internal": "npm uninstall @json2csv/formatters && npm install @json2csv/formatters",

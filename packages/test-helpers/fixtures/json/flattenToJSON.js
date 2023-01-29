@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   hello: {
     world: {
       again: 'good morning',
