@@ -2,13 +2,13 @@ import os from 'os';
 import { createReadStream } from 'fs';
 import { readdir, readFile } from 'fs/promises';
 import { dirname, extname, join, parse } from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { Readable } from 'stream';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const csvDirectory = join(__dirname, './fixtures/csv');
-const jsonDirectory = join(__dirname, './fixtures/json');
+const csvDirectory = join(__dirname, 'fixtures', 'csv');
+const jsonDirectory = join(__dirname, 'fixtures', 'json');
 
 function getImportAssertion(filePath) {
   return extname(filePath).toLowerCase() === '.json'
@@ -33,8 +33,9 @@ async function loadJSON() {
         const filePath = join(jsonDirectory, filename);
         let content;
         try {
-          content = (await import(filePath, getImportAssertion(filePath)))
-            .default;
+          content = (
+            await import(pathToFileURL(filePath), getImportAssertion(filename))
+          ).default;
         } catch (e) {
           content = await readFile(filePath, 'utf-8');
         }
@@ -59,7 +60,7 @@ async function loadJSONStreams() {
         try {
           parsedContent = (
             await import(
-              join(jsonDirectory, filename),
+              pathToFileURL(join(jsonDirectory, filename)),
               getImportAssertion(filename)
             )
           ).default;
