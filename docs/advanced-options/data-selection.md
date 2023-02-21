@@ -82,7 +82,7 @@ json2csvParser.onData = (data) => console.log(csv);
 json2csvParser.onError = (err) => console.error(err);
 json2csvParser.onEnd = () => console.log(csv);
 
-data.forEach(record => json2csvParser.push(record));
+data.forEach(record => json2csvParser.write(record));
 ```
 
 #### **Node Transform**
@@ -239,7 +239,7 @@ json2csvParser.onData = (data) => console.log(csv);
 json2csvParser.onError = (err) => console.error(err);
 json2csvParser.onEnd = () => console.log(csv);
 
-data.forEach(record => json2csvParser.push(record));
+data.forEach(record => json2csvParser.write(record));
 ```
 
 #### **Node Transform**
@@ -447,7 +447,7 @@ json2csvParser.onData = (data) => console.log(csv);
 json2csvParser.onError = (err) => console.error(err);
 json2csvParser.onEnd = () => console.log(csv);
 
-data.forEach(record => json2csvParser.push(record));
+data.forEach(record => json2csvParser.write(record));
 ```
 
 #### **Node Transform**
