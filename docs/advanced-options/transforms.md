@@ -129,7 +129,7 @@ parser.onData = (chunk) => (csv += chunk.toString()));
 parser.onEnd = () => console.log(csv));
 parser.onError = (err) => console.error(err));
 
-data.forEach(record => parser.push(record));
+data.forEach(record => parser.write(record));
 ```
 
 #### **Node Transform**
