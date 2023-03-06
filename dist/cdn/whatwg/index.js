@@ -1,5 +1,7 @@
 // packages/whatwg/src/index.js
-import { default as default2 } from "./TransformStream.js";
+import { default as default2 } from "./AsyncParser.js";
+import { default as default3 } from "./TransformStream.js";
 export {
-  default2 as TransformStream
+  default2 as AsyncParser,
+  default3 as TransformStream
 };
