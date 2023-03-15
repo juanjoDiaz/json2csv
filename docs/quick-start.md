@@ -4,7 +4,7 @@
 
 json2csv parsers are offered in various flavours:
 
-* **[Parser](parsers/parser.md):** Pure Javascript synchronous parser. High-performant and runs both node.js and the browser. It´s the fastes but loads both the JSON and the resulting CSV in memory, and block the event loop while processing. Not recommended unless the JSON data is small.
+* **[Parser](parsers/parser.md):** Pure Javascript synchronous parser. High-performant and runs both node.js and the browser. It´s the fastest but loads both the JSON and the resulting CSV in memory, and block the event loop while processing. Not recommended unless the JSON data is small.
 * **[Stream Parser](parsers/stream-parser.md):** Pure Javascript stream parser. High-performant and runs both node.js and the browser. It keeps a consistent memory footprint and doesn't block the event loop. It's the base of all other parsers. Recommended to build your own parser.
 * **[Node Transform](parsers/node-transform.md):** Wraps the `Stream Parser` in a Node.js Transform Stream. Recommended for Node.js users using stream.
 * **[Node Async Parser](parsers/node-async-parser.md):** Wraps the `Node Transform` to offer a friendly promise-based API similar to the synchronous `Parser`. Recommended for Node.js users that want a higher abstraction level.
