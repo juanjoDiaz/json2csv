@@ -32,10 +32,11 @@
     "test": "npm run test:raw | tap-spec",
     "test-with-coverage": "c8 --reporter=text npm test",
     "test:raw": "node test",
-    "deprendencies:update-internal": "npm uninstall @json2csv/node && npm install @json2csv/node"
+    "deprendencies:update-internal": "npm uninstall @json2csv/node @json2csv/transforms && npm install @json2csv/node @json2csv/transforms"
   },
   "dependencies": {
     "@json2csv/node": "^6.1.2",
+    "@json2csv/transforms": "^6.1.2",
     "commander": "^9.3.0"
   }
 }
