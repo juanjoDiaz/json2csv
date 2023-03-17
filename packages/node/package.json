@@ -40,7 +40,7 @@
     "test": "npm run test:raw | tap-spec",
     "test-with-coverage": "c8 --reporter=text npm test",
     "test:raw": "node test",
-    "deprendencies:update-internal": "npm uninstall @json2csv/plainjs && npm install @json2csv/plainjs",
+    "dependencies:update-internal": "npm uninstall @json2csv/plainjs && npm install @json2csv/plainjs",
     "build:cjs": "node ../../build-cjs.js node",
     "prepublishOnly": "npm run build:cjs"
   },
