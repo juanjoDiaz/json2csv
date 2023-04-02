@@ -102,6 +102,9 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
     }
     this.pushHeader();
   }
+  /**
+   * Generate the csv header and pushes it downstream.
+   */
   pushHeader() {
     if (this.opts.withBOM) {
       this.onData("\uFEFF");
@@ -113,6 +116,11 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
       this._hasWritten = true;
     }
   }
+  /**
+   * Transforms an incoming json data to csv and pushes it downstream.
+   *
+   * @param {Object} data JSON object to be converted in a CSV row
+   */
   pushLine(data) {
     const processedData = this.preprocessRow(data);
     if (!this._hasWritten) {
@@ -130,6 +138,8 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
       this._hasWritten = true;
     });
   }
+  // No idea why eslint doesn't detect the usage of these
+  /* eslint-disable no-unused-vars */
   onHeader(header) {
   }
   onLine(line) {
@@ -140,6 +150,7 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
   }
   onEnd() {
   }
+  /* eslint-enable no-unused-vars */
 };
 export {
   JSON2CSVStreamParser as default

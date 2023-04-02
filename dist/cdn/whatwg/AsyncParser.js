@@ -7,6 +7,12 @@ var JSON2CSVNodeAsyncParser = class {
     this.writableStrategy = writableStrategy;
     this.readableStrategy = readableStrategy;
   }
+  /**
+   * Main function that converts json to csv.
+   *
+   * @param {Stream|Array|Object} data Array of JSON objects to be converted to CSV
+   * @returns {Stream} A stream producing the CSV formated data as a string
+   */
   parse(data) {
     if (typeof data === "string" || ArrayBuffer.isView(data)) {
       data = new ReadableStream({

@@ -5,7 +5,7 @@ function getProp(obj, path, defaultValue) {
 }
 function flattenReducer(acc, arr) {
   try {
-    acc.push(...arr);
+    Array.isArray(arr) ? acc.push(...arr) : acc.push(arr);
     return acc;
   } catch (err) {
     return acc.concat(arr);

@@ -41,7 +41,7 @@ export default class JSON2CSVStreamParser extends JSON2CSVBase {
       if (!this.tokenParser.isEnded) this.tokenParser.end();
     };
 
-    tokenParser.onValue = (value) => this.pushLine(value);
+    tokenParser.onValue = ({ value }) => this.pushLine(value);
     tokenParser.onError = (err) => this.onError(err);
     tokenParser.onEnd = () => {
       this.pushHeaderIfNotWritten();
@@ -62,7 +62,7 @@ export default class JSON2CSVStreamParser extends JSON2CSVBase {
 
   getBinaryModeTokenizer(asyncOpts) {
     const tokenizer = new Tokenizer(asyncOpts);
-    tokenizer.onToken = (token, value, offset) => {
+    tokenizer.onToken = ({ token, value, offset }) => {
       if (token === TokenType.LEFT_BRACKET) {
         this.tokenParser = new TokenParser({
           paths: ['$.*'],
@@ -77,7 +77,7 @@ export default class JSON2CSVStreamParser extends JSON2CSVBase {
 
       this.configureCallbacks(tokenizer, this.tokenParser);
 
-      this.tokenParser.write(token, value, offset);
+      this.tokenParser.write({ token, value, offset });
     };
     tokenizer.onError = () =>
       this.onError(new Error('Data should be a JSON object or array'));

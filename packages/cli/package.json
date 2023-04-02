@@ -37,6 +37,6 @@
   "dependencies": {
     "@json2csv/node": "^6.1.2",
     "@json2csv/transforms": "^6.1.2",
-    "commander": "^9.3.0"
+    "commander": "^10.0.0"
   }
 }

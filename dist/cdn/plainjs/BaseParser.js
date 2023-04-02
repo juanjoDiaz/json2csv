@@ -10,6 +10,12 @@ var JSON2CSVBase = class {
   constructor(opts) {
     this.opts = this.preprocessOpts(opts);
   }
+  /**
+   * Check passing opts and set defaults.
+   *
+   * @param {Json2CsvOptions} opts Options object containing fields,
+   * delimiter, default value, quote mark, header, etc.
+   */
   preprocessOpts(opts) {
     const processedOpts = Object.assign({}, opts);
     if (processedOpts.fields) {
@@ -43,6 +49,13 @@ var JSON2CSVBase = class {
     processedOpts.withBOM = processedOpts.withBOM || false;
     return processedOpts;
   }
+  /**
+   * Check and normalize the fields configuration.
+   *
+   * @param {(string|object)[]} fields Fields configuration provided by the user
+   * or inferred from the data
+   * @returns {object[]} preprocessed FieldsInfo array
+   */
   preprocessFieldsInfo(fields, globalDefaultValue) {
     return fields.map((fieldInfo) => {
       if (typeof fieldInfo === "string") {
@@ -76,6 +89,11 @@ var JSON2CSVBase = class {
       );
     });
   }
+  /**
+   * Create the title row with all the provided fields as column headings
+   *
+   * @returns {String} titles as a string
+   */
   getHeader() {
     return fastJoin(
       this.opts.fields.map(
@@ -84,12 +102,22 @@ var JSON2CSVBase = class {
       this.opts.delimiter
     );
   }
+  /**
+   * Preprocess each object according to the given transforms (unwind, flatten, etc.).
+   * @param {Object} row JSON object to be converted in a CSV row
+   */
   preprocessRow(row) {
     return this.opts.transforms.reduce(
       (rows, transform) => rows.map((row2) => transform(row2)).reduce(flattenReducer, []),
       [row]
     );
   }
+  /**
+   * Create the content of a specific CSV row
+   *
+   * @param {Object} row JSON object to be converted in a CSV row
+   * @returns {String} CSV string (row)
+   */
   processRow(row) {
     if (!row) {
       return void 0;
@@ -102,9 +130,22 @@ var JSON2CSVBase = class {
     }
     return fastJoin(processedRow, this.opts.delimiter);
   }
+  /**
+   * Create the content of a specfic CSV row cell
+   *
+   * @param {Object} row JSON object representing the  CSV row that the cell belongs to
+   * @param {FieldInfo} fieldInfo Details of the field to process to be a CSV cell
+   * @returns {String} CSV string (cell)
+   */
   processCell(row, fieldInfo) {
     return this.processValue(fieldInfo.value(row));
   }
+  /**
+   * Create the content of a specfic CSV row cell
+   *
+   * @param {Any} value Value to be included in a CSV cell
+   * @returns {String} Value stringified and processed
+   */
   processValue(value) {
     return this.opts.formatters[typeof value](value);
   }
