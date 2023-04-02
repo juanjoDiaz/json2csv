@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/formatters",
-  "version": "6.1.2",
+  "version": "6.1.3",
   "description": "json2csv built-in formatters. A formatter is a function that receives the raw js value of a given type and formats it as a valid CSV cell.",
   "keywords": [
     "json",

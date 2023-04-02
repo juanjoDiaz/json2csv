@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.1.3](https://github.com/juanjodiaz/json2csv/compare/v6.1.2...v6.1.3) (2023-04-02)
+
+
+### Bug Fixes
+
+* add AsyncParser to whatwg export ([81ada93](https://github.com/juanjodiaz/json2csv/commit/81ada93184ed96bbc43d95fb2cfb6aa545b0e017))
+* add transform dependency to CLI ([e06961c](https://github.com/juanjodiaz/json2csv/commit/e06961c4308ead917094e8bd6f29357eb21901b4))
+
 ### [6.1.2](https://github.com/juanjodiaz/json2csv/compare/v6.1.1...v6.1.2) (2022-11-14)
 
 

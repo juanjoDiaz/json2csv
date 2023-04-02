@@ -1,5 +1,5 @@
 // packages/plainjs/src/StreamParser.js
-import { Tokenizer, TokenParser, TokenType } from "https://cdn.jsdelivr.net/npm/@streamparser/json@0.0.9/dist/mjs/index.mjs";
+import { Tokenizer, TokenParser, TokenType } from "https://cdn.jsdelivr.net/npm/@streamparser/json@0.0.12/dist/mjs/index.mjs";
 import JSON2CSVBase from "./BaseParser.js";
 var JSON2CSVStreamParser = class extends JSON2CSVBase {
   constructor(opts, asyncOpts) {
@@ -37,7 +37,7 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
       if (!this.tokenParser.isEnded)
         this.tokenParser.end();
     };
-    tokenParser.onValue = (value) => this.pushLine(value);
+    tokenParser.onValue = ({ value }) => this.pushLine(value);
     tokenParser.onError = (err) => this.onError(err);
     tokenParser.onEnd = () => {
       this.pushHeaderIfNotWritten();
@@ -56,7 +56,7 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
   }
   getBinaryModeTokenizer(asyncOpts) {
     const tokenizer = new Tokenizer(asyncOpts);
-    tokenizer.onToken = (token, value, offset) => {
+    tokenizer.onToken = ({ token, value, offset }) => {
       if (token === TokenType.LEFT_BRACKET) {
         this.tokenParser = new TokenParser({
           paths: ["$.*"],
@@ -69,7 +69,7 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
         return;
       }
       this.configureCallbacks(tokenizer, this.tokenParser);
-      this.tokenParser.write(token, value, offset);
+      this.tokenParser.write({ token, value, offset });
     };
     tokenizer.onError = () => this.onError(new Error("Data should be a JSON object or array"));
     tokenizer.onEnd = () => {
