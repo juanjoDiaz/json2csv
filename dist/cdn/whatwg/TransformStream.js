@@ -47,6 +47,7 @@ var JSON2CSVWHATWGTransformer = class extends StreamParser {
   }
 };
 var JSON2CSVWHATWGTransformStream = class extends TransformStream {
+  // TODO should be (event: Event): boolean
   constructor(opts = {}, asyncOpts = {}, writableStrategy, readableStrategy) {
     const transformer = new JSON2CSVWHATWGTransformer(opts, asyncOpts);
     super(transformer, writableStrategy, readableStrategy);

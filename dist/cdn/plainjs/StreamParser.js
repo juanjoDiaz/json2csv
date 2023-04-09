@@ -109,6 +109,7 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
     };
     return tokenizer;
   }
+  // TODO this should be narrowed based on options
   write(data) {
     this.tokenizer.write(data);
   }
@@ -174,7 +175,7 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
     });
   }
   // No idea why eslint doesn't detect the usage of these
-  /* eslint-disable no-unused-vars */
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   onHeader(header) {
   }
   onLine(line) {
@@ -185,7 +186,7 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
   }
   onEnd() {
   }
-  /* eslint-enable no-unused-vars */
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 };
 export {
   JSON2CSVStreamParser as default

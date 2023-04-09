@@ -174,7 +174,7 @@ var JSON2CSVBase = class {
   /**
    * Create the content of a specfic CSV row cell
    *
-   * @param {Any} value Value to be included in a CSV cell
+   * @param {T} value Value to be included in a CSV cell
    * @returns {String} Value stringified and processed
    */
   processValue(value) {
