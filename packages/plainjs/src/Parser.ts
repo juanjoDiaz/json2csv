@@ -1,4 +1,4 @@
-import JSON2CSVBase, { Json2CSVBaseOptions } from './BaseParser.js';
+import JSON2CSVBase, { type Json2CSVBaseOptions } from './BaseParser.js';
 import { flattenReducer, fastJoin } from './utils.js';
 
 export type ParserOptions<TRaw, T> = Json2CSVBaseOptions<TRaw, T>;

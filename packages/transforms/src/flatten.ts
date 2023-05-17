@@ -1,4 +1,4 @@
-import Transform from './Transform.js';
+import type Transform from './Transform.js';
 
 // type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
 // type FlattenedObject<T, K extends keyof T> = UnionToIntersection<T[K]>;

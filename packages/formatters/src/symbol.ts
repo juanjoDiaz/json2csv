@@ -1,4 +1,4 @@
-import Formatter from './Formatter.js';
+import type Formatter from './Formatter.js';
 import defaulStringFormatter from './string.js';
 
 export default function symbolFormatter(

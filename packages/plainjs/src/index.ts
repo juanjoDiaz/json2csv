@@ -1,14 +1,14 @@
 export {
   default as BaseParser,
-  FieldValueGetterInfo,
-  FieldValueGetterFnWithoutField,
-  FieldValueGetterFnWithField,
-  FieldInfo,
+  type FieldValueGetterInfo,
+  type FieldValueGetterFnWithoutField,
+  type FieldValueGetterFnWithField,
+  type FieldInfo,
   FormatterTypes,
-  FormattersOptions,
+  type FormattersOptions,
 } from './BaseParser.js';
-export { default as Parser, ParserOptions } from './Parser.js';
+export { default as Parser, type ParserOptions } from './Parser.js';
 export {
   default as StreamParser,
-  StreamParserOptions,
+  type StreamParserOptions,
 } from './StreamParser.js';

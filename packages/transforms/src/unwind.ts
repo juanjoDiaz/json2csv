@@ -1,5 +1,5 @@
 import lodashGet from 'lodash.get';
-import Transform from './Transform.js';
+import type Transform from './Transform.js';
 import { setProp, unsetProp, flattenReducer } from './utils.js';
 
 function getUnwindablePaths<T extends object>(

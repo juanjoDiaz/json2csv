@@ -8,20 +8,26 @@ import {
 } from 'fs';
 import os from 'os';
 import { isAbsolute, join, extname } from 'path';
-import { Command, OptionValues } from 'commander';
+import { Command, type OptionValues } from 'commander';
 
 import { flatten, unwind } from '@json2csv/transforms';
 import {
   string as stringFormatter,
   stringExcel as stringExcelFormatter,
 } from '@json2csv/formatters';
-import { Parser, ParserOptions, StreamParserOptions } from '@json2csv/plainjs';
+import {
+  Parser,
+  type ParserOptions,
+  type StreamParserOptions,
+} from '@json2csv/plainjs';
 import { Transform as Json2csvTransform } from '@json2csv/node';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore not use resolveJSONmodule so package.json is not copied to bin
 import pkg from '../package.json' assert { type: 'json' };
 import parseNdJson from './utils/parseNdjson.js';
-import TablePrinter, { TablePrinterOptions } from './utils/TablePrinter.js';
+import TablePrinter, {
+  type TablePrinterOptions,
+} from './utils/TablePrinter.js';
 
 const { readFile, writeFile } = fsPromises;
 

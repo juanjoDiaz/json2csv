@@ -1,7 +1,7 @@
 import {
-  ParserOptions,
+  type ParserOptions,
   StreamParser,
-  StreamParserOptions,
+  type StreamParserOptions,
 } from '@json2csv/plainjs';
 
 class JSON2CSVWHATWGTransformer<TRaw extends object, T extends object>

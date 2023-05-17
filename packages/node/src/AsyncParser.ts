@@ -1,5 +1,5 @@
-import { Readable, TransformOptions } from 'stream';
-import { ParserOptions } from '@json2csv/plainjs';
+import { Readable, type TransformOptions } from 'stream';
+import { type ParserOptions } from '@json2csv/plainjs';
 import JSON2CSVNodeTransform from './Transform.js';
 
 export default class JSON2CSVNodeAsyncParser<

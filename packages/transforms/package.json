@@ -37,7 +37,7 @@
   "main": "dist/mjs/index.js",
   "scripts": {
     "lint": "eslint src",
-    "build:cjs": "tsc --module commonjs --outDir ./dist/cjs && node ../../build-cjs.js",
+    "build:cjs": "tsc --module commonjs --verbatimModuleSyntax false --outDir ./dist/cjs && node ../../build-cjs.js",
     "build:mjs": "tsc --module esnext --outDir ./dist/mjs",
     "build": "npm run build:cjs && npm run build:mjs",
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,4 +1,4 @@
-import { ParserOptions, StreamParserOptions } from '@json2csv/plainjs';
+import type { ParserOptions, StreamParserOptions } from '@json2csv/plainjs';
 import JSON2CSVWHATWGTransformStream from './TransformStream.js';
 
 export default class JSON2CSVNodeAsyncParser<

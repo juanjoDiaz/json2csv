@@ -5,8 +5,8 @@ import {
   TokenizerError,
 } from '@streamparser/json';
 import JSON2CSVBase, {
-  Json2CSVBaseOptions,
-  NormalizedJson2CSVBaseOptions,
+  type Json2CSVBaseOptions,
+  type NormalizedJson2CSVBaseOptions,
 } from './BaseParser.js';
 
 export interface StreamParserOptions {

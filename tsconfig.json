@@ -13,7 +13,7 @@
     /* Interop Constraints */
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    // "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": true,
     /* Type Checking */
     "allowUnreachableCode": false,
     // "exactOptionalPropertyTypes": true,

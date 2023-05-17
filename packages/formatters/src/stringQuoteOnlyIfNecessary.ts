@@ -1,5 +1,7 @@
-import Formatter from './Formatter.js';
-import defaulStringFormatter, { StringFormatterOptions } from './string.js';
+import type Formatter from './Formatter.js';
+import defaulStringFormatter, {
+  type StringFormatterOptions,
+} from './string.js';
 
 export interface StringFQuoteOnlyIfNecesaryFormatterOptions
   extends StringFormatterOptions {

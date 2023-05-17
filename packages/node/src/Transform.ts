@@ -1,9 +1,13 @@
 import os from 'os';
-import { Transform, TransformOptions, TransformCallback } from 'stream';
 import {
-  ParserOptions,
+  Transform,
+  type TransformOptions,
+  type TransformCallback,
+} from 'stream';
+import {
+  type ParserOptions,
   StreamParser,
-  StreamParserOptions,
+  type StreamParserOptions,
 } from '@json2csv/plainjs';
 
 export default class JSON2CSVNodeTransform<

@@ -1,4 +1,4 @@
-import Formatter from './Formatter.js';
+import type Formatter from './Formatter.js';
 
 export interface StringFormatterOptions {
   quote?: string;

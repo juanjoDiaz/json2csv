@@ -1,10 +1,5 @@
 {
   "env": {
     "node": true
-  },
-  "rules": {
-    "prettier/prettier": ["warn", {
-      "endOfLine": "auto"
-    }]
   }
 }
