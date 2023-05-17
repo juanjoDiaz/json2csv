@@ -1,6 +1,9 @@
 {
   "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "noPropertyAccessFromIndexSignature": false,
+  },
   "include": [
-    "src/**/*"
+    "src/**/*.ts"
   ],
 }

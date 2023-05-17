@@ -48,7 +48,11 @@ export default class JSON2CSVNodeTransform<
    * @param {String} encoding Encoding of the incoming data. Defaults to 'utf8'
    * @param {Function} done Called when the proceesing of the supplied chunk is done
    */
-  _transform(chunk: any, encoding: BufferEncoding, done: TransformCallback) {
+  override _transform(
+    chunk: any,
+    encoding: BufferEncoding,
+    done: TransformCallback
+  ) {
     try {
       this.streamParser.write(chunk);
       done();
@@ -57,7 +61,7 @@ export default class JSON2CSVNodeTransform<
     }
   }
 
-  _final(done: any) {
+  override _final(done: any) {
     try {
       this.streamParser.end();
       done();

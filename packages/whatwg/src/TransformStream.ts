@@ -17,15 +17,15 @@ class JSON2CSVWHATWGTransformer<TRaw extends object, T extends object>
     super(opts, asyncOpts);
   }
 
-  onData(data: string) {
+  override onData(data: string) {
     this.controller.enqueue(data);
   }
 
-  onError(err: Error) {
+  override onError(err: Error) {
     this.controller.error(err);
   }
 
-  onEnd() {
+  override onEnd() {
     this.controller.terminate();
   }
 
@@ -53,7 +53,7 @@ export default class JSON2CSVWHATWGTransformStream<
   extends TransformStream<TRaw, string>
   implements TransformStream<TRaw, string>, EventTarget
 {
-  readonly readable!: AwaitableReadableStream<string>;
+  override readonly readable!: AwaitableReadableStream<string>;
   private delegate?: DocumentFragment; // TODO should be (event: Event): boolean
 
   constructor(

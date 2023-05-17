@@ -1,18 +1,31 @@
 {
   "compilerOptions": {
-    "incremental": true,
+    /* Language and Environment */
     "target": "es6",
     "module": "esnext",
     "moduleResolution": "nodenext",
     "lib": ["es2020", "dom"],
+    /* Emit */
     "declaration": true,
-    "strict": true,
+    "declarationMap": true,
     "outDir": "dist",
-    "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
     "sourceMap": true,
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    // "verbatimModuleSyntax": true,
+    /* Type Checking */
+    "allowUnreachableCode": false,
+    // "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    // "noUncheckedIndexedAccess": true,
     "preserveConstEnums": true,
-    "noImplicitAny": true,
+    "strict": true,
+    /* Projects */
+    "incremental": true,
   },
   "include": [
     "src/**/*.ts"

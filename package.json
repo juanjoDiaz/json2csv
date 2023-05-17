@@ -38,15 +38,13 @@
   "scripts": {
     "docs:preview": "docsify serve docs",
     "lint": "npm run lint -ws",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "npm run lint -ws -- --fix ",
     "prepublishOnly": "npm run build",
     "pretest": "npm run build",
     "test": "npm run test:raw -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg -w @json2csv/cli | tap-spec",
     "test-with-coverage": "c8 --include 'packages/*/src' --include 'packages/*/bin' --reporter=text --reporter=lcov npm test",
     "build:cdn": "node build-cdn.js",
-    "build:cjs": "npm run build:cjs -w @json2csv/formatters -w @json2csv/transforms -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg",
-    "build:mjs": "npm run build:mjs -w @json2csv/formatters -w @json2csv/transforms -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg -w @json2csv/cli",
-    "build": "npm run build:cdn && npm run build:cjs && npm run build:mjs",
+    "build": "npm run build -ws -w @json2csv/formatters -w @json2csv/transforms -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg -w @json2csv/cli",
     "dependencies:update-internal": "npm run dependencies:update-internal -w @json2csv/cli -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg"
   },
   "devDependencies": {
@@ -65,7 +63,7 @@
     "tap-spec": "^5.0.0",
     "tape": "^5.2.2",
     "tiny-glob": "^0.2.9",
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.4"
   },
   "engines": {
     "node": ">=14.17.0",

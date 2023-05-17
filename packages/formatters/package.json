@@ -24,17 +24,14 @@
     "email": "juanjo.diazmo@gmail.com"
   },
   "type": "module",
-  "types": "./dist/types/index.d.ts",
   "exports": {
     "./*": {
       "import": "./dist/mjs/*",
-      "require": "./dist/cjs/*",
-      "types": "./dist/types/*"
+      "require": "./dist/cjs/*"
     },
     ".": {
       "import": "./dist/mjs/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/cjs/index.js"
     }
   },
   "main": "src/index.js",
