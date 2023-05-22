@@ -29,6 +29,10 @@ Excel only recognizes `\r\n` as valid new line inside a cell.
 
 Excel can display Unicode correctly (just setting the `withBOM` option to true). However, Excel can't save unicode so, if you perform any changes to the CSV and save it from Excel, the Unicode characters will not be displayed correctly.
 
+### SYLK error
+
+Excel assumes that the .csv file is a SYLK file type if the first two characters of the .csv file are uppercase `ID`. Avoid using `ID` as the first column name. Or simply use lowercase `id`.
+
 ## PowerShell escaping
 
 PowerShell do some estrange double quote escaping escaping which results on each line of the CSV missing the first and last quote if outputting the result directly to stdout. Instead of that, it's advisable that you write the result directly to a file.
