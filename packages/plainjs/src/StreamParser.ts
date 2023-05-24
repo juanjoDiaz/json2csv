@@ -203,6 +203,7 @@ export default class JSON2CSVStreamParser<
 
   // No idea why eslint doesn't detect the usage of these
   /* eslint-disable @typescript-eslint/no-unused-vars */
+  /* c8 ignore start */
   onHeader(header: string) {
     /* To be set by the user */
   }
@@ -218,5 +219,6 @@ export default class JSON2CSVStreamParser<
   onEnd() {
     /* To be set by the user */
   }
+  /* c8 ignore stop */
   /* eslint-enable @typescript-eslint/no-unused-vars */
 }

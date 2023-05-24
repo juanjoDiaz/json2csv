@@ -1,7 +1,7 @@
 import TestRunner from '@json2csv/test-helpers/TestRunner.js';
 import parsendjson from '../bin/utils/parseNdjson.js';
 
-export default function (jsonFixtures) {
+export default function (jsonFixtures: Record<string, () => any>) {
   const testRunner = new TestRunner('Parse ND-JSON');
 
   testRunner.add('should parse line-delimited JSON', (t) => {

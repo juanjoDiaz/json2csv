@@ -211,7 +211,7 @@ async function getInputFromStdin<TRaw>(ndjson: boolean): Promise<Array<TRaw>> {
         resolve(
           ndjson ? parseNdJson(inputData, os.EOL) : JSON.parse(inputData)
         );
-      } catch (err) {
+      } catch (err: unknown) {
         reject(new Error(`Invalid data received from stdin (${err})`));
       }
     });

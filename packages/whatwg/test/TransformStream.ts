@@ -1,5 +1,9 @@
+import { Readable } from 'node:stream';
+import { text } from 'node:stream/consumers';
+
 import TestRunner from '@json2csv/test-helpers/TestRunner.js';
 import { forceCrlfEol } from '@json2csv/test-helpers/utils.js';
+import type CarInfo from '@json2csv/test-helpers/fixtures/types/carInfo.js';
 import { flatten, unwind } from '@json2csv/transforms';
 import {
   number as numberFormatter,
@@ -7,50 +11,112 @@ import {
   stringExcel as stringExcelFormatter,
   stringQuoteOnlyIfNecessary as stringQuoteOnlyIfNecessaryFormatter,
 } from '@json2csv/formatters';
-import Parser from '@json2csv/plainjs/Parser.js';
+import {
+  TransformStream as Parser,
+  type ParserOptions,
+} from '@json2csv/whatwg';
 
-async function parseInput(parser, nodeStream) {
-  return parser.parse(nodeStream);
+async function parseInput<TRaw extends object, T extends object>(
+  transform: Parser<TRaw, T>,
+  nodeStream: Readable
+): Promise<string> {
+  return await text(
+    Readable.toWeb(nodeStream).pipeThrough(transform as any) as any
+  );
 }
 
-export default function (jsonFixtures, csvFixtures) {
-  const testRunner = new TestRunner('Parser');
+export default function (
+  jsonFixtures: Record<string, (opts?: { objectMode: boolean }) => Readable>,
+  csvFixtures: Record<string, any>
+) {
+  const testRunner = new TestRunner('WHATWG Transform Stream');
+
+  testRunner.add('should handle object mode', async (t) => {
+    const opts: ParserOptions = {
+      fields: ['carModel', 'price', 'color', 'manual'],
+    };
+    const transformOpts = { objectMode: true };
+
+    const parser = new Parser(opts, transformOpts);
+    const csv = await parseInput(
+      parser,
+      jsonFixtures.default({ objectMode: true })
+    );
+
+    t.equal(csv, csvFixtures.ndjson);
+  });
+
+  testRunner.add('should handle ndjson', async (t) => {
+    const opts: ParserOptions = {
+      fields: ['carModel', 'price', 'color', 'manual'],
+      ndjson: true,
+    };
+
+    const parser = new Parser(opts);
+    const csv = await parseInput(parser, jsonFixtures.ndjson());
+
+    t.equal(csv, csvFixtures.ndjson);
+  });
 
   testRunner.add(
-    'should not modify the JSON object passed passed',
+    'should error if ndjson input data is empty and fields are not set',
     async (t) => {
-      const opts = {
-        fields: [
-          'carModel',
-          'price',
-          'extras.items.name',
-          'extras.items.items.position',
-          'extras.items.items.color',
-          'extras.items.color',
-        ],
-        transforms: [
-          unwind({ paths: ['extras.items', 'extras.items.items'] }),
-          flatten(),
-        ],
+      const opts: ParserOptions = {
+        ndjson: true,
       };
-      const originalJson = JSON.parse(
-        JSON.stringify(jsonFixtures.unwindComplexObject())
-      );
 
-      const parser = new Parser(opts);
-      const csv = await parseInput(parser, originalJson);
+      try {
+        const parser = new Parser(opts);
+        await parseInput(parser, jsonFixtures.empty());
 
-      t.equal(csv, csvFixtures.unwindComplexObject);
-      t.deepEqual(jsonFixtures.unwindComplexObject(), originalJson);
+        t.fail('Exception expected');
+      } catch (err: any) {
+        t.equal(
+          err.message,
+          'Data should not be empty or the "fields" option should be included'
+        );
+      }
     }
   );
 
+  testRunner.add('should handle ndjson with small chunk size', async (t) => {
+    const opts: ParserOptions = {
+      fields: ['carModel', 'price', 'color', 'manual'],
+      ndjson: true,
+    };
+
+    try {
+      const parser = new Parser(opts, undefined, { highWaterMark: 16 });
+      await parseInput(parser, jsonFixtures.ndjsonInvalid());
+
+      t.fail('Exception expected');
+    } catch (err: any) {
+      t.equal(err.message, 'Unexpected SEPARATOR ("\\n") in state COMMA');
+    }
+  });
+
+  testRunner.add('should error on invalid ndjson input data', async (t) => {
+    const opts: ParserOptions = {
+      fields: ['carModel', 'price', 'color', 'manual'],
+      ndjson: true,
+    };
+
+    try {
+      const parser = new Parser(opts);
+      await parseInput(parser, jsonFixtures.ndjsonInvalid());
+
+      t.fail('Exception expected');
+    } catch (err: any) {
+      t.ok(err.message.includes('Unexpected SEPARATOR ("\\n") in state COMMA'));
+    }
+  });
+
   testRunner.add('should not modify the opts passed', async (t) => {
-    const opts = {};
+    const opts: ParserOptions = {};
     const parser = new Parser(opts);
     const csv = await parseInput(parser, jsonFixtures.default());
 
-    t.equal(csv, csvFixtures.default);
+    t.equal(csv, csvFixtures.defaultStream);
     t.deepEqual(opts, {});
   });
 
@@ -59,10 +125,10 @@ export default function (jsonFixtures, csvFixtures) {
     async (t) => {
       try {
         const parser = new Parser();
-        await parseInput(parser, jsonFixtures.empty() || undefined);
+        await parseInput(parser, jsonFixtures.empty());
 
         t.fail('Exception expected');
-      } catch (err) {
+      } catch (err: any) {
         t.equal(
           err.message,
           'Data should not be empty or the "fields" option should be included'
@@ -79,7 +145,7 @@ export default function (jsonFixtures, csvFixtures) {
         await parseInput(parser, jsonFixtures.notObjectSingleItem());
 
         t.fail('Exception expected');
-      } catch (err) {
+      } catch (err: any) {
         t.equal(
           err.message,
           'Data items should be objects or the "fields" option should be included'
@@ -94,7 +160,7 @@ export default function (jsonFixtures, csvFixtures) {
       await parseInput(parser, jsonFixtures.notObjectArray());
 
       t.fail('Exception expected');
-    } catch (err) {
+    } catch (err: any) {
       t.equal(
         err.message,
         'Data items should be objects or the "fields" option should be included'
@@ -102,8 +168,41 @@ export default function (jsonFixtures, csvFixtures) {
     }
   });
 
+  testRunner.add('should error if input data is not valid json', async (t) => {
+    const opts: ParserOptions = {
+      fields: ['carModel', 'price', 'color', 'manual'],
+    };
+
+    try {
+      const parser = new Parser(opts);
+      await parseInput(parser, jsonFixtures.defaultInvalid());
+
+      t.fail('Exception expected');
+    } catch (err: any) {
+      t.equal(err.message, 'Unexpected LEFT_BRACE ("{") in state KEY');
+    }
+  });
+
+  testRunner.add(
+    "should error if input data is not valid json and doesn't emit the first token",
+    async (t) => {
+      const opts: ParserOptions = {
+        fields: ['carModel', 'price', 'color', 'manual'],
+      };
+
+      try {
+        const parser = new Parser(opts);
+        await parseInput(parser, jsonFixtures.invalidNoToken());
+
+        t.fail('Exception expected');
+      } catch (err: any) {
+        t.equal(err.message, 'Data should be a valid JSON object or array');
+      }
+    }
+  );
+
   testRunner.add('should handle empty object', async (t) => {
-    const opts = {
+    const opts: ParserOptions = {
       fields: ['carModel', 'price', 'color'],
     };
 
@@ -114,7 +213,7 @@ export default function (jsonFixtures, csvFixtures) {
   });
 
   testRunner.add('should handle empty array', async (t) => {
-    const opts = {
+    const opts: ParserOptions = {
       fields: ['carModel', 'price', 'color'],
     };
 
@@ -125,7 +224,7 @@ export default function (jsonFixtures, csvFixtures) {
   });
 
   testRunner.add('should hanlde array with nulls', async (t) => {
-    const opts = {
+    const opts: ParserOptions = {
       fields: ['carModel', 'price', 'color'],
     };
 
@@ -148,12 +247,12 @@ export default function (jsonFixtures, csvFixtures) {
       const parser = new Parser();
       const csv = await parseInput(parser, jsonFixtures.default());
 
-      t.equal(csv, csvFixtures.default);
+      t.equal(csv, csvFixtures.defaultStream);
     }
   );
 
   testRunner.add('should parse json to csv using custom fields', async (t) => {
-    const opts = {
+    const opts: ParserOptions = {
       fields: ['carModel', 'price', 'color', 'manual'],
     };
 
@@ -164,7 +263,7 @@ export default function (jsonFixtures, csvFixtures) {
   });
 
   testRunner.add('should output only selected fields', async (t) => {
-    const opts = {
+    const opts: ParserOptions = {
       fields: ['carModel', 'price'],
     };
 
@@ -175,7 +274,7 @@ export default function (jsonFixtures, csvFixtures) {
   });
 
   testRunner.add('should output fields in the order provided', async (t) => {
-    const opts = {
+    const opts: ParserOptions = {
       fields: ['price', 'carModel'],
     };
 
@@ -188,7 +287,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should output empty value for non-existing fields',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: [
           'first not exist field',
           'carModel',
@@ -208,7 +307,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should name columns as specified in 'fields' property",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: [
           {
             label: 'Car Model',
@@ -229,9 +328,11 @@ export default function (jsonFixtures, csvFixtures) {
   );
 
   testRunner.add("should error on invalid 'fields' property", async (t) => {
-    const opts = {
+    const opts: ParserOptions = {
       fields: [
         { value: 'price' },
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error test for non TS users. Wrong type expected
         () => {
           /* Do nothing */
         },
@@ -243,10 +344,10 @@ export default function (jsonFixtures, csvFixtures) {
       await parseInput(parser, jsonFixtures.default());
 
       t.fail('Exception expected');
-    } catch (error) {
+    } catch (err: any) {
       t.equal(
-        error.message,
-        `Invalid field info option. ${JSON.stringify(opts.fields[1])}`
+        err.message,
+        `Invalid field info option. ${JSON.stringify(opts.fields![1])}`
       );
     }
   });
@@ -254,9 +355,11 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should error on invalid 'fields.value' property",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions<CarInfo> = {
         fields: [
-          { value: (row) => row.price },
+          { value: (row: CarInfo) => row.price },
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error test for non TS users. Wrong type expected
           { label: 'Price USD', value: [] },
         ],
       };
@@ -266,17 +369,17 @@ export default function (jsonFixtures, csvFixtures) {
         await parseInput(parser, jsonFixtures.default());
 
         t.fail('Exception expected');
-      } catch (error) {
+      } catch (err: any) {
         t.equal(
-          error.message,
-          `Invalid field info option. ${JSON.stringify(opts.fields[1])}`
+          err.message,
+          `Invalid field info option. ${JSON.stringify(opts.fields![1])}`
         );
       }
     }
   );
 
   testRunner.add('should support nested properties selectors', async (t) => {
-    const opts = {
+    const opts: ParserOptions = {
       fields: [
         {
           label: 'Make',
@@ -310,7 +413,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'field.value function should receive a valid field object',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions<{ value1: any }> = {
         fields: [
           {
             label: 'Value1',
@@ -336,11 +439,11 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'field.value function should stringify results by default',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions<{ value1: any }> = {
         fields: [
           {
             label: 'Value1',
-            value: (row) => row.value1.toLocaleString(),
+            value: (row: { value1: any }) => row.value1.toLocaleString(),
           },
         ],
       };
@@ -358,7 +461,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should process different combinations in fields option',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: [
           {
             label: 'PATH1',
@@ -366,7 +469,7 @@ export default function (jsonFixtures, csvFixtures) {
           },
           {
             label: 'PATH1+PATH2',
-            value: (row) => row.path1 + row.path2,
+            value: (row: any) => row.path1 + row.path2,
           },
           {
             label: 'NEST1',
@@ -394,7 +497,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should output the default value as set in 'defaultValue'",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['carModel', 'price'],
         defaultValue: '',
       };
@@ -409,7 +512,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should override 'options.defaultValue' with 'field.defaultValue'",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: [
           { value: 'carModel' },
           { value: 'price', default: 1 },
@@ -431,19 +534,19 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should use 'options.defaultValue' when no 'field.defaultValue'",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions<CarInfo> = {
         fields: [
           {
             value: 'carModel',
           },
           {
             label: 'price',
-            value: (row) => row.price,
+            value: (row: CarInfo) => row.price,
             default: 1,
           },
           {
             label: 'color',
-            value: (row) => row.color,
+            value: (row: CarInfo) => row.color,
           },
         ],
         defaultValue: '',
@@ -464,7 +567,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should use a custom delimiter when 'delimiter' property is defined",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['carModel', 'price', 'color'],
         delimiter: '\t',
       };
@@ -477,7 +580,7 @@ export default function (jsonFixtures, csvFixtures) {
   );
 
   testRunner.add('should remove last delimiter |@|', async (t) => {
-    const opts = { delimiter: '|@|' };
+    const opts: ParserOptions = { delimiter: '|@|' };
 
     const parser = new Parser(opts);
     const csv = await parseInput(parser, jsonFixtures.delimiter());
@@ -490,7 +593,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should use a custom eol character when 'eol' property is present",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['carModel', 'price', 'color'],
         eol: '\r\n',
       };
@@ -505,7 +608,7 @@ export default function (jsonFixtures, csvFixtures) {
   // Header
 
   testRunner.add('should parse json to csv without column title', async (t) => {
-    const opts = {
+    const opts: ParserOptions = {
       header: false,
       fields: ['carModel', 'price', 'color', 'manual'],
     };
@@ -531,7 +634,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should include empty rows when options.includeEmptyRows is true',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         includeEmptyRows: true,
       };
 
@@ -545,7 +648,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should not include empty rows when options.includeEmptyRows is false',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         includeEmptyRows: false,
       };
 
@@ -559,7 +662,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should include empty rows when options.includeEmptyRows is true, with default values',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: [
           {
             value: 'carModel',
@@ -586,7 +689,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should parse data:[null] to csv with only column title, despite options.includeEmptyRows',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['carModel', 'price', 'color'],
         includeEmptyRows: true,
       };
@@ -601,7 +704,7 @@ export default function (jsonFixtures, csvFixtures) {
   // BOM
 
   testRunner.add('should add BOM character', async (t) => {
-    const opts = {
+    const opts: ParserOptions = {
       withBOM: true,
       fields: ['carModel', 'price', 'color', 'manual'],
     };
@@ -620,7 +723,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should unwind all unwindable fields using the unwind transform',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: [
           'carModel',
           'price',
@@ -642,7 +745,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should support unwinding specific fields using the unwind transform',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['carModel', 'price', 'colors'],
         transforms: [unwind({ paths: ['colors'] })],
       };
@@ -657,7 +760,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should support multi-level unwind using the unwind transform',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: [
           'carModel',
           'price',
@@ -679,7 +782,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should support unwind and blank out repeated data using the unwind transform',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: [
           'carModel',
           'price',
@@ -706,7 +809,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should support flattening deep JSON using the flatten transform',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         transforms: [flatten()],
       };
 
@@ -720,7 +823,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should support flattening JSON with nested arrays using the flatten transform',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         transforms: [flatten({ arrays: true })],
       };
 
@@ -734,7 +837,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should support custom flatten separator using the flatten transform',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         transforms: [flatten({ separator: '__' })],
       };
 
@@ -748,7 +851,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should support multiple transforms and honor the order in which they are declared',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         transforms: [unwind({ paths: ['items'] }), flatten()],
       };
 
@@ -762,7 +865,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should unwind complex objects using the unwind transform',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: [
           'carModel',
           'price',
@@ -785,7 +888,14 @@ export default function (jsonFixtures, csvFixtures) {
   );
 
   testRunner.add('should support custom transforms', async (t) => {
-    const opts = {
+    interface TransformedCarInfo {
+      model: string;
+      price: number;
+      color: string;
+      manual: 'automatic' | 'manual';
+    }
+
+    const opts: ParserOptions<CarInfo, TransformedCarInfo> = {
       transforms: [
         (row) => ({
           model: row.carModel,
@@ -809,7 +919,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should used a custom separator when 'decimals' is passed to the number formatter",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         formatters: {
           number: numberFormatter({ decimals: 2 }),
         },
@@ -824,7 +934,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should used a custom separator when 'separator' is passed to the number formatter",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         delimiter: ';',
         formatters: {
           number: numberFormatter({ separator: ',' }),
@@ -840,7 +950,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should used a custom separator and fixed number of decimals when 'separator' and 'decimals' are passed to the number formatter",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         delimiter: ';',
         formatters: {
           number: numberFormatter({ separator: ',', decimals: 2 }),
@@ -872,7 +982,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should use a custom quote when 'quote' property is present",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['carModel', 'price'],
         formatters: {
           string: stringFormatter({ quote: "'" }),
@@ -889,7 +999,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should be able to don't output quotes when setting 'quote' to empty string",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['carModel', 'price'],
         formatters: {
           string: stringFormatter({ quote: '' }),
@@ -906,7 +1016,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should escape quotes when setting 'quote' property is present",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['carModel', 'color'],
         formatters: {
           string: stringFormatter({ quote: "'" }),
@@ -923,7 +1033,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should not escape '\"' when setting 'quote' set to something else",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         formatters: {
           string: stringFormatter({ quote: "'" }),
         },
@@ -971,7 +1081,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should escape quotes with value in 'escapedQuote'",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['a string'],
         formatters: {
           string: stringFormatter({ escapedQuote: '*' }),
@@ -988,7 +1098,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     "should escape quotes before new line with value in 'escapedQuote'",
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['a string'],
         eol: '\n',
       };
@@ -1008,7 +1118,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should quote only if necessary if using stringQuoteOnlyIfNecessary formatter',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         formatters: {
           string: stringQuoteOnlyIfNecessaryFormatter({ eol: '\n' }),
         },
@@ -1027,7 +1137,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should format strings to force excel to view the values as strings',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['carModel', 'price', 'color'],
         formatters: {
           string: stringExcelFormatter,
@@ -1044,7 +1154,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should format strings to force excel to view the values as strings with escaped quotes',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         formatters: {
           string: stringExcelFormatter,
         },
@@ -1062,7 +1172,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should parse JSON values with trailing backslashes',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['carModel', 'price', 'color'],
       };
 
@@ -1084,7 +1194,7 @@ export default function (jsonFixtures, csvFixtures) {
   });
 
   testRunner.add('should preserve new lines in values', async (t) => {
-    const opts = {
+    const opts: ParserOptions = {
       eol: '\r\n',
     };
 
@@ -1106,7 +1216,7 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add(
     'should format headers based on the headers formatter',
     async (t) => {
-      const opts = {
+      const opts: ParserOptions = {
         fields: ['carModel', 'price', 'color', 'manual'],
         formatters: {
           header: stringFormatter({ quote: '' }),

@@ -16,7 +16,7 @@ export default class JSON2CSVNodeAsyncParser<
     readableStrategy?: QueuingStrategy<string>
   ) {
     this.opts = opts;
-    this.asyncOpts = asyncOpts || {};
+    this.asyncOpts = asyncOpts;
     this.writableStrategy = writableStrategy;
     this.readableStrategy = readableStrategy;
   }

@@ -20,7 +20,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
+    // "noPropertyAccessFromIndexSignature": true,
     // "noUncheckedIndexedAccess": true,
     "preserveConstEnums": true,
     "strict": true,

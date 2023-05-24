@@ -18,8 +18,8 @@ export default class JSON2CSVNodeTransform<
 
   constructor(
     opts: ParserOptions<TRaw, T> = {},
-    transformOpts: TransformOptions = {},
-    asyncOptions: StreamParserOptions = {}
+    asyncOptions: StreamParserOptions = {},
+    transformOpts: TransformOptions = {}
   ) {
     super(transformOpts);
     this.streamParser = new StreamParser(
@@ -74,7 +74,7 @@ export default class JSON2CSVNodeTransform<
     }
   }
 
-  promise() {
+  promise(): Promise<string> {
     return new Promise((resolve, reject) => {
       const csvBuffer: Array<string> = [];
       this.on('data', (chunk) => csvBuffer.push(chunk.toString()))

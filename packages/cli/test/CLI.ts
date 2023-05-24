@@ -11,17 +11,20 @@ const execAsync = promisify(exec);
 
 const cli = `node "${joinPath(process.cwd(), './bin/json2csv.js')}"`;
 
-const getFixturePath = (fixture) =>
+const getFixturePath = (fixture: string): string =>
   joinPath('../test-helpers/fixtures', fixture);
 const resultsPath = getFixturePath('results');
 
-export default function (jsonFixtures, csvFixtures) {
+export default function (
+  jsonFixtures: Record<string, () => any>,
+  csvFixtures: Record<string, any>
+) {
   const testRunner = new TestRunner('CLI');
 
   testRunner.addBefore(async () => {
     try {
       await mkdir(resultsPath);
-    } catch (err) {
+    } catch (err: any) {
       if (err.code !== 'EEXIST') throw err;
     }
   });
@@ -51,7 +54,7 @@ export default function (jsonFixtures, csvFixtures) {
         );
 
         t.fail('Exception expected');
-      } catch (err) {
+      } catch (err: any) {
         t.equal(
           err.stderr.split('\n')[0].substring(7),
           'Data should not be empty or the "fields" option should be included'
@@ -69,7 +72,7 @@ export default function (jsonFixtures, csvFixtures) {
       );
 
       t.fail('Exception expected.');
-    } catch (err) {
+    } catch (err: any) {
       t.ok(
         err.message.includes(
           `Unexpected SEPARATOR ("${os.EOL.replace('\r', '\\r').replace(
@@ -103,7 +106,7 @@ export default function (jsonFixtures, csvFixtures) {
         );
 
         t.fail('Exception expected.');
-      } catch (err) {
+      } catch (err: any) {
         t.equal(
           err.stderr.split('\n')[0].substring(7),
           "Invalid ND-JSON couldn't be parsed"
@@ -117,7 +120,7 @@ export default function (jsonFixtures, csvFixtures) {
       await execAsync(`${cli} -i "${getFixturePath('/json2/default.json')}"`);
 
       t.fail('Exception expected.');
-    } catch (err) {
+    } catch (err: any) {
       t.ok(err.message.includes('Invalid input file.'));
     }
   });
@@ -133,7 +136,7 @@ export default function (jsonFixtures, csvFixtures) {
         );
 
         t.fail('Exception expected.');
-      } catch (err) {
+      } catch (err: any) {
         t.ok(err.message.includes('Invalid input file.'));
       }
     }
@@ -148,7 +151,7 @@ export default function (jsonFixtures, csvFixtures) {
         );
 
         t.fail('Exception expected');
-      } catch (err) {
+      } catch (err: any) {
         t.equal(
           err.stderr.split('\n')[0].substring(7),
           'Data items should be objects or the "fields" option should be included'
@@ -164,7 +167,7 @@ export default function (jsonFixtures, csvFixtures) {
       );
 
       t.fail('Exception expected.');
-    } catch (err) {
+    } catch (err: any) {
       t.equal(
         err.stderr.split('\n')[0].substring(7),
         'Data items should be objects or the "fields" option should be included'
@@ -225,7 +228,7 @@ export default function (jsonFixtures, csvFixtures) {
         );
 
         t.fail('Exception expected.');
-      } catch (err) {
+      } catch (err: any) {
         t.ok(err.message.includes('Invalid config file.'));
       }
     }
@@ -524,8 +527,8 @@ export default function (jsonFixtures, csvFixtures) {
     async (t) => {
       const execution = execAsync(cli);
 
-      execution.child.stdin.write(JSON.stringify(jsonFixtures.default()));
-      execution.child.stdin.end();
+      execution.child.stdin!.write(JSON.stringify(jsonFixtures.default()));
+      execution.child.stdin!.end();
 
       const { stdout: csv } = await execution;
 
@@ -536,14 +539,14 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add('should error if stdin data is not valid', async (t) => {
     const execution = execAsync(cli);
 
-    execution.child.stdin.write('{ "b": 1,');
-    execution.child.stdin.end();
+    execution.child.stdin!.write('{ "b": 1,');
+    execution.child.stdin!.end();
 
     try {
       await execution;
 
       t.fail('Exception expected.');
-    } catch (err) {
+    } catch (err: any) {
       t.ok(
         err.message.includes(
           'Error: Parser ended in mid-parsing (state: KEY). Either not all the data was received or the data was invalid.'
@@ -555,8 +558,8 @@ export default function (jsonFixtures, csvFixtures) {
   testRunner.add('should get input from stdin with -s flag', async (t) => {
     const execution = execAsync(`${cli} -s`);
 
-    execution.child.stdin.write(JSON.stringify(jsonFixtures.default()));
-    execution.child.stdin.end();
+    execution.child.stdin!.write(JSON.stringify(jsonFixtures.default()));
+    execution.child.stdin!.end();
 
     const { stdout: csv } = await execution;
 
@@ -568,14 +571,14 @@ export default function (jsonFixtures, csvFixtures) {
     async (t) => {
       const execution = execAsync(`${cli} -s`);
 
-      execution.child.stdin.write('{ "b": 1,');
-      execution.child.stdin.end();
+      execution.child.stdin!.write('{ "b": 1,');
+      execution.child.stdin!.end();
 
       try {
         await execution;
 
         t.fail('Exception expected.');
-      } catch (err) {
+      } catch (err: any) {
         t.ok(err.message.includes('Invalid data received from stdin'));
       }
     }
@@ -585,19 +588,20 @@ export default function (jsonFixtures, csvFixtures) {
     const execution = execAsync(cli);
 
     // TODO Figure out how to make the stdin to error
-    execution.child.stdin._read = execution.child.stdin._write = () => {
-      /* Do nothing */
-    };
-    execution.child.stdin.on('error', () => {
+    (execution.child.stdin as any)._read = execution.child.stdin!._write =
+      () => {
+        /* Do nothing */
+      };
+    execution.child.stdin!.on('error', () => {
       /* Do nothing */
     });
-    execution.child.stdin.destroy(new Error('Test error'));
+    execution.child.stdin!.destroy(new Error('Test error'));
 
     try {
       await execution;
 
       t.fail('Exception expected.');
-    } catch (err) {
+    } catch (err: any) {
       // TODO error message seems wrong
       t.ok(
         err.message.includes(
@@ -641,7 +645,7 @@ export default function (jsonFixtures, csvFixtures) {
       await execAsync(
         `${cli} -i "${getFixturePath('/json/default.json')}" ${opts}`
       );
-    } catch (err) {
+    } catch (err: any) {
       t.ok(err.message.includes('Invalid output file.'));
     }
   });
@@ -656,7 +660,7 @@ export default function (jsonFixtures, csvFixtures) {
         await execAsync(
           `${cli} -i "${getFixturePath('/json/default.json')}" ${opts}`
         );
-      } catch (err) {
+      } catch (err: any) {
         t.ok(err.message.includes('Invalid output file.'));
       }
     }

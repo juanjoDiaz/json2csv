@@ -8,9 +8,9 @@ import objectFormatterCtor from '@json2csv/formatters/object.js';
 import type Transform from './types/Transform.js';
 import { getProp, flattenReducer, fastJoin } from './utils.js';
 
-export interface FieldValueGetterInfo {
+export interface FieldValueGetterInfo<FT> {
   label: string;
-  default?: string;
+  default?: FT;
 }
 
 export interface FieldValueGetterFnWithoutField<RT, FT> {
@@ -18,7 +18,7 @@ export interface FieldValueGetterFnWithoutField<RT, FT> {
 }
 
 export interface FieldValueGetterFnWithField<RT, FT> {
-  (row: RT, field: FieldValueGetterInfo): FT;
+  (row: RT, field: FieldValueGetterInfo<FT>): FT;
 }
 
 export type FieldValueGetter<RT, FT> =
@@ -28,7 +28,7 @@ export type FieldValueGetter<RT, FT> =
 
 export interface FieldInfo<RT, FT> {
   label?: string | undefined;
-  default?: string | undefined;
+  default?: FT | undefined;
   value: FieldValueGetter<RT, FT>;
 }
 
@@ -73,11 +73,7 @@ export interface Json2CSVBaseOptions<TRaw, T> {
   transforms?:
     | []
     | [Transform<TRaw, T>]
-    | [
-        Transform<TRaw, T>,
-        ...Array<Transform<unknown, unknown>>,
-        Transform<unknown, T>
-      ];
+    | [Transform<TRaw, any>, ...Array<Transform<any, any>>, Transform<any, T>];
 }
 
 interface NormalizedFieldInfo<RT, FT> {
@@ -231,8 +227,8 @@ export default abstract class JSON2CSVBase<
    * @param {Object} row JSON object to be converted in a CSV row
    */
   protected preprocessRow(row: TRaw): Array<T> {
-    return (this.opts.transforms as Array<Transform<unknown, unknown>>).reduce(
-      (rows: Array<unknown>, transform: Transform<unknown, unknown>) =>
+    return (this.opts.transforms as Array<Transform<any, any>>).reduce(
+      (rows: Array<unknown>, transform: Transform<any, any>) =>
         rows.map((row) => transform(row)).reduce(flattenReducer, []),
       [row]
     ) as Array<T>;

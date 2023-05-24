@@ -1,5 +1,5 @@
 import { Readable, type TransformOptions } from 'stream';
-import { type ParserOptions } from '@json2csv/plainjs';
+import type { ParserOptions, StreamParserOptions } from '@json2csv/plainjs';
 import JSON2CSVNodeTransform from './Transform.js';
 
 export default class JSON2CSVNodeAsyncParser<
@@ -7,13 +7,16 @@ export default class JSON2CSVNodeAsyncParser<
   T extends object
 > {
   private readonly opts: ParserOptions<TRaw, T>;
+  private asyncOpts: StreamParserOptions;
   private readonly transformOpts: TransformOptions;
 
   constructor(
     opts: ParserOptions<TRaw, T> = {},
+    asyncOpts: StreamParserOptions = {},
     transformOpts: TransformOptions = {}
   ) {
     this.opts = opts;
+    this.asyncOpts = asyncOpts;
     this.transformOpts = transformOpts;
   }
 
@@ -51,7 +54,7 @@ export default class JSON2CSVNodeAsyncParser<
       );
     }
     return data.pipe(
-      new JSON2CSVNodeTransform(this.opts, {
+      new JSON2CSVNodeTransform(this.opts, this.asyncOpts, {
         objectMode: data.readableObjectMode,
         ...this.transformOpts,
       })
