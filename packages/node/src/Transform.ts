@@ -60,8 +60,8 @@ export default class JSON2CSVNodeTransform<
     try {
       this.streamParser.write(chunk);
       done();
-    } catch (err: any) {
-      done(err);
+    } catch (err: unknown) {
+      done(err as Error);
     }
   }
 
@@ -69,7 +69,7 @@ export default class JSON2CSVNodeTransform<
     try {
       this.streamParser.end();
       done();
-    } catch (err) {
+    } catch (err: unknown) {
       done(err);
     }
   }

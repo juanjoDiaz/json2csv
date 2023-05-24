@@ -5,7 +5,7 @@ export default function parseNdJson<T>(input: string, eol: string): Array<T> {
       .map((line) => line.trim())
       .filter((line) => line !== '')
       .map((line) => JSON.parse(line));
-  } catch (err: any) {
+  } catch (err: unknown) {
     throw new Error("Invalid ND-JSON couldn't be parsed");
   }
 }

@@ -69,7 +69,7 @@ export default class JSON2CSVParser<
     }
 
     if (this.opts.transforms.length === 0)
-      return processedData as any as Array<T>; // TODO remove any casting
+      return processedData as unknown as Array<T>;
 
     return processedData
       .map((row) => this.preprocessRow(row))

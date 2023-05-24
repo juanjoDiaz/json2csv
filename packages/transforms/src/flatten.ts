@@ -1,24 +1,5 @@
 import type Transform from './Transform.js';
 
-// type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
-// type FlattenedObject<T, K extends keyof T> = UnionToIntersection<T[K]>;
-
-// type B = { c: number}
-// type A = { b: B}
-// interface Test { a: A }
-
-// var r = flatten<Test>()({ a: { b: { c: 1 } }})
-// console.log(r)
-
-// type FlattenObjectKeys<
-//   T extends { [key: string]: unknown; },
-//   Key = keyof T
-// > = Key extends string
-//   ? T[Key] extends { [key: string]: unknown; }
-//     ? `${Key}.${FlattenObjectKeys<T[Key]>}`
-//     : `${Key}`
-//   : never;
-
 export interface FlattenOptions {
   objects?: boolean | undefined;
   arrays?: boolean | undefined;
@@ -31,11 +12,14 @@ export interface FlattenOptions {
  * @param {String} separator Separator to be used as the flattened field name
  * @returns {Object => Object} Flattened object
  */
-export default function flatten<I extends object = object>({
+export default function flatten<
+  I extends object = object,
+  O extends object = object
+>({
   objects = true,
   arrays = false,
   separator = '.',
-}: FlattenOptions = {}): Transform<I, any> {
+}: FlattenOptions = {}): Transform<I, O> {
   function step<T extends object, FT extends object>(
     obj: T,
     flatDataRow: FT,

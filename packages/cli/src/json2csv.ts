@@ -270,12 +270,12 @@ async function processStream<TRaw extends object, T extends object>(
       {},
       programConfig.config ? await getInputJSON(programConfig.config) : {},
       programConfig
-    ) as any;
+    ) as Options;
 
     const transforms: any = [];
     if (config.unwind) {
       transforms.push(
-        unwind<TRaw, any>({
+        unwind<TRaw>({
           paths: config.unwind === true ? undefined : config.unwind.split(','),
           blankOut: config.unwindBlank,
         })
@@ -284,7 +284,7 @@ async function processStream<TRaw extends object, T extends object>(
 
     if (config.flattenObjects || config.flattenArrays) {
       transforms.push(
-        flatten<any>({
+        flatten({
           objects: config.flattenObjects,
           arrays: config.flattenArrays,
           separator: config.flattenSeparator,
@@ -308,7 +308,7 @@ async function processStream<TRaw extends object, T extends object>(
         config.fields !== undefined
           ? Array.isArray(config.fields)
             ? config.fields
-            : config.fields!.split(',')
+            : config.fields.split(',')
           : config.fields,
       defaultValue: config.defaultValue,
       delimiter: config.delimiter,
@@ -325,20 +325,30 @@ async function processStream<TRaw extends object, T extends object>(
       config,
       opts
     );
-  } catch (err: any) {
-    let processedError = err;
-    if (programConfig.input && err.message.includes(programConfig.input)) {
-      processedError = new Error(`Invalid input file. (${err.message})`);
+  } catch (err: unknown) {
+    let processedError =
+      err instanceof Error ? err : new Error(`Unexpected error. (${err})`);
+    if (
+      programConfig.input &&
+      processedError.message.includes(programConfig.input)
+    ) {
+      processedError = new Error(
+        `Invalid input file. (${processedError.message})`
+      );
     } else if (
       programConfig.output &&
-      err.message.includes(programConfig.output)
+      processedError.message.includes(programConfig.output)
     ) {
-      processedError = new Error(`Invalid output file. (${err.message})`);
+      processedError = new Error(
+        `Invalid output file. (${processedError.message})`
+      );
     } else if (
       programConfig.config &&
-      err.message.includes(programConfig.config)
+      processedError.message.includes(programConfig.config)
     ) {
-      processedError = new Error(`Invalid config file. (${err.message})`);
+      processedError = new Error(
+        `Invalid config file. (${processedError.message})`
+      );
     }
     // eslint-disable-next-line no-console
     console.error(processedError);

@@ -86,5 +86,5 @@ export default function unwind<
   return (dataRow: I) =>
     (paths || getUnwindablePaths(dataRow)).reduce(unwindReducer, [
       dataRow,
-    ]) as any as Array<O>;
+    ]) as unknown as Array<O>;
 }

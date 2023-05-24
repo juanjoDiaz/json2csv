@@ -5,10 +5,10 @@ function propertyPathToString(path: PropertyPath): ReadonlyArray<string> {
   return path;
 }
 
-export function setProp<T extends object>(
+export function setProp<T extends object, PT>(
   obj: T,
   path: PropertyPath,
-  value: any
+  value: PT
 ): T {
   const pathArray = propertyPathToString(path);
   const [key, ...restPath] = pathArray;
@@ -46,7 +46,7 @@ export function unsetProp<T extends object>(obj: T, path: PropertyPath): T {
       [prop]:
         prop !== key
           ? obj[prop as keyof T]
-          : unsetProp(obj[key as keyof T] as any, restPath),
+          : unsetProp(obj[key as keyof T] as object, restPath),
     }),
     {} as T
   );
@@ -57,7 +57,7 @@ export function flattenReducer<T>(acc: Array<T>, arr: Array<T> | T): Array<T> {
     // This is faster but susceptible to `RangeError: Maximum call stack size exceeded`
     Array.isArray(arr) ? acc.push(...arr) : acc.push(arr);
     return acc;
-  } catch (err) {
+  } catch (err: unknown) {
     // Fallback to a slower but safer option
     return acc.concat(arr);
   }

@@ -55,7 +55,7 @@ export function getProp<
   path: TPath,
   defaultValue: TDefault
 ): Exclude<GetFieldType<TObject, TPath>, null | undefined> | TDefault;
-export function getProp(obj: any, path: PropertyName, defaultValue?: any): any {
+export function getProp<T>(obj: any, path: PropertyName, defaultValue?: T): T {
   const value = obj[path];
   return value === undefined ? defaultValue : value;
 }
@@ -65,7 +65,7 @@ export function flattenReducer<T>(acc: Array<T>, arr: Array<T> | T): Array<T> {
     // This is faster but susceptible to `RangeError: Maximum call stack size exceeded`
     Array.isArray(arr) ? acc.push(...arr) : acc.push(arr);
     return acc;
-  } catch (err) {
+  } catch (err: unknown) {
     // Fallback to a slower but safer option
     return acc.concat(arr);
   }
