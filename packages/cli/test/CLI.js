@@ -53,7 +53,7 @@ export default function (jsonFixtures, csvFixtures) {
         t.fail('Exception expected');
       } catch (err) {
         t.equal(
-          err.stderr.split('\n')[2].substring(7),
+          err.stderr.split('\n')[0].substring(7),
           'Data should not be empty or the "fields" option should be included'
         );
       }
@@ -105,7 +105,7 @@ export default function (jsonFixtures, csvFixtures) {
         t.fail('Exception expected.');
       } catch (err) {
         t.equal(
-          err.stderr.split('\n')[2].substring(7),
+          err.stderr.split('\n')[0].substring(7),
           "Invalid ND-JSON couldn't be parsed"
         );
       }
@@ -150,7 +150,7 @@ export default function (jsonFixtures, csvFixtures) {
         t.fail('Exception expected');
       } catch (err) {
         t.equal(
-          err.stderr.split('\n')[2].substring(7),
+          err.stderr.split('\n')[0].substring(7),
           'Data items should be objects or the "fields" option should be included'
         );
       }
@@ -166,7 +166,7 @@ export default function (jsonFixtures, csvFixtures) {
       t.fail('Exception expected.');
     } catch (err) {
       t.equal(
-        err.stderr.split('\n')[2].substring(7),
+        err.stderr.split('\n')[0].substring(7),
         'Data items should be objects or the "fields" option should be included'
       );
     }
