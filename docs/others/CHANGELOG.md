@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [7.0.0](https://github.com/juanjodiaz/json2csv/compare/v6.1.3...v7.0.0) (2023-05-26)
+
+* library moved to Typescript.
+
+### Bug Fixes
+
+* fix issue with CLI and node JSON import warnings ([d316310](https://github.com/juanjodiaz/json2csv/commit/d31631021344ceded78fd111a8d7cd795159b49d))
+* rebase issues ([8eeca7d](https://github.com/juanjodiaz/json2csv/commit/8eeca7d6da88f033d581b8facf4a46080db33814))
+
+
+### Features
+
+* improve error messaging for invalid inputs ([471849f](https://github.com/juanjodiaz/json2csv/commit/471849f4b203d6e9ac741eb9d4b9c14b045ba838))
+
 ### [6.1.3](https://github.com/juanjodiaz/json2csv/compare/v6.1.2...v6.1.3) (2023-04-02)
 
 
@@ -33,6 +47,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [6.0.0](https://github.com/juanjodiaz/json2csv/compare/v6.0.0-alpha.4...v6.0.0) (2022-09-22)
 
+### ⚠ BREAKING CHANGES
+
+* library broken into multiple independent npm packages
 
 ### Bug Fixes
 
