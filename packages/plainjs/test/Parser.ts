@@ -8,7 +8,7 @@ import {
   stringExcel as stringExcelFormatter,
   stringQuoteOnlyIfNecessary as stringQuoteOnlyIfNecessaryFormatter,
 } from '@json2csv/formatters';
-import { default as Parser, type ParserOptions } from '../src/Parser.js';
+import { Parser, type ParserOptions } from '@json2csv/plainjs';
 
 async function parseInput<TRaw extends object, T extends object>(
   parser: Parser<TRaw, T>,
