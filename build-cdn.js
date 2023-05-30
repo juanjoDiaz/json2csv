@@ -1,6 +1,7 @@
 import path from 'path';
 import esbuild from 'esbuild';
 import glob from 'tiny-glob';
+import pkg from './packages/plainjs/package.json' assert { type: 'json' };
 
 const replaceDependenciesByJsdelivr = {
   name: 'replace-dependencies-by-jsdelivr',
@@ -27,7 +28,7 @@ const replaceDependenciesByJsdelivr = {
     });
 
     const dependencies = {
-      '@streamparser/json': 'https://cdn.jsdelivr.net/npm/@streamparser/json@0.0.12/dist/mjs/index.mjs',
+      '@streamparser/json': `https://cdn.jsdelivr.net/npm/@streamparser/json@${pkg.dependencies['@streamparser/json']}/dist/mjs/index.mjs`,
       'lodash.get': 'https://cdn.jsdelivr.net/gh/lodash/lodash@master/get.js'
     };
 
