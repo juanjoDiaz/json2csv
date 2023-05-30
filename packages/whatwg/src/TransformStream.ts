@@ -102,7 +102,7 @@ export default class JSON2CSVWHATWGTransformStream<
   }
 
   public dispatchEvent(event: Event): boolean {
-    return this.dispatchEvent(event);
+    return this.delegate?.dispatchEvent(event) ?? false;
   }
 
   public removeEventListener(
@@ -110,6 +110,6 @@ export default class JSON2CSVWHATWGTransformStream<
     callback: EventListenerOrEventListenerObject | null,
     options?: boolean | EventListenerOptions | undefined
   ): void {
-    this.removeEventListener(type, callback, options);
+    this.delegate?.removeEventListener(type, callback, options);
   }
 }
