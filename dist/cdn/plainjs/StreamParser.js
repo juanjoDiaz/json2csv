@@ -176,6 +176,7 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
   }
   // No idea why eslint doesn't detect the usage of these
   /* eslint-disable @typescript-eslint/no-unused-vars */
+  /* c8 ignore start */
   onHeader(header) {
   }
   onLine(line) {
@@ -186,6 +187,7 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
   }
   onEnd() {
   }
+  /* c8 ignore stop */
   /* eslint-enable @typescript-eslint/no-unused-vars */
 };
 export {

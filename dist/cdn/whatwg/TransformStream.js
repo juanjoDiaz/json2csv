@@ -77,10 +77,12 @@ var JSON2CSVWHATWGTransformStream = class extends TransformStream {
     (_a = this.delegate) == null ? void 0 : _a.addEventListener(type, callback, options);
   }
   dispatchEvent(event) {
-    return this.dispatchEvent(event);
+    var _a, _b;
+    return (_b = (_a = this.delegate) == null ? void 0 : _a.dispatchEvent(event)) != null ? _b : false;
   }
   removeEventListener(type, callback, options) {
-    this.removeEventListener(type, callback, options);
+    var _a;
+    (_a = this.delegate) == null ? void 0 : _a.removeEventListener(type, callback, options);
   }
 };
 export {

@@ -1,28 +1,15 @@
 // packages/plainjs/src/index.ts
 import {
   default as default2,
-  FieldValueGetterInfo,
-  FieldValueGetterFnWithoutField,
-  FieldValueGetterFnWithField,
-  FieldInfo,
-  FormatterTypes,
-  FormattersOptions
+  FormatterTypes
 } from "./BaseParser.js";
-import { default as default3, ParserOptions } from "./Parser.js";
+import { default as default3 } from "./Parser.js";
 import {
-  default as default4,
-  StreamParserOptions
+  default as default4
 } from "./StreamParser.js";
 export {
   default2 as BaseParser,
-  FieldInfo,
-  FieldValueGetterFnWithField,
-  FieldValueGetterFnWithoutField,
-  FieldValueGetterInfo,
   FormatterTypes,
-  FormattersOptions,
   default3 as Parser,
-  ParserOptions,
-  default4 as StreamParser,
-  StreamParserOptions
+  default4 as StreamParser
 };
