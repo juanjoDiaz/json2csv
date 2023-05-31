@@ -1,3 +1,10 @@
+### [7.0.1](https://github.com/juanjodiaz/json2csv/compare/v7.0.0...v7.0.1) (2023-05-31)
+
+
+### Bug Fixes
+
+* Maximum call stack size exceeded on whatwg interface ([ea44d4e](https://github.com/juanjodiaz/json2csv/commit/ea44d4e642c38529610b509383c034cb9cf41696))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.

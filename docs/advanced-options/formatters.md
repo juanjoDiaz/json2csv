@@ -73,7 +73,7 @@ You can import the latest version:
 
 ```html
 <script type="module">
-  import default from 'https://cdn.jsdelivr.net/npm/@json2csv/formatters/src/default.js';
+  import default from 'https://cdn.jsdelivr.net/npm/@json2csv/formatters';
 </script>
 ```
 
@@ -81,7 +81,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import default from 'https://cdn.jsdelivr.net/npm/@json2csv/formatters@7.0.0/src/default.js';
+  import default from 'https://cdn.jsdelivr.net/npm/@json2csv/formatters@7.0.1';
 </script>
 ```
 

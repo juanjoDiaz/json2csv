@@ -33,7 +33,7 @@ You can import the latest version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg/src/AsyncParser.js';
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv';
 </script>
 ```
 
@@ -41,7 +41,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg@7.0.0/src/AsyncParser.js';
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg@7.0.1';
 </script>
 ```
 

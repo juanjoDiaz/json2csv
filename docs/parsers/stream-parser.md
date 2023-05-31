@@ -38,7 +38,7 @@ You can import the latest version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs/src/StreamParser.js';
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs';
 </script>
 ```
 
@@ -46,7 +46,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs@7.0.0/src/StreamParser.js';
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/plainjs@7.0.1';
 </script>
 ```
 

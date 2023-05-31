@@ -1,6 +1,6 @@
 {
   "name": "json2csv",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "private": true,
   "description": "Fast and highly configurable JSON to CSV converter",
   "keywords": [

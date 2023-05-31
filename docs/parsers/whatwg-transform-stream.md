@@ -36,7 +36,7 @@ You can import the latest version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg/src/TransformStream.js';
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg';
 </script>
 ```
 
@@ -44,7 +44,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg@7.0.0/src/TransformStream.js';
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg@7.0.1';
 </script>
 ```
 
