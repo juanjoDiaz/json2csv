@@ -1,10 +1,12 @@
 import lodashGet from 'lodash.get';
-import type Formatter from '@json2csv/formatters/Formatter.js';
-import defaultFormatter from '@json2csv/formatters/default.js';
-import numberFormatterCtor from '@json2csv/formatters/number.js';
-import stringFormatterCtor from '@json2csv/formatters/string.js';
-import symbolFormatterCtor from '@json2csv/formatters/symbol.js';
-import objectFormatterCtor from '@json2csv/formatters/object.js';
+import {
+  type Formatter,
+  default as defaultFormatter,
+  number as numberFormatterCtor,
+  string as stringFormatterCtor,
+  symbol as symbolFormatterCtor,
+  object as objectFormatterCtor,
+} from '@json2csv/formatters';
 import type Transform from './types/Transform.js';
 import { getProp, flattenReducer, fastJoin } from './utils.js';
 
