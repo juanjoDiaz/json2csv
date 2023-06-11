@@ -314,13 +314,13 @@ const opts = {
 const parser = new StreamParser(opts);
 
 let csv = '';
-parser.onData = (chunk) => (csv += chunk.toString()));
-parser.onEnd = () => console.log(csv));
-parser.onError = (err) => console.error(err));
+parser.onData = (chunk) => (csv += chunk.toString());
+parser.onEnd = () => console.log(csv);
+parser.onError = (err) => console.error(err);
 
 // You can also listen for events on the conversion and see how the header or the lines are coming out.
-parser.onHeader = (header) => console.log(header));
-parser.onLine = (line) => console.log(line));
+parser.onHeader = (header) => console.log(header);
+parser.onLine = (line) => console.log(line);
 ```
 
 #### **Node Transform**
