@@ -34,7 +34,7 @@
       "require": "./dist/cjs/index.js"
     }
   },
-  "main": "src/index.js",
+  "main": "dist/mjs/index.js",
   "scripts": {
     "lint": "eslint src",
     "build:cjs": "tsc --module commonjs --verbatimModuleSyntax false --outDir ./dist/cjs && node ../../build-cjs.js",
