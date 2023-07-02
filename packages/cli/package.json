@@ -27,6 +27,9 @@
   "bin": {
     "json2csv": "./bin/json2csv.js"
   },
+  "files": [
+    "bin"
+  ],
   "scripts": {
     "lint": "eslint src test",
     "build:mjs": "tsc --module esnext --outDir ./bin",
