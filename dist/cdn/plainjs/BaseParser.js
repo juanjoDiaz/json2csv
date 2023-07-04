@@ -17,11 +17,13 @@ var __spreadValues = (a, b) => {
 
 // packages/plainjs/src/BaseParser.ts
 import lodashGet from "https://cdn.jsdelivr.net/gh/lodash/lodash@master/get.js";
-import defaultFormatter from "../formatters/default.js";
-import numberFormatterCtor from "../formatters/number.js";
-import stringFormatterCtor from "../formatters/string.js";
-import symbolFormatterCtor from "../formatters/symbol.js";
-import objectFormatterCtor from "../formatters/object.js";
+import {
+  default as defaultFormatter,
+  number as numberFormatterCtor,
+  string as stringFormatterCtor,
+  symbol as symbolFormatterCtor,
+  object as objectFormatterCtor
+} from "../formatters";
 import { getProp, flattenReducer, fastJoin } from "./utils.js";
 var FormatterTypes = /* @__PURE__ */ ((FormatterTypes2) => {
   FormatterTypes2["header"] = "header";

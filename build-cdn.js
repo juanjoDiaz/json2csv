@@ -28,7 +28,7 @@ const replaceDependenciesByJsdelivr = {
     });
 
     const dependencies = {
-      '@streamparser/json': `https://cdn.jsdelivr.net/npm/@streamparser/json@${pkg.dependencies['@streamparser/json']}/dist/mjs/index.mjs`,
+      '@streamparser/json': `https://cdn.jsdelivr.net/npm/@streamparser/json@${pkg.dependencies['@streamparser/json']}/dist/mjs/index.js`,
       'lodash.get': 'https://cdn.jsdelivr.net/gh/lodash/lodash@master/get.js'
     };
 
