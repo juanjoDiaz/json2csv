@@ -14,7 +14,7 @@ export interface FlattenOptions {
  */
 export default function flatten<
   I extends object = object,
-  O extends object = object
+  O extends object = object,
 >({
   objects = true,
   arrays = false,
@@ -23,7 +23,7 @@ export default function flatten<
   function step<T extends object, FT extends object>(
     obj: T,
     flatDataRow: FT,
-    currentPath?: string
+    currentPath?: string,
   ): FT {
     Object.keys(obj).forEach((key) => {
       const newPath = currentPath ? `${currentPath}${separator}${key}` : key;

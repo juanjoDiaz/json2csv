@@ -4,7 +4,7 @@ import { setProp, unsetProp, flattenReducer } from './utils.js';
 
 function getUnwindablePaths<T extends object>(
   obj: T,
-  currentPath?: string
+  currentPath?: string,
 ): Array<string> {
   return Object.keys(obj).reduce(
     (unwindablePaths: Array<string>, key: string) => {
@@ -20,21 +20,21 @@ function getUnwindablePaths<T extends object>(
         Object.keys(value).length
       ) {
         unwindablePaths = unwindablePaths.concat(
-          getUnwindablePaths(value, newPath)
+          getUnwindablePaths(value, newPath),
         );
       } else if (Array.isArray(value)) {
         unwindablePaths.push(newPath);
         unwindablePaths = unwindablePaths.concat(
-          value
+          (value as Array<any>)
             .map((arrObj) => getUnwindablePaths(arrObj, newPath))
             .reduce(flattenReducer, [])
-            .filter((item, index, arr) => arr.indexOf(item) !== index)
+            .filter((item, index, arr) => arr.indexOf(item) !== index),
         );
       }
 
       return unwindablePaths;
     },
-    []
+    [],
   );
 }
 
@@ -50,11 +50,11 @@ export interface UnwindOptions {
  */
 export default function unwind<
   I extends object = object,
-  O extends object = object
+  O extends object = object,
 >(opts: UnwindOptions = {}): Transform<I, O> {
   function unwindReducer<RT extends object>(
     rows: Array<RT>,
-    unwindPath: string
+    unwindPath: string,
   ): Array<any> {
     return rows.flatMap((row) => {
       const unwindArray = lodashGet(row, unwindPath);
@@ -72,7 +72,7 @@ export default function unwind<
       return [
         setProp(row, unwindPath, firstRow),
         ...restRows.map((unwindRow) =>
-          setProp(baseNewRow, unwindPath, unwindRow)
+          setProp(baseNewRow, unwindPath, unwindRow),
         ),
       ];
     });

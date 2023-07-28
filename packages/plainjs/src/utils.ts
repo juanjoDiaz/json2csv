@@ -44,16 +44,16 @@ type PropertyName = string | number | symbol;
 export function getProp<TObject extends object, TKey extends keyof TObject>(
   obj: TObject,
   path: TKey,
-  defaultValue: TObject[TKey]
+  defaultValue: TObject[TKey],
 ): TObject[TKey];
 export function getProp<
   TObject,
   TPath extends string,
-  TDefault = GetFieldType<TObject, TPath>
+  TDefault = GetFieldType<TObject, TPath>,
 >(
   obj: TObject,
   path: TPath,
-  defaultValue: TDefault
+  defaultValue: TDefault,
 ): Exclude<GetFieldType<TObject, TPath>, null | undefined> | TDefault;
 export function getProp<T>(obj: any, path: PropertyName, defaultValue?: T): T {
   const value = obj[path];

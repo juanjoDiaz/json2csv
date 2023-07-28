@@ -9,7 +9,7 @@
     "export",
     "convert",
     "parse"
-  ],
+  ], 
   "homepage": "http://juanjodiaz.github.io/json2csv",
   "bugs": {
     "url": "https://github.com/juanjoDiaz/json2csv/issues"

@@ -8,7 +8,7 @@ function propertyPathToString(path: PropertyPath): ReadonlyArray<string> {
 export function setProp<T extends object, PT>(
   obj: T,
   path: PropertyPath,
-  value: PT
+  value: PT,
 ): T {
   const pathArray = propertyPathToString(path);
   const [key, ...restPath] = pathArray;
@@ -36,7 +36,7 @@ export function unsetProp<T extends object>(obj: T, path: PropertyPath): T {
       .filter((prop) => prop !== key)
       .reduce(
         (acc, prop) => ({ ...acc, [prop]: obj[prop as keyof T] }),
-        {} as T
+        {} as T,
       );
   }
 
@@ -48,7 +48,7 @@ export function unsetProp<T extends object>(obj: T, path: PropertyPath): T {
           ? obj[prop as keyof T]
           : unsetProp(obj[key as keyof T] as object, restPath),
     }),
-    {} as T
+    {} as T,
   );
 }
 

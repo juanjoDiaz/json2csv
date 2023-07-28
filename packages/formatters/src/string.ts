@@ -6,7 +6,7 @@ export interface StringFormatterOptions {
 }
 
 export default function stringFormatter(
-  opts: StringFormatterOptions = {}
+  opts: StringFormatterOptions = {},
 ): Formatter<string> {
   const quote = typeof opts.quote === 'string' ? opts.quote : '"';
   const escapedQuote =

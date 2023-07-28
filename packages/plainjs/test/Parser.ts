@@ -12,14 +12,14 @@ import { Parser, type ParserOptions } from '@json2csv/plainjs';
 
 async function parseInput<TRaw extends object, T extends object>(
   parser: Parser<TRaw, T>,
-  nodeStream: TRaw
+  nodeStream: TRaw,
 ): Promise<string> {
   return parser.parse(nodeStream);
 }
 
 export default function (
   jsonFixtures: Record<string, () => any>,
-  csvFixtures: Record<string, any>
+  csvFixtures: Record<string, any>,
 ) {
   const testRunner = new TestRunner('Parser');
 
@@ -41,7 +41,7 @@ export default function (
         ],
       };
       const originalJson = JSON.parse(
-        JSON.stringify(jsonFixtures.unwindComplexObject())
+        JSON.stringify(jsonFixtures.unwindComplexObject()),
       );
 
       const parser = new Parser(opts);
@@ -49,7 +49,7 @@ export default function (
 
       t.equal(csv, csvFixtures.unwindComplexObject);
       t.deepEqual(jsonFixtures.unwindComplexObject(), originalJson);
-    }
+    },
   );
 
   testRunner.add('should not modify the opts passed', async (t) => {
@@ -72,10 +72,10 @@ export default function (
       } catch (err: any) {
         t.equal(
           err.message,
-          'Data should not be empty or the "fields" option should be included'
+          'Data should not be empty or the "fields" option should be included',
         );
       }
-    }
+    },
   );
 
   testRunner.add(
@@ -89,10 +89,10 @@ export default function (
       } catch (err: any) {
         t.equal(
           err.message,
-          'Data items should be objects or the "fields" option should be included'
+          'Data items should be objects or the "fields" option should be included',
         );
       }
-    }
+    },
   );
 
   testRunner.add('should error if input data is not an object', async (t) => {
@@ -104,7 +104,7 @@ export default function (
     } catch (err: any) {
       t.equal(
         err.message,
-        'Data items should be objects or the "fields" option should be included'
+        'Data items should be objects or the "fields" option should be included',
       );
     }
   });
@@ -156,7 +156,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.default);
-    }
+    },
   );
 
   testRunner.add('should parse json to csv using custom fields', async (t) => {
@@ -209,7 +209,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.withNotExistField);
-    }
+    },
   );
 
   testRunner.add(
@@ -232,7 +232,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.fieldNames);
-    }
+    },
   );
 
   testRunner.add("should error on invalid 'fields' property", async (t) => {
@@ -255,7 +255,7 @@ export default function (
     } catch (err: any) {
       t.equal(
         err.message,
-        `Invalid field info option. ${JSON.stringify(opts.fields![1])}`
+        `Invalid field info option. ${JSON.stringify(opts.fields![1])}`,
       );
     }
   });
@@ -280,10 +280,10 @@ export default function (
       } catch (err: any) {
         t.equal(
           err.message,
-          `Invalid field info option. ${JSON.stringify(opts.fields![1])}`
+          `Invalid field info option. ${JSON.stringify(opts.fields![1])}`,
         );
       }
-    }
+    },
   );
 
   testRunner.add('should support nested properties selectors', async (t) => {
@@ -337,11 +337,11 @@ export default function (
       const parser = new Parser(opts);
       const csv = await parseInput(
         parser,
-        jsonFixtures.functionStringifyByDefault()
+        jsonFixtures.functionStringifyByDefault(),
       );
 
       t.equal(csv, csvFixtures.functionStringifyByDefault);
-    }
+    },
   );
 
   testRunner.add(
@@ -359,11 +359,11 @@ export default function (
       const parser = new Parser(opts);
       const csv = await parseInput(
         parser,
-        jsonFixtures.functionStringifyByDefault()
+        jsonFixtures.functionStringifyByDefault(),
       );
 
       t.equal(csv, csvFixtures.functionStringifyByDefault);
-    }
+    },
   );
 
   testRunner.add(
@@ -397,7 +397,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.fancyfields());
 
       t.equal(csv, csvFixtures.fancyfields);
-    }
+    },
   );
 
   // Default value
@@ -414,7 +414,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.defaultValueEmpty());
 
       t.equal(csv, csvFixtures.defaultValueEmpty);
-    }
+    },
   );
 
   testRunner.add(
@@ -432,11 +432,11 @@ export default function (
       const parser = new Parser(opts);
       const csv = await parseInput(
         parser,
-        jsonFixtures.overriddenDefaultValue()
+        jsonFixtures.overriddenDefaultValue(),
       );
 
       t.equal(csv, csvFixtures.overriddenDefaultValue);
-    }
+    },
   );
 
   testRunner.add(
@@ -463,11 +463,11 @@ export default function (
       const parser = new Parser(opts);
       const csv = await parseInput(
         parser,
-        jsonFixtures.overriddenDefaultValue()
+        jsonFixtures.overriddenDefaultValue(),
       );
 
       t.equal(csv, csvFixtures.overriddenDefaultValue);
-    }
+    },
   );
 
   // Delimiter
@@ -484,7 +484,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.tsv);
-    }
+    },
   );
 
   testRunner.add('should remove last delimiter |@|', async (t) => {
@@ -510,7 +510,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, forceCrlfEol(csvFixtures.eol));
-    }
+    },
   );
 
   // Header
@@ -536,7 +536,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.emptyRow());
 
       t.equal(csv, csvFixtures.emptyRowNotIncluded);
-    }
+    },
   );
 
   testRunner.add(
@@ -550,7 +550,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.emptyRow());
 
       t.equal(csv, csvFixtures.emptyRow);
-    }
+    },
   );
 
   testRunner.add(
@@ -564,7 +564,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.emptyRow());
 
       t.equal(csv, csvFixtures.emptyRowNotIncluded);
-    }
+    },
   );
 
   testRunner.add(
@@ -591,7 +591,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.emptyRow());
 
       t.equal(csv, csvFixtures.emptyRowDefaultValues);
-    }
+    },
   );
 
   testRunner.add(
@@ -606,7 +606,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.arrayWithNull());
 
       t.equal(csv, csvFixtures.emptyObject);
-    }
+    },
   );
 
   // BOM
@@ -647,7 +647,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.unwind2());
 
       t.equal(csv, csvFixtures.unwind2);
-    }
+    },
   );
 
   testRunner.add(
@@ -662,7 +662,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.unwind());
 
       t.equal(csv, csvFixtures.unwind);
-    }
+    },
   );
 
   testRunner.add(
@@ -684,7 +684,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.unwind2());
 
       t.equal(csv, csvFixtures.unwind2);
-    }
+    },
   );
 
   testRunner.add(
@@ -711,7 +711,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.unwind2());
 
       t.equal(csv, csvFixtures.unwind2Blank);
-    }
+    },
   );
 
   testRunner.add(
@@ -725,7 +725,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.deepJSON());
 
       t.equal(csv, csvFixtures.flattenedDeepJSON);
-    }
+    },
   );
 
   testRunner.add(
@@ -739,7 +739,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.flattenArrays());
 
       t.equal(csv, csvFixtures.flattenedArrays);
-    }
+    },
   );
 
   testRunner.add(
@@ -753,7 +753,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.deepJSON());
 
       t.equal(csv, csvFixtures.flattenedCustomSeparatorDeepJSON);
-    }
+    },
   );
 
   testRunner.add(
@@ -767,7 +767,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.unwindAndFlatten());
 
       t.equal(csv, csvFixtures.unwindAndFlatten);
-    }
+    },
   );
 
   testRunner.add(
@@ -792,7 +792,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.unwindComplexObject());
 
       t.equal(csv, csvFixtures.unwindComplexObject);
-    }
+    },
   );
 
   testRunner.add('should support custom transforms', async (t) => {
@@ -836,7 +836,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.numberFormatter());
 
       t.equal(csv, csvFixtures.numberFixedDecimals);
-    }
+    },
   );
 
   testRunner.add(
@@ -852,7 +852,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.numberFormatter());
 
       t.equal(csv, csvFixtures.numberCustomSeparator);
-    }
+    },
   );
 
   testRunner.add(
@@ -868,7 +868,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.numberFormatter());
 
       t.equal(csv, csvFixtures.numberFixedDecimalsAndCustomSeparator);
-    }
+    },
   );
 
   // Symbol
@@ -896,7 +896,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.withSimpleQuotes);
-    }
+    },
   );
 
   testRunner.add(
@@ -913,7 +913,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.withoutQuotes);
-    }
+    },
   );
 
   testRunner.add(
@@ -930,7 +930,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.escapeCustomQuotes());
 
       t.equal(csv, csvFixtures.escapeCustomQuotes);
-    }
+    },
   );
 
   testRunner.add(
@@ -946,7 +946,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.escapedQuotes());
 
       t.equal(csv, csvFixtures.escapedQuotesUnescaped);
-    }
+    },
   );
 
   // String Escaped Quote
@@ -965,7 +965,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.backslashAtEnd());
 
       t.equal(csv, csvFixtures.backslashAtEnd);
-    }
+    },
   );
 
   testRunner.add(
@@ -974,11 +974,11 @@ export default function (
       const parser = new Parser();
       const csv = await parseInput(
         parser,
-        jsonFixtures.backslashAtEndInMiddleColumn()
+        jsonFixtures.backslashAtEndInMiddleColumn(),
       );
 
       t.equal(csv, csvFixtures.backslashAtEndInMiddleColumn);
-    }
+    },
   );
 
   testRunner.add(
@@ -995,7 +995,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.escapedQuotes());
 
       t.equal(csv, csvFixtures.escapedQuotes);
-    }
+    },
   );
 
   testRunner.add(
@@ -1009,11 +1009,11 @@ export default function (
       const parser = new Parser(opts);
       const csv = await parseInput(
         parser,
-        jsonFixtures.backslashBeforeNewLine()
+        jsonFixtures.backslashBeforeNewLine(),
       );
 
       t.equal(csv, csvFixtures.backslashBeforeNewLine);
-    }
+    },
   );
 
   // String Quote Only if Necessary
@@ -1032,7 +1032,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.quoteOnlyIfNecessary());
 
       t.equal(csv, csvFixtures.quoteOnlyIfNecessary);
-    }
+    },
   );
 
   // String Excel
@@ -1051,7 +1051,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.excelStrings);
-    }
+    },
   );
 
   testRunner.add(
@@ -1067,7 +1067,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.quotes());
 
       t.equal(csv, csvFixtures.excelStringsWithEscapedQuoted);
-    }
+    },
   );
 
   // String Escaping and preserving values
@@ -1083,14 +1083,14 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.trailingBackslash());
 
       t.equal(csv, csvFixtures.trailingBackslash);
-    }
+    },
   );
 
   testRunner.add('should escape " when preceeded by \\', async (t) => {
     const parser = new Parser();
     const csv = await parseInput(
       parser,
-      jsonFixtures.escapeDoubleBackslashedEscapedQuote()
+      jsonFixtures.escapeDoubleBackslashedEscapedQuote(),
     );
 
     t.equal(csv, csvFixtures.escapeDoubleBackslashedEscapedQuote);
@@ -1110,7 +1110,7 @@ export default function (
         '"a string"',
         '"with a \u2028description\\n and\na new line"',
         '"with a \u2029\u2028description and\r\nanother new line"',
-      ].join('\r\n')
+      ].join('\r\n'),
     );
   });
 
@@ -1130,7 +1130,7 @@ export default function (
       const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.customHeaderQuotes);
-    }
+    },
   );
 
   return testRunner;

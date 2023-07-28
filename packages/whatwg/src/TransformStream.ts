@@ -12,7 +12,7 @@ class JSON2CSVWHATWGTransformer<TRaw extends object, T extends object>
 
   constructor(
     opts: ParserOptions<TRaw, T> = {},
-    asyncOpts: StreamParserOptions = {}
+    asyncOpts: StreamParserOptions = {},
   ) {
     super(opts, asyncOpts);
   }
@@ -48,7 +48,7 @@ interface AwaitableReadableStream<T> extends ReadableStream<T> {
 
 export default class JSON2CSVWHATWGTransformStream<
     TRaw extends object,
-    T extends object
+    T extends object,
   >
   extends TransformStream<TRaw, string>
   implements TransformStream<TRaw, string>, EventTarget
@@ -60,7 +60,7 @@ export default class JSON2CSVWHATWGTransformStream<
     opts: ParserOptions<TRaw, T> = {},
     asyncOpts: StreamParserOptions = {},
     writableStrategy?: QueuingStrategy<TRaw>,
-    readableStrategy?: QueuingStrategy<string>
+    readableStrategy?: QueuingStrategy<string>,
   ) {
     const transformer = new JSON2CSVWHATWGTransformer<TRaw, T>(opts, asyncOpts);
     super(transformer, writableStrategy, readableStrategy);
@@ -96,7 +96,7 @@ export default class JSON2CSVWHATWGTransformStream<
   public addEventListener(
     type: string,
     callback: EventListenerOrEventListenerObject | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void {
     this.delegate?.addEventListener(type, callback, options);
   }
@@ -108,7 +108,7 @@ export default class JSON2CSVWHATWGTransformStream<
   public removeEventListener(
     type: string,
     callback: EventListenerOrEventListenerObject | null,
-    options?: boolean | EventListenerOptions | undefined
+    options?: boolean | EventListenerOptions | undefined,
   ): void {
     this.delegate?.removeEventListener(type, callback, options);
   }

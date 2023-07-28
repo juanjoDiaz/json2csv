@@ -12,14 +12,14 @@ import {
 
 export default class JSON2CSVNodeTransform<
   TRaw extends object,
-  T extends object
+  T extends object,
 > extends Transform {
   private streamParser: StreamParser<TRaw, T>;
 
   constructor(
     opts: ParserOptions<TRaw, T> = {},
     asyncOptions: StreamParserOptions = {},
-    transformOpts: TransformOptions = {}
+    transformOpts: TransformOptions = {},
   ) {
     super(transformOpts);
     this.streamParser = new StreamParser(
@@ -31,7 +31,7 @@ export default class JSON2CSVNodeTransform<
         ...asyncOptions,
         objectMode:
           transformOpts.objectMode || transformOpts.readableObjectMode,
-      }
+      },
     );
 
     this.streamParser.onHeader = (header) => this.emit('header', header);
@@ -55,7 +55,7 @@ export default class JSON2CSVNodeTransform<
   override _transform(
     chunk: any,
     encoding: BufferEncoding,
-    done: TransformCallback
+    done: TransformCallback,
   ) {
     try {
       this.streamParser.write(chunk);

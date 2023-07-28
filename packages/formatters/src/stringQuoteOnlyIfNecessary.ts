@@ -10,7 +10,7 @@ export interface StringFQuoteOnlyIfNecesaryFormatterOptions
 }
 
 export default function stringQuoteOnlyIfNecessaryFormatter(
-  opts: StringFQuoteOnlyIfNecesaryFormatterOptions = {}
+  opts: StringFQuoteOnlyIfNecesaryFormatterOptions = {},
 ): Formatter<string> {
   const quote = typeof opts.quote === 'string' ? opts.quote : '"';
   const escapedQuote =

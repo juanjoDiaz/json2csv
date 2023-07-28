@@ -6,7 +6,7 @@ export interface NumberFormatterOptions {
 }
 
 export default function numberFormatter<T extends number>(
-  opts: NumberFormatterOptions = {}
+  opts: NumberFormatterOptions = {},
 ): Formatter<T> {
   const { separator, decimals } = opts;
   if (separator) {

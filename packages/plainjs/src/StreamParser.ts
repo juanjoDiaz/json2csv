@@ -23,7 +23,7 @@ interface ObjectModeTokenizer<TRaw> {
 
 export default class JSON2CSVStreamParser<
   TRaw extends object,
-  T extends object
+  T extends object,
 > extends JSON2CSVBase<TRaw, T> {
   protected tokenizer!: Tokenizer | ObjectModeTokenizer<TRaw>;
   private tokenParser!: TokenParser;
@@ -31,7 +31,7 @@ export default class JSON2CSVStreamParser<
 
   constructor(
     opts?: Readonly<Json2CSVBaseOptions<TRaw, T>>,
-    asyncOpts?: Readonly<StreamParserOptions>
+    asyncOpts?: Readonly<StreamParserOptions>,
   ) {
     super(opts);
     if (this.opts.fields)
@@ -41,7 +41,7 @@ export default class JSON2CSVStreamParser<
 
   protected initTokenizer(
     opts: NormalizedJson2CSVBaseOptions<TRaw, T>,
-    asyncOpts: StreamParserOptions = {}
+    asyncOpts: StreamParserOptions = {},
   ) {
     if (asyncOpts.objectMode) {
       this.tokenizer = this.getObjectModeTokenizer();
@@ -106,8 +106,8 @@ export default class JSON2CSVStreamParser<
       } else {
         this.onError(
           new Error(
-            'Data items should be objects or the "fields" option should be included'
-          )
+            'Data items should be objects or the "fields" option should be included',
+          ),
         );
         return;
       }
@@ -120,7 +120,7 @@ export default class JSON2CSVStreamParser<
       this.onError(
         err instanceof TokenizerError
           ? new Error('Data should be a valid JSON object or array')
-          : err
+          : err,
       );
     tokenizer.onEnd = () => {
       this.pushHeaderIfNotWritten();
@@ -144,8 +144,8 @@ export default class JSON2CSVStreamParser<
     if (!this.opts.fields) {
       this.onError(
         new Error(
-          'Data should not be empty or the "fields" option should be included'
-        )
+          'Data should not be empty or the "fields" option should be included',
+        ),
       );
       return;
     }
@@ -181,12 +181,12 @@ export default class JSON2CSVStreamParser<
       if (!this.opts.fields) {
         if (typeof processedData[0] !== 'object') {
           throw new Error(
-            'Data items should be objects or the "fields" option should be included'
+            'Data items should be objects or the "fields" option should be included',
           );
         }
         this.opts.fields = this.preprocessFieldsInfo(
           Object.keys(processedData[0]),
-          this.opts.defaultValue
+          this.opts.defaultValue,
         );
       }
       this.pushHeader();
