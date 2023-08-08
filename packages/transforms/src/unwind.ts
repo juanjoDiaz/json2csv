@@ -25,7 +25,7 @@ function getUnwindablePaths<T extends object>(
       } else if (Array.isArray(value)) {
         unwindablePaths.push(newPath);
         unwindablePaths = unwindablePaths.concat(
-          value
+          (value as Array<any>)
             .map((arrObj) => getUnwindablePaths(arrObj, newPath))
             .reduce(flattenReducer, [])
             .filter((item, index, arr) => arr.indexOf(item) !== index)
