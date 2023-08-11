@@ -85,7 +85,7 @@ const output = createWriteStream(outputPath, { encoding: 'utf8' });
 const opts = {};
 const transformOpts = {};
 const asyncOpts = {};
-const parser = new Transform(opts, transformOpts, asyncOpts);
+const parser = new Transform(opts, asyncOpts, transformOpts);
 
 const processor = input.pipe(parser).pipe(output);
 
@@ -110,10 +110,6 @@ parser
 * `includeEmptyRows` [&lt;Boolean&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) includes empty rows. Defaults to `false`.
 * `withBOM` [&lt;Boolean&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) with BOM character. Defaults to `false`.
 
-##### Transform Options
-
-See the [Duplex stream options](https://nodejs.org/api/stream.html#new-streamduplexoptions) for more details.
-
 ##### Async Options
 
 Options used by the underlying parsing library to process the binary or text stream.
@@ -123,6 +119,10 @@ See [@streamparser/json](https://github.com/juanjoDiaz/streamparser-json#bufferi
 
 * `stringBufferSize` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) Size of the buffer used to parse strings. Defaults to 0 which means to don't buffer. Min valid value is 4.
 * `numberBufferSize` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) Size of the buffer used to parse numbers. Defaults to 0 to don't buffer.
+
+##### Transform Options
+
+See the [Duplex stream options](https://nodejs.org/api/stream.html#new-streamduplexoptions) for more details.
 
 ### Complete Documentation
 
@@ -140,9 +140,9 @@ To facilitate usage, `NodeAsyncParser` wraps `NodeTransform` exposing a single `
 import { AsyncParser } from '@json2csv/node';
 
 const opts = {};
-const transformOpts = {};
 const asyncOpts = {};
-const parser = new AsyncParser(opts, transformOpts, asyncOpts);
+const transformOpts = {};
+const parser = new AsyncParser(opts, asyncOpts, transformOpts);
 
 const csv = await parser.parse(data).promise();
 
@@ -166,10 +166,6 @@ parser.parse(data).pipe(writableStream);
 * `includeEmptyRows` [&lt;Boolean&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) includes empty rows. Defaults to `false`.
 * `withBOM` [&lt;Boolean&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) with BOM character. Defaults to `false`.
 
-##### Transform Options
-
-See the [Duplex stream options](https://nodejs.org/api/stream.html#new-streamduplexoptions) for more details.
-
 ##### Async Options
 
 Options used by the underlying parsing library to process the binary or text stream.
@@ -179,6 +175,10 @@ See [@streamparser/json](https://github.com/juanjoDiaz/streamparser-json#bufferi
 
 * `stringBufferSize` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) Size of the buffer used to parse strings. Defaults to 0 which means to don't buffer. Min valid value is 4.
 * `numberBufferSize` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) Size of the buffer used to parse numbers. Defaults to 0 to don't buffer.
+
+##### Transform Options
+
+See the [Duplex stream options](https://nodejs.org/api/stream.html#new-streamduplexoptions) for more details.
 
 ### Complete Documentation
 
