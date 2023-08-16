@@ -19,7 +19,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Get npm cache directory
         id: npm-cache-dir
-        run: echo "::set-output name=dir::$(npm config get cache)"
+        run: echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
+        shell: bash
       - name: Cache Node.js modules on Linux
         uses: actions/cache@v3
         with:
@@ -34,7 +35,7 @@ jobs:
       - name: Unit tests
         run: npm run test-with-coverage
       - name: Coveralls Parallel
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.github_token }}
           flag-name: run-${{ matrix.node-version }}
@@ -44,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.github_token }}
           parallel-finished: true
