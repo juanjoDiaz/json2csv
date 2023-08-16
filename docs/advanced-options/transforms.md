@@ -53,7 +53,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import unwind from 'https://cdn.jsdelivr.net/npm/@json2csv/transforms@7.0.1';
+  import unwind from 'https://cdn.jsdelivr.net/npm/@json2csv/transforms@7.0.2';
 </script>
 ```
 

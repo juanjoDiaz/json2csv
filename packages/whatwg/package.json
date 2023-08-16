@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/whatwg",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "WHATWG Transform and Async interface to convert JSON into CSV.",
   "keywords": [
     "json",
@@ -48,6 +48,6 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@json2csv/plainjs": "^7.0.1"
+    "@json2csv/plainjs": "^7.0.2"
   }
 }

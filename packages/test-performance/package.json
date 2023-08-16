@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/test-performance",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "Performance tests for json2csv",
   "keywords": [
     "json",

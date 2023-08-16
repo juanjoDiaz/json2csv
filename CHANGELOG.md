@@ -1,3 +1,10 @@
+### [7.0.2](https://github.com/juanjodiaz/json2csv/compare/v7.0.1...v7.0.2) (2023-08-16)
+
+
+### Bug Fixes
+
+* wrong "main" in formatters package.json affecting eslint ([3179a05](https://github.com/juanjodiaz/json2csv/commit/3179a05957c3a357f7752b41b1ad0a77c4f2e54c))
+
 ### [7.0.1](https://github.com/juanjodiaz/json2csv/compare/v7.0.0...v7.0.1) (2023-05-31)
 
 
