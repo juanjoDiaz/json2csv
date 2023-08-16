@@ -55,7 +55,7 @@ import { AsyncParser } from '@json2csv/whatwg';
 const opts = {};
 const transformOpts = {};
 const asyncOpts = {};
-const parser = new AsyncParser(opts, transformOpts, asyncOpts);
+const parser = new AsyncParser(opts, asyncOpts, transformOpts);
 
 const csv = await parser.parse(data).promise();
 

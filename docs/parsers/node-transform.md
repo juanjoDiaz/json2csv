@@ -40,7 +40,7 @@ const output = createWriteStream(outputPath, { encoding: 'utf8' });
 const opts = {};
 const transformOpts = {};
 const asyncOpts = {};
-const parser = new Transform(opts, transformOpts, asyncOpts);
+const parser = new Transform(opts, asyncOpts, transformOpts);
 
 const processor = input.pipe(parser).pipe(output);
 

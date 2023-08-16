@@ -85,7 +85,7 @@ const output = createWriteStream(outputPath, { encoding: 'utf8' });
 const opts = {};
 const transformOpts = {};
 const asyncOpts = {};
-const parser = new Transform(opts, transformOpts, asyncOpts);
+const parser = new Transform(opts, asyncOpts, transformOpts);
 
 const processor = input.pipe(parser).pipe(output);
 
@@ -142,7 +142,7 @@ import { AsyncParser } from '@json2csv/node';
 const opts = {};
 const transformOpts = {};
 const asyncOpts = {};
-const parser = new AsyncParser(opts, transformOpts, asyncOpts);
+const parser = new AsyncParser(opts, asyncOpts, transformOpts);
 
 const csv = await parser.parse(data).promise();
 
