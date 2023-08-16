@@ -4,7 +4,7 @@ import stringFormatter from '@json2csv/formatters/string';
 // import Papa from 'papaparse'
 // import json2csv2 from 'json-2-csv';
 const data = Array(1000).fill(
-  (() => ({ carModel: 'Audi', price: 0, color: 'blue', power: 220 }))()
+  (() => ({ carModel: 'Audi', price: 0, color: 'blue', power: 220 }))(),
 );
 const streamData = JSON.stringify(data);
 

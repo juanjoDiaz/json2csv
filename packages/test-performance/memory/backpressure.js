@@ -19,8 +19,8 @@ try {
         pipeline(
           networkStream,
           new Transform(parserOptions, streamParserOptions, transformOptions),
-          fs.createWriteStream('mb100.csv')
-        )
+          fs.createWriteStream('mb100.csv'),
+        ),
       );
     });
   });

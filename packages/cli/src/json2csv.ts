@@ -57,90 +57,90 @@ program
   .version(pkg.version)
   .option(
     '-i, --input <input>',
-    'Path and name of the incoming json file. Defaults to stdin.'
+    'Path and name of the incoming json file. Defaults to stdin.',
   )
   .option(
     '-o, --output <output>',
-    'Path and name of the resulting csv file. Defaults to stdout.'
+    'Path and name of the resulting csv file. Defaults to stdout.',
   )
   .option(
     '-c, --config <path>',
-    'Specify a file with a valid JSON configuration.'
+    'Specify a file with a valid JSON configuration.',
   )
   .option('-n, --ndjson', 'Treat the input as NewLine-Delimited JSON.')
   .option(
     '-s, --no-streaming',
-    'Process the whole JSON array in memory instead of doing it line by line.'
+    'Process the whole JSON array in memory instead of doing it line by line.',
   )
   .option(
     '-f, --fields <fields>',
-    'List of fields to process. Defaults to field auto-detection.'
+    'List of fields to process. Defaults to field auto-detection.',
   )
   // CSV customizations
   .option(
     '-v, --default-value <defaultValue>',
-    'Default value to use for missing fields.'
+    'Default value to use for missing fields.',
   )
   .option(
     '-d, --delimiter <delimiter>',
     "Character(s) to use as delimiter. Defaults to ','.",
-    ','
+    ',',
   )
   .option(
     '-e, --eol <eol>',
     "Character(s) to use as End-of-Line for separating rows. Defaults to '\\n'.",
-    os.EOL
+    os.EOL,
   )
   .option('-H, --no-header', 'Disable the column name header.')
   .option(
     '-a, --include-empty-rows',
-    'Includes empty rows in the resulting CSV output.'
+    'Includes empty rows in the resulting CSV output.',
   )
   .option(
     '-b, --with-bom',
-    'Includes BOM character at the beginning of the CSV.'
+    'Includes BOM character at the beginning of the CSV.',
   )
   .option(
     '-p, --pretty',
-    'Print output as a pretty table. Use only when printing to console.'
+    'Print output as a pretty table. Use only when printing to console.',
   )
   // Built-in formatters
   .option(
     '-q, --quote <quote>',
-    "Character(s) to use as quote mark. Defaults to '\"'."
+    "Character(s) to use as quote mark. Defaults to '\"'.",
   )
   .option(
     '-Q, --escaped-quote <escapedQuote>',
-    'Character(s) to use as a escaped quote. Defaults to a double `quote`, \'""\'.'
+    'Character(s) to use as a escaped quote. Defaults to a double `quote`, \'""\'.',
   )
   .option(
     '-E, --excel-strings',
-    'Wraps string data to force Excel to interpret it as string even if it contains a number.'
+    'Wraps string data to force Excel to interpret it as string even if it contains a number.',
   )
   // Built-in transforms
   .option(
     '--unwind [paths]',
-    'Creates multiple rows from a single JSON document similar to MongoDB unwind.'
+    'Creates multiple rows from a single JSON document similar to MongoDB unwind.',
   )
   .option(
     '--unwind-blank',
     'When unwinding, blank out instead of repeating data. Defaults to false.',
-    false
+    false,
   )
   .option(
     '--flatten-objects',
     'Flatten nested objects. Defaults to false.',
-    false
+    false,
   )
   .option(
     '--flatten-arrays',
     'Flatten nested arrays. Defaults to false.',
-    false
+    false,
   )
   .option(
     '--flatten-separator <separator>',
     "Flattened keys separator. Defaults to '.'.",
-    '.'
+    '.',
   );
 
 program.parse(process.argv);
@@ -189,7 +189,7 @@ function getOutputStream(outputPath: string, config: OutputOptions): Writable {
 async function getInput<TRaw>(
   inputPath: string,
   ndjson: boolean,
-  eol: string
+  eol: string,
 ): Promise<Array<TRaw>> {
   if (!inputPath) return getInputFromStdin(ndjson);
   if (ndjson) return parseNdJson<TRaw>(await readFile(inputPath, 'utf8'), eol);
@@ -204,12 +204,12 @@ async function getInputFromStdin<TRaw>(ndjson: boolean): Promise<Array<TRaw>> {
     let inputData = '';
     process.stdin.on('data', (chunk) => (inputData += chunk));
     process.stdin.on('error', (err) =>
-      reject(new Error(`Could not read from stdin. (${err})`))
+      reject(new Error(`Could not read from stdin. (${err})`)),
     );
     process.stdin.on('end', () => {
       try {
         resolve(
-          ndjson ? parseNdJson(inputData, os.EOL) : JSON.parse(inputData)
+          ndjson ? parseNdJson(inputData, os.EOL) : JSON.parse(inputData),
         );
       } catch (err: unknown) {
         reject(new Error(`Invalid data received from stdin (${err})`));
@@ -221,7 +221,7 @@ async function getInputFromStdin<TRaw>(ndjson: boolean): Promise<Array<TRaw>> {
 async function processOutput(
   outputPath: string,
   csv: string,
-  config: OutputOptions
+  config: OutputOptions,
 ): Promise<void> {
   if (!outputPath) {
     config.pretty
@@ -237,7 +237,7 @@ async function processInMemory<TRaw extends object, T extends object>(
   input: string,
   output: string,
   config: InputOptions & OutputOptions,
-  opts: ParserOptions<TRaw, T>
+  opts: ParserOptions<TRaw, T>,
 ): Promise<void> {
   const inputData = await getInput<TRaw>(input, config.ndjson, config.eol);
   const outputData = new Parser(opts).parse(inputData);
@@ -248,7 +248,7 @@ async function processStream<TRaw extends object, T extends object>(
   input: string,
   output: string,
   config: OutputOptions,
-  opts: ParserOptions<TRaw, T>
+  opts: ParserOptions<TRaw, T>,
 ) {
   const inputStream = getInputStream(input);
   const transform = new Json2csvTransform(opts);
@@ -263,13 +263,13 @@ async function processStream<TRaw extends object, T extends object>(
 }
 
 (async function Main<TRaw extends object, T extends object>(
-  programConfig: OptionValues
+  programConfig: OptionValues,
 ) {
   try {
     const config: Options = Object.assign(
       {},
       programConfig.config ? await getInputJSON(programConfig.config) : {},
-      programConfig
+      programConfig,
     ) as Options;
 
     const transforms: any = [];
@@ -278,7 +278,7 @@ async function processStream<TRaw extends object, T extends object>(
         unwind<TRaw>({
           paths: config.unwind === true ? undefined : config.unwind.split(','),
           blankOut: config.unwindBlank,
-        })
+        }),
       );
     }
 
@@ -288,7 +288,7 @@ async function processStream<TRaw extends object, T extends object>(
           objects: config.flattenObjects,
           arrays: config.flattenArrays,
           separator: config.flattenSeparator,
-        })
+        }),
       );
     }
 
@@ -323,7 +323,7 @@ async function processStream<TRaw extends object, T extends object>(
       config.input,
       config.output,
       config,
-      opts
+      opts,
     );
   } catch (err: unknown) {
     let processedError =
@@ -333,21 +333,21 @@ async function processStream<TRaw extends object, T extends object>(
       processedError.message.includes(programConfig.input)
     ) {
       processedError = new Error(
-        `Invalid input file. (${processedError.message})`
+        `Invalid input file. (${processedError.message})`,
       );
     } else if (
       programConfig.output &&
       processedError.message.includes(programConfig.output)
     ) {
       processedError = new Error(
-        `Invalid output file. (${processedError.message})`
+        `Invalid output file. (${processedError.message})`,
       );
     } else if (
       programConfig.config &&
       processedError.message.includes(programConfig.config)
     ) {
       processedError = new Error(
-        `Invalid config file. (${processedError.message})`
+        `Invalid config file. (${processedError.message})`,
       );
     }
     // eslint-disable-next-line no-console

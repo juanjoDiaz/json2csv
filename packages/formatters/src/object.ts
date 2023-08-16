@@ -2,7 +2,7 @@ import type Formatter from './Formatter.js';
 import defaulStringFormatter from './string.js';
 
 export default function objectFormatter<T extends object>(
-  opts = { stringFormatter: defaulStringFormatter() }
+  opts = { stringFormatter: defaulStringFormatter() },
 ): Formatter<T> {
   return (value: T) => {
     if (value === null) return '';

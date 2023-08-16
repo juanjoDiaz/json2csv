@@ -8,7 +8,7 @@ export default {
             `Expected ${JSON.stringify(field)} to equals ${JSON.stringify({
               label: 'Value1',
               default: 'default value',
-            })}.`
+            })}.`,
           );
         }
         return row.value1.toLocaleString();

@@ -5,7 +5,7 @@ import { string as stringFormatter } from '@json2csv/formatters';
 // import json2csv2 from 'json-2-csv';
 
 const data = JSON.stringify(
-  Array(1000).fill((() => ({ carModel: 'Audi', price: 0, color: 'blue' }))())
+  Array(1000).fill((() => ({ carModel: 'Audi', price: 0, color: 'blue' }))()),
 );
 // const data = Array(100).fill((() => ({ carModel: 1234123, price: 0, color: 1234 }))());
 // const data = Array(10000).fill((() => ({ carModel: 'Audi', price: 0, color: ['blue', 'red', 'green' ]}))());
@@ -61,7 +61,7 @@ suite
   // })
   .on('cycle', (event) => console.log(String(event.target)))
   .on('complete', () =>
-    console.log(`Fastest is ${suite.filter('fastest').map('name')} \n`)
+    console.log(`Fastest is ${suite.filter('fastest').map('name')} \n`),
   )
   .on('error', console.error)
   .run({ async: true });

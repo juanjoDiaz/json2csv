@@ -8,7 +8,7 @@ export type ParserOptions<TRaw = object, T = TRaw> = Json2CSVBaseOptions<
 
 export default class JSON2CSVParser<
   TRaw extends object,
-  T extends object
+  T extends object,
 > extends JSON2CSVBase<TRaw, T> {
   constructor(opts?: Readonly<Json2CSVBaseOptions<TRaw, T>>) {
     super(opts);
@@ -35,7 +35,7 @@ export default class JSON2CSVParser<
 
           return fields;
         }, []),
-        this.opts.defaultValue
+        this.opts.defaultValue,
       );
 
     const header = this.opts.header ? this.getHeader() : '';
@@ -61,12 +61,12 @@ export default class JSON2CSVParser<
     if (!this.opts.fields) {
       if (data === undefined || data === null || processedData.length === 0) {
         throw new Error(
-          'Data should not be empty or the "fields" option should be included'
+          'Data should not be empty or the "fields" option should be included',
         );
       }
       if (typeof processedData[0] !== 'object') {
         throw new Error(
-          'Data items should be objects or the "fields" option should be included'
+          'Data items should be objects or the "fields" option should be included',
         );
       }
     }
@@ -88,7 +88,7 @@ export default class JSON2CSVParser<
   processData(data: Array<T>): string {
     return fastJoin(
       data.map((row) => this.processRow(row)).filter((row) => row), // Filter empty rows
-      this.opts.eol
+      this.opts.eol,
     );
   }
 }

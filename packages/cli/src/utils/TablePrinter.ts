@@ -72,16 +72,16 @@ export default class TablePrinter {
       .map(
         (cell, i) =>
           cell.match(new RegExp(`(.{1,${this.colWidths[i] - 2}})`, 'g')) ||
-          ([] as Array<string>)
+          ([] as Array<string>),
       );
 
     const height = wrappedRow.reduce(
       (acc, cell) => Math.max(acc, cell.length),
-      0
+      0,
     );
 
     const processedCells = wrappedRow.map((cell, i) =>
-      this.formatCell(cell, height, this.colWidths[i])
+      this.formatCell(cell, height, this.colWidths[i]),
     );
 
     return Array(height)
@@ -93,7 +93,7 @@ export default class TablePrinter {
   formatCell(
     content: Array<string>,
     heigth: number,
-    width: number
+    width: number,
   ): Array<string> {
     const paddedContent = this.padCellHorizontally(content, width);
     return this.padCellVertically(paddedContent, heigth, width);
@@ -102,7 +102,7 @@ export default class TablePrinter {
   padCellVertically(
     content: Array<string>,
     heigth: number,
-    width: number
+    width: number,
   ): Array<string> {
     const vertPad = heigth - content.length;
     const vertPadTop = Math.ceil(vertPad / 2);

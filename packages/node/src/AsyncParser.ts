@@ -4,7 +4,7 @@ import JSON2CSVNodeTransform from './Transform.js';
 
 export default class JSON2CSVNodeAsyncParser<
   TRaw extends object,
-  T extends object
+  T extends object,
 > {
   private readonly opts: ParserOptions<TRaw, T>;
   private asyncOpts: StreamParserOptions;
@@ -13,7 +13,7 @@ export default class JSON2CSVNodeAsyncParser<
   constructor(
     opts: ParserOptions<TRaw, T> = {},
     asyncOpts: StreamParserOptions = {},
-    transformOpts: TransformOptions = {}
+    transformOpts: TransformOptions = {},
   ) {
     this.opts = opts;
     this.asyncOpts = asyncOpts;
@@ -34,7 +34,7 @@ export default class JSON2CSVNodeAsyncParser<
       | AsyncIterable<TRaw>
       | TRaw
       | ReadableStream<TRaw>
-      | Readable
+      | Readable,
   ) {
     // if (Array.isArray(data)) {
     //   data = Readable.from(data.filter((item) => item !== null));
@@ -50,14 +50,14 @@ export default class JSON2CSVNodeAsyncParser<
 
     if (!(data instanceof Readable)) {
       throw new Error(
-        'Data should be a JSON object, JSON array, typed array, string or stream'
+        'Data should be a JSON object, JSON array, typed array, string or stream',
       );
     }
     return data.pipe(
       new JSON2CSVNodeTransform(this.opts, this.asyncOpts, {
         objectMode: data.readableObjectMode,
         ...this.transformOpts,
-      })
+      }),
     );
   }
 }

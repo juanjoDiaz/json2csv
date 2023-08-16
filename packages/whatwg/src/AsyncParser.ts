@@ -3,7 +3,7 @@ import JSON2CSVWHATWGTransformStream from './TransformStream.js';
 
 export default class JSON2CSVNodeAsyncParser<
   TRaw extends object,
-  T extends object
+  T extends object,
 > {
   private opts: ParserOptions<TRaw, T>;
   private asyncOpts: StreamParserOptions;
@@ -13,7 +13,7 @@ export default class JSON2CSVNodeAsyncParser<
     opts: ParserOptions<TRaw, T> = {},
     asyncOpts: StreamParserOptions = {},
     writableStrategy?: QueuingStrategy<TRaw>,
-    readableStrategy?: QueuingStrategy<string>
+    readableStrategy?: QueuingStrategy<string>,
   ) {
     this.opts = opts;
     this.asyncOpts = asyncOpts;
@@ -35,7 +35,7 @@ export default class JSON2CSVNodeAsyncParser<
       | Iterable<TRaw>
       | AsyncIterable<TRaw>
       | TRaw
-      | ReadableStream<TRaw>
+      | ReadableStream<TRaw>,
   ) {
     if (typeof data === 'string' || ArrayBuffer.isView(data)) {
       data = new ReadableStream({
@@ -66,7 +66,7 @@ export default class JSON2CSVNodeAsyncParser<
 
     if (!(data instanceof ReadableStream)) {
       throw new Error(
-        'Data should be a JSON object, JSON array, typed array, string or stream'
+        'Data should be a JSON object, JSON array, typed array, string or stream',
       );
     }
 
@@ -74,7 +74,7 @@ export default class JSON2CSVNodeAsyncParser<
       this.opts,
       this.asyncOpts,
       this.writableStrategy,
-      this.readableStrategy
+      this.readableStrategy,
     );
     return data.pipeThrough(transform);
   }

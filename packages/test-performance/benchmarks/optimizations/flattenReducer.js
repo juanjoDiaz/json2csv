@@ -9,7 +9,7 @@ function test(sampleSize) {
     .add(`flat(${sampleSize})`, () => data.flat())
     .on('cycle', (event) => console.log(String(event.target)))
     .on('complete', () =>
-      console.log(`Fastest is ${suite.filter('fastest').map('name')} \n`)
+      console.log(`Fastest is ${suite.filter('fastest').map('name')} \n`),
     )
     .on('error', console.error)
     .run();

@@ -91,7 +91,7 @@ export interface NormalizedJson2CSVBaseOptions<TRaw, T>
 
 export default abstract class JSON2CSVBase<
   TRaw extends object,
-  T extends object
+  T extends object,
 > {
   protected opts: NormalizedJson2CSVBaseOptions<TRaw, T>;
 
@@ -106,17 +106,17 @@ export default abstract class JSON2CSVBase<
    * delimiter, default value, quote mark, header, etc.
    */
   protected preprocessOpts(
-    opts?: Json2CSVBaseOptions<TRaw, T>
+    opts?: Json2CSVBaseOptions<TRaw, T>,
   ): NormalizedJson2CSVBaseOptions<TRaw, T> {
     const processedOpts = Object.assign(
       {},
-      opts
+      opts,
     ) as NormalizedJson2CSVBaseOptions<TRaw, T>;
 
     if (processedOpts.fields) {
       processedOpts.fields = this.preprocessFieldsInfo(
         processedOpts.fields,
-        processedOpts.defaultValue
+        processedOpts.defaultValue,
       );
     }
 
@@ -161,7 +161,7 @@ export default abstract class JSON2CSVBase<
    */
   protected preprocessFieldsInfo(
     fields: Array<string | FieldInfo<T, unknown>>,
-    globalDefaultValue?: string
+    globalDefaultValue?: string,
   ): Array<NormalizedFieldInfo<T, unknown>> {
     return fields.map((fieldInfo) => {
       if (typeof fieldInfo === 'string') {
@@ -205,7 +205,7 @@ export default abstract class JSON2CSVBase<
       }
 
       throw new Error(
-        'Invalid field info option. ' + JSON.stringify(fieldInfo)
+        'Invalid field info option. ' + JSON.stringify(fieldInfo),
       );
     });
   }
@@ -218,9 +218,9 @@ export default abstract class JSON2CSVBase<
   protected getHeader(): string {
     return fastJoin(
       this.opts.fields.map((fieldInfo) =>
-        this.opts.formatters.header(fieldInfo.label)
+        this.opts.formatters.header(fieldInfo.label),
       ),
-      this.opts.delimiter
+      this.opts.delimiter,
     );
   }
 
@@ -232,7 +232,7 @@ export default abstract class JSON2CSVBase<
     return (this.opts.transforms as Array<Transform<any, any>>).reduce(
       (rows: Array<unknown>, transform: Transform<any, any>) =>
         rows.map((row) => transform(row)).reduce(flattenReducer, []),
-      [row]
+      [row],
     ) as Array<T>;
   }
 
@@ -248,7 +248,7 @@ export default abstract class JSON2CSVBase<
     }
 
     const processedRow = this.opts.fields.map((fieldInfo) =>
-      this.processCell(row, fieldInfo)
+      this.processCell(row, fieldInfo),
     );
 
     if (
@@ -270,7 +270,7 @@ export default abstract class JSON2CSVBase<
    */
   protected processCell<FT>(
     row: T,
-    fieldInfo: NormalizedFieldInfo<T, FT>
+    fieldInfo: NormalizedFieldInfo<T, FT>,
   ): string {
     return this.processValue<FT>(fieldInfo.value(row));
   }
