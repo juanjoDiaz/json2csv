@@ -19,7 +19,7 @@ It fully support conversion following the [RFC4180](https://datatracker.ietf.org
 - Advanced data selection (automatic field discovery, underscore-like selectors, custom data getters, default values for missing fields, ...)
 - Support for custom input data transformation
 - Support for custom csv cell formatting.
-- Highly customizable (supportting custom quotation marks, delimiters, eol values, etc.)
+- Highly customizable (supporting custom quotation marks, delimiters, eol values, etc.)
 - Automatic escaping (preserving new lines, quotes, etc.)
 - Optional headers
 - Unicode encoding support
