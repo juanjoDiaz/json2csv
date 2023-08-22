@@ -18,7 +18,7 @@ Can be used as a module from node.js or the browser as well as from the command 
 - Advanced data selection (automatic field discovery, underscore-like selectors, custom data getters, default values for missing fields, ...)
 - Support for custom input data transformation
 - Support for custom csv cell formatting.
-- Highly customizable (supportting custom quotation marks, delimiters, eol values, etc.)
+- Highly customizable (supporting custom quotation marks, delimiters, eol values, etc.)
 - Automatic escaping (preserving new lines, quotes, etc.)
 - Optional headers
 - Unicode encoding support

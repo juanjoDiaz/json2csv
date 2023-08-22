@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/juanjoDiaz/json2csv/badge.svg?branch=main)](https://coveralls.io/github/juanjoDiaz/json2csv?branch=main)
 [![license](https://img.shields.io/npm/l/serverless-plugin-warmup.svg)](https://raw.githubusercontent.com/juanjoDiaz/json2csv/main/LICENSE.md)
 
-Fast and highly configurable JSON to CSV converter. 
+Fast and highly configurable JSON to CSV converter.
 
 ## Features
 
@@ -15,7 +15,7 @@ Fast and highly configurable JSON to CSV converter.
 - Advanced data selection (automatic field discovery, underscore-like selectors, custom data getters, default values for missing fields, ...)
 - Support for custom input data transformation
 - Support for custom csv cell formatting.
-- Highly customizable (supportting custom quotation marks, delimiters, eol values, etc.)
+- Highly customizable (supporting custom quotation marks, delimiters, eol values, etc.)
 - Automatic escaping (preserving new lines, quotes, etc.)
 - Optional headers
 - Unicode encoding support

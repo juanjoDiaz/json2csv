@@ -23,7 +23,7 @@ This package includes two modules:
 - Advanced data selection (automatic field discovery, underscore-like selectors, custom data getters, default values for missing fields, ...)
 - Support for custom input data transformation
 - Support for custom csv cell formatting.
-- Highly customizable (supportting custom quotation marks, delimiters, eol values, etc.)
+- Highly customizable (supporting custom quotation marks, delimiters, eol values, etc.)
 - Automatic escaping (preserving new lines, quotes, etc.)
 - Optional headers
 - Unicode encoding support
@@ -92,7 +92,7 @@ You can also select a specific version:
 
 For browser users, the Streaming API is wrapped in a WHATWG Transform Stream. This approach ensures a consistent memory footprint and avoids blocking JavaScript's event loop.
 
-The async API takes a second options arguments that is directly passed to the underlying streams accepts the same options as the `Stream Parser`. It also support a third and fourth options equivalent to the `writableStrategy` and 
+The async API takes a second options arguments that is directly passed to the underlying streams accepts the same options as the `Stream Parser`. It also support a third and fourth options equivalent to the `writableStrategy` and
 `readableStrategy` of a [WHATWG Transform Stream](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream/TransformStream) respectively.
 
 This Transform uses the `StreamParser` under the hood and support similar events.
