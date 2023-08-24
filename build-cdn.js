@@ -11,7 +11,7 @@ const replaceDependenciesByJsdelivr = {
       
       const [, relativePath] = args.path.match(/\@json2csv\/(.*)/);
       return {
-        path: path.join('..', relativePath),
+        path: path.join('..', relativePath, 'index.js'),
         external: true,
         namespace: 'dependency',
       };
@@ -52,6 +52,7 @@ pkgs.forEach(async (pkg) => {
   esbuild.build({
     entryPoints,
     bundle: true,
+    target: 'es2019',
     format: 'esm',
     outdir: `dist/cdn/${pkg}`,
     plugins: [replaceDependenciesByJsdelivr],

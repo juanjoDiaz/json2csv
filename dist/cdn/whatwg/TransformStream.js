@@ -1,28 +1,7 @@
-var __async = (__this, __arguments, generator) => {
-  return new Promise((resolve, reject) => {
-    var fulfilled = (value) => {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    };
-    var rejected = (value) => {
-      try {
-        step(generator.throw(value));
-      } catch (e) {
-        reject(e);
-      }
-    };
-    var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
-    step((generator = generator.apply(__this, __arguments)).next());
-  });
-};
-
 // packages/whatwg/src/TransformStream.ts
 import {
   StreamParser
-} from "../plainjs";
+} from "../plainjs/index.js";
 var JSON2CSVWHATWGTransformer = class extends StreamParser {
   constructor(opts = {}, asyncOpts = {}) {
     super(opts, asyncOpts);
@@ -61,16 +40,16 @@ var JSON2CSVWHATWGTransformStream = class extends TransformStream {
         this.dispatchEvent(new CustomEvent("data", { detail: data }));
       };
     }
-    this.readable.promise = () => __async(this, null, function* () {
+    this.readable.promise = async () => {
       let csv = "";
       const outputStream = new WritableStream({
         write(chunk) {
           csv += chunk;
         }
       });
-      yield this.readable.pipeTo(outputStream);
+      await this.readable.pipeTo(outputStream);
       return csv;
-    });
+    };
   }
   addEventListener(type, callback, options) {
     var _a;

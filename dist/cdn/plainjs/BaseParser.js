@@ -1,20 +1,3 @@
-var __defProp = Object.defineProperty;
-var __getOwnPropSymbols = Object.getOwnPropertySymbols;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __spreadValues = (a, b) => {
-  for (var prop in b ||= {})
-    if (__hasOwnProp.call(b, prop))
-      __defNormalProp(a, prop, b[prop]);
-  if (__getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(b)) {
-      if (__propIsEnum.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    }
-  return a;
-};
-
 // packages/plainjs/src/BaseParser.ts
 import lodashGet from "https://cdn.jsdelivr.net/gh/lodash/lodash@master/get.js";
 import {
@@ -23,7 +6,7 @@ import {
   string as stringFormatterCtor,
   symbol as symbolFormatterCtor,
   object as objectFormatterCtor
-} from "../formatters";
+} from "../formatters/index.js";
 import { getProp, flattenReducer, fastJoin } from "./utils.js";
 var FormatterTypes = /* @__PURE__ */ ((FormatterTypes2) => {
   FormatterTypes2["header"] = "header";
@@ -72,7 +55,10 @@ var JSON2CSVBase = class {
       function: objectFormatter,
       object: objectFormatter
     };
-    processedOpts.formatters = __spreadValues(__spreadValues({}, defaultFormatters), processedOpts.formatters);
+    processedOpts.formatters = {
+      ...defaultFormatters,
+      ...processedOpts.formatters
+    };
     processedOpts.delimiter = processedOpts.delimiter || ",";
     processedOpts.eol = processedOpts.eol || "\n";
     processedOpts.header = processedOpts.header !== false;
