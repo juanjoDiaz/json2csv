@@ -1,3 +1,17 @@
+## [7.0.3](https://github.com/juanjodiaz/json2csv/compare/v7.0.2...v7.0.3) (2023-08-24)
+
+
+### Bug Fixes
+
+* fix CDN build & set esbuild to use es2019 ([d59606e](https://github.com/juanjodiaz/json2csv/commit/d59606eb3b01c20ab46547aaddf00e7611c670cd))
+
+## [7.0.3](https://github.com/juanjodiaz/json2csv/compare/v7.0.2...v7.0.3) (2023-08-24)
+
+
+### Bug Fixes
+
+* fix CDN build & set esbuild to use es2019 ([d59606e](https://github.com/juanjodiaz/json2csv/commit/d59606eb3b01c20ab46547aaddf00e7611c670cd))
+
 ### [7.0.2](https://github.com/juanjodiaz/json2csv/compare/v7.0.1...v7.0.2) (2023-08-16)
 
 

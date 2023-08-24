@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/plainjs",
-  "version": "7.0.2",
+  "version": "7.0.3",
   "description": "Pure Javascript JSON to CSV converter.",
   "keywords": [
     "json",
@@ -48,7 +48,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@json2csv/formatters": "^7.0.2",
+    "@json2csv/formatters": "^7.0.3",
     "@streamparser/json": "^0.0.17",
     "lodash.get": "^4.4.2"
   }

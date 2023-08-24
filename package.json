@@ -1,6 +1,6 @@
 {
   "name": "json2csv",
-  "version": "7.0.2",
+  "version": "7.0.3",
   "private": true,
   "description": "Fast and highly configurable JSON to CSV converter",
   "keywords": [
@@ -46,7 +46,7 @@
     "build:cdn": "node build-cdn.js",
     "build": "npm run build -w @json2csv/formatters -w @json2csv/transforms -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg -w @json2csv/cli",
     "dependencies:update-internal": "npm run dependencies:update-internal -w @json2csv/cli -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg",
-    "changelog:update": "conventional-changelog-cli -p conventionalcommits -i CHANGELOG.md -s"
+    "changelog:update": "conventional-changelog-cli -p conventionalcommits -i CHANGELOG.md -s && cp CHANGELOG.md docs/others/CHANGELOG.md"
   },
   "devDependencies": {
     "@types/lodash.get": "^4.4.7",
