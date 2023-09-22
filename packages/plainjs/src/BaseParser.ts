@@ -1,4 +1,4 @@
-import lodashGet from 'lodash.get';
+import {get as lodashGet} from 'lodash.get';
 import {
   type Formatter,
   default as defaultFormatter,
