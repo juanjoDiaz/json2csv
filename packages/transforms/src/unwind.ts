@@ -1,4 +1,4 @@
-import {get as lodashGet} from 'lodash.get';
+import lodashGet from 'lodash.get';
 import type Transform from './Transform.js';
 import { setProp, unsetProp, flattenReducer } from './utils.js';
 

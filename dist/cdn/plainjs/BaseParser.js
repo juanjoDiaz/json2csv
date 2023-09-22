@@ -1,5 +1,5 @@
 // packages/plainjs/src/BaseParser.ts
-import {get as lodashGet} from "https://cdn.jsdelivr.net/npm/lodash@4.17.21/get.js";
+import lodashGet from "https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/get.js";
 import {
   default as defaultFormatter,
   number as numberFormatterCtor,
