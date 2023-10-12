@@ -41,11 +41,58 @@ type GetFieldType<T, P> = P extends `${infer Left}.${infer Right}`
 
 type PropertyName = string | number | symbol;
 
+const rePropName = RegExp(
+  // Match anything that isn't a dot or bracket.
+  '[^.[\\]]+' +
+    '|' +
+    // Or match property names within brackets.
+    '\\[(?:' +
+    // Match a non-string expression.
+    '([^"\'][^[]*)' +
+    '|' +
+    // Or match strings (supports escaping characters).
+    '(["\'])((?:(?!\\2)[^\\\\]|\\\\.)*?)\\2' +
+    ')\\]' +
+    '|' +
+    // Or match "" as the space between consecutive dots or empty brackets.
+    '(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))',
+  'g',
+);
+
+/**
+ * Casts `value` to a path array if it's not one.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @param {Object} [object] The object to query keys on.
+ * @returns {Array} Returns the cast property path array.
+ */
+function castPath<TKey extends keyof TObject, TObject extends object>(
+  path: TKey,
+  obj: TObject,
+): [TKey];
+function castPath<TPath extends string, TObject>(
+  path: TPath,
+  obj: TObject,
+): Exclude<GetFieldType<TObject, TPath>, null | undefined>;
+function castPath(value: string): string[] {
+  const result: string[] = [];
+  let match: RegExpExecArray | null;
+  while ((match = rePropName.exec(value))) {
+    result.push(match[3] ?? match[1]?.trim() ?? match[0]);
+  }
+  return result;
+}
+
 export function getProp<TObject extends object, TKey extends keyof TObject>(
   obj: TObject,
   path: TKey,
   defaultValue: TObject[TKey],
 ): TObject[TKey];
+export function getProp<TObject, TPath extends string>(
+  obj: TObject,
+  path: TPath,
+): Exclude<GetFieldType<TObject, TPath>, null | undefined>;
 export function getProp<
   TObject,
   TPath extends string,
@@ -55,9 +102,23 @@ export function getProp<
   path: TPath,
   defaultValue: TDefault,
 ): Exclude<GetFieldType<TObject, TPath>, null | undefined> | TDefault;
-export function getProp<T>(obj: any, path: PropertyName, defaultValue?: T): T {
-  const value = obj[path];
-  return value === undefined ? defaultValue : value;
+export function getProp<T>(
+  obj: any,
+  path: PropertyName,
+  defaultValue?: T,
+): T | undefined {
+  if (path in obj) {
+    const value = obj[path];
+    return value === undefined ? defaultValue : value;
+  }
+
+  const processedPath = Array.isArray(path) ? path : castPath(path, obj);
+  let currentValue = obj;
+  for (const key of processedPath) {
+    currentValue = currentValue?.[key];
+    if (currentValue === undefined) return defaultValue;
+  }
+  return currentValue;
 }
 
 export function flattenReducer<T>(acc: Array<T>, arr: Array<T> | T): Array<T> {

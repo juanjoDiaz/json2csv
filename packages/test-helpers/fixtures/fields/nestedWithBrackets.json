@@ -1,10 +1,10 @@
 {
   "fields": [{
     "label": "Make",
-    "value": "car.make"
+    "value": "car[make]"
   },{
     "label": "Model",
-    "value": "car.model"
+    "value": "car[model]"
   },{
     "label": "Price",
     "value": "prices[0]"
@@ -13,6 +13,6 @@
     "value": "color"
   },{
     "label": "Year",
-    "value": "car.ye.ar"
+    "value": "car[ye][ar]"
   }]
 }

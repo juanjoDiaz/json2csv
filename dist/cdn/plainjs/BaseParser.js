@@ -1,5 +1,4 @@
 // packages/plainjs/src/BaseParser.ts
-import lodashGet from "https://cdn.jsdelivr.net/gh/lodash/lodash@master/get.js";
 import {
   default as defaultFormatter,
   number as numberFormatterCtor,
@@ -78,7 +77,7 @@ var JSON2CSVBase = class {
       if (typeof fieldInfo === "string") {
         return {
           label: fieldInfo,
-          value: fieldInfo.includes(".") || fieldInfo.includes("[") ? (row) => lodashGet(row, fieldInfo, globalDefaultValue) : (row) => getProp(row, fieldInfo, globalDefaultValue)
+          value: (row) => getProp(row, fieldInfo, globalDefaultValue)
         };
       }
       if (typeof fieldInfo === "object") {
@@ -87,7 +86,7 @@ var JSON2CSVBase = class {
           const fieldPath = fieldInfo.value;
           return {
             label: fieldInfo.label || fieldInfo.value,
-            value: fieldInfo.value.includes(".") || fieldInfo.value.includes("[") ? (row) => lodashGet(row, fieldPath, defaultValue) : (row) => getProp(row, fieldPath, defaultValue)
+            value: (row) => getProp(row, fieldPath, defaultValue)
           };
         }
         if (typeof fieldInfo.value === "function") {

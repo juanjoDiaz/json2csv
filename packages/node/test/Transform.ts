@@ -408,7 +408,7 @@ export default function (
         },
         {
           label: 'Price',
-          value: 'price',
+          value: 'prices[0]',
         },
         {
           label: 'Color',
@@ -426,6 +426,41 @@ export default function (
 
     t.equal(csv, csvFixtures.nested);
   });
+
+  testRunner.add(
+    'should support nested properties selectors using braket notation',
+    async (t) => {
+      const opts: ParserOptions = {
+        fields: [
+          {
+            label: 'Make',
+            value: 'car[make]',
+          },
+          {
+            label: 'Model',
+            value: 'car["model"]',
+          },
+          {
+            label: 'Price',
+            value: 'prices[0]',
+          },
+          {
+            label: 'Color',
+            value: 'color',
+          },
+          {
+            label: 'Year',
+            value: "car['ye'][ar]",
+          },
+        ],
+      };
+
+      const parser = new Parser(opts);
+      const csv = await parseInput(parser, jsonFixtures.nested());
+
+      t.equal(csv, csvFixtures.nested);
+    },
+  );
 
   testRunner.add(
     'field.value function should receive a valid field object',

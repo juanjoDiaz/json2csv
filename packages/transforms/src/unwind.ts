@@ -1,6 +1,5 @@
-import lodashGet from 'lodash.get';
 import type Transform from './Transform.js';
-import { setProp, unsetProp, flattenReducer } from './utils.js';
+import { getProp, setProp, unsetProp, flattenReducer } from './utils.js';
 
 function getUnwindablePaths<T extends object>(
   obj: T,
@@ -57,7 +56,7 @@ export default function unwind<
     unwindPath: string,
   ): Array<any> {
     return rows.flatMap((row) => {
-      const unwindArray = lodashGet(row, unwindPath);
+      const unwindArray = getProp(row, unwindPath);
 
       if (!Array.isArray(unwindArray)) {
         return row;

@@ -302,6 +302,21 @@ export default function (
   });
 
   testRunner.add(
+    'should support nested properties selectors using braket notation',
+    async (t) => {
+      const opts = `--config "${getFixturePath(
+        '/fields/nestedWithBrackets.json',
+      )}"`;
+
+      const { stdout: csv } = await execAsync(
+        `${cli} -i "${getFixturePath('/json/nested.json')}" ${opts}`,
+      );
+
+      t.equal(csv, csvFixtures.nested);
+    },
+  );
+
+  testRunner.add(
     'field.value function should receive a valid field object',
     async (t) => {
       const opts = `--config "${getFixturePath(

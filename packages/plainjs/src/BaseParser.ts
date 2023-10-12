@@ -1,4 +1,3 @@
-import lodashGet from 'lodash.get';
 import {
   type Formatter,
   default as defaultFormatter,
@@ -167,10 +166,7 @@ export default abstract class JSON2CSVBase<
       if (typeof fieldInfo === 'string') {
         return {
           label: fieldInfo,
-          value:
-            fieldInfo.includes('.') || fieldInfo.includes('[')
-              ? (row) => lodashGet(row, fieldInfo, globalDefaultValue)
-              : (row) => getProp(row, fieldInfo, globalDefaultValue as unknown),
+          value: (row) => getProp(row, fieldInfo, globalDefaultValue),
         };
       }
 
@@ -182,10 +178,7 @@ export default abstract class JSON2CSVBase<
           const fieldPath: string = fieldInfo.value;
           return {
             label: fieldInfo.label || fieldInfo.value,
-            value:
-              fieldInfo.value.includes('.') || fieldInfo.value.includes('[')
-                ? (row) => lodashGet(row, fieldPath, defaultValue)
-                : (row) => getProp(row, fieldPath, defaultValue),
+            value: (row) => getProp(row, fieldPath, defaultValue),
           };
         }
 

@@ -49,7 +49,6 @@
   },
   "dependencies": {
     "@json2csv/formatters": "^7.0.3",
-    "@streamparser/json": "^0.0.17",
-    "lodash.get": "^4.4.2"
+    "@streamparser/json": "^0.0.17"
   }
 }
