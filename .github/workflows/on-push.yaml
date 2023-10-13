@@ -32,6 +32,8 @@ jobs:
         run: npm ci --workspaces --include-workspace-root
       - name: Linting
         run: npm run lint
+      - name: Build
+        run: npm run build && npm run build:cdn
       - name: Unit tests
         run: npm run test-with-coverage
       - name: Coveralls Parallel
@@ -40,6 +42,8 @@ jobs:
           github-token: ${{ secrets.github_token }}
           flag-name: run-${{ matrix.node-version }}
           parallel: true
+      - name: Test for missing changes
+        run: node -e "const gitResult = '$(git status --porcelain)'; if (gitResult) { console.log('Repo is not pristine.'); console.log(gitResult); process.exit(1); }" 
   finish:
     needs: test
     runs-on: ubuntu-latest
