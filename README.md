@@ -27,7 +27,7 @@ Fast and highly configurable JSON to CSV converter.
 There are multiple flavours of json2csv:
 
 * The **[Plainjs](https://www.npmjs.com/package/@json2csv/plainjs)** package includes:
-  * **[Parser](packages/plainjs/README.md#parser):** Pure Javascript synchronous parser. High-performant and runs both node.js and the browser. It´s the fastes but loads both the JSON and the resulting CSV in memory, and block the event loop while processing. Not recommended unless the JSON data is small.
+  * **[Parser](packages/plainjs/README.md#parser):** Pure Javascript synchronous parser. High-performant and runs both node.js and the browser. It´s the fastest but loads both the JSON and the resulting CSV in memory, and block the event loop while processing. Not recommended unless the JSON data is small.
   * **[Stream Parser](packages/plainjs/README.md#stream-parser):** Pure Javascript stream parser. High-performant and runs both node.js and the browser. It keeps a consistent memory footprint and doesn't block the event loop. It's the base of all other parsers. Recommended to build your own parser.
 * The **[Node](https://www.npmjs.com/package/@json2csv/node)** packages includes:
   * **[Node Transform](packages/node/README.md#node-transform):** Wraps the `Stream Parser` in a Node.js Transform Stream. Recommended for Node.js users using stream.
