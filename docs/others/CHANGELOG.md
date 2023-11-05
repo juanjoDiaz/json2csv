@@ -1,3 +1,5 @@
+## [7.0.4](https://github.com/juanjodiaz/json2csv/compare/v7.0.3...v7.0.4) (2023-11-05)
+
 ## [7.0.3](https://github.com/juanjodiaz/json2csv/compare/v7.0.2...v7.0.3) (2023-08-24)
 
 

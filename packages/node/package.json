@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/node",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "description": "Node.js Transform and Async interface to convert JSON into CSV.",
   "keywords": [
     "json",
@@ -51,6 +51,6 @@
     "@types/node": "^20.1.7"
   },
   "dependencies": {
-    "@json2csv/plainjs": "^7.0.3"
+    "@json2csv/plainjs": "^7.0.4"
   }
 }
