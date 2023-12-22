@@ -21,6 +21,7 @@
   - [CSV Customization](advanced-options/csv-customization.md)
 
 - Migration Guides
+  - [6.X to 7.X](migration-guides/6-to-7.md)
   - [5.X to 6.X](migration-guides/5-to-6.md)
   - [4.X to 5.X](migration-guides/4-to-5.md)
   - [3.X to 4.X](migration-guides/3-to-4.md)
