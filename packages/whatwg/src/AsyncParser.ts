@@ -1,5 +1,7 @@
 import type { ParserOptions, StreamParserOptions } from '@json2csv/plainjs';
-import JSON2CSVWHATWGTransformStream from './TransformStream.js';
+import JSON2CSVWHATWGTransformStream, {
+  type AwaitableReadableStream,
+} from './TransformStream.js';
 
 export default class JSON2CSVNodeAsyncParser<
   TRaw extends object,
@@ -36,7 +38,7 @@ export default class JSON2CSVNodeAsyncParser<
       | AsyncIterable<TRaw>
       | TRaw
       | ReadableStream<TRaw>,
-  ) {
+  ): AwaitableReadableStream<string> {
     if (typeof data === 'string' || ArrayBuffer.isView(data)) {
       data = new ReadableStream({
         start(controller) {
@@ -76,6 +78,6 @@ export default class JSON2CSVNodeAsyncParser<
       this.writableStrategy,
       this.readableStrategy,
     );
-    return data.pipeThrough(transform);
+    return data.pipeThrough(transform) as AwaitableReadableStream<string>;
   }
 }

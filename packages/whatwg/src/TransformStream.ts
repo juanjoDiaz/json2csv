@@ -42,7 +42,7 @@ class JSON2CSVWHATWGTransformer<TRaw extends object, T extends object>
   }
 }
 
-interface AwaitableReadableStream<T> extends ReadableStream<T> {
+export interface AwaitableReadableStream<T> extends ReadableStream<T> {
   promise(): Promise<string>;
 }
 

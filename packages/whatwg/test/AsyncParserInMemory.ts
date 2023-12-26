@@ -23,11 +23,11 @@ async function parseInput<TRaw extends object, T extends object>(
     | ReadableStream<TRaw>
     | Readable,
 ): Promise<string> {
-  return (
-    (await parser.parse(
+  return parser
+    .parse(
       nodeStream instanceof Readable ? Readable.toWeb(nodeStream) : nodeStream,
-    )) as any
-  ).promise();
+    )
+    .promise();
 }
 
 export default function (
