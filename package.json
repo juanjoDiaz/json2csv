@@ -52,7 +52,7 @@
     "@types/tape": "^5.6.0",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
-    "c8": "^8.0.1",
+    "c8": "^7.14.0",
     "conventional-changelog-cli": "^4.1.0",
     "docsify-cli": "^4.4.4",
     "esbuild": "^0.19.2",
