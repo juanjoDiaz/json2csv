@@ -80,8 +80,8 @@ export default function unwind<
   const paths = Array.isArray(opts.paths)
     ? opts.paths
     : opts.paths
-    ? [opts.paths]
-    : undefined;
+      ? [opts.paths]
+      : undefined;
   return (dataRow: I) =>
     (paths || getUnwindablePaths(dataRow)).reduce(unwindReducer, [
       dataRow,

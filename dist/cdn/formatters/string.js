@@ -5,9 +5,10 @@ function stringFormatter(opts = {}) {
   if (!quote || quote === escapedQuote) {
     return (value) => value;
   }
+  const quoteRegExp = new RegExp(quote, "g");
   return (value) => {
     if (value.includes(quote)) {
-      value = value.replace(new RegExp(quote, "g"), escapedQuote);
+      value = value.replace(quoteRegExp, escapedQuote);
     }
     return `${quote}${value}${quote}`;
   };

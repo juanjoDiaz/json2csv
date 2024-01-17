@@ -1,6 +1,7 @@
 const quote = '"';
 const escapedQuote = '""""';
 
+const quoteRegExp = new RegExp(quote, 'g');
 export default function stringExcel(value: string) {
-  return `"=""${value.replace(new RegExp(quote, 'g'), escapedQuote)}"""`;
+  return `"=""${value.replace(quoteRegExp, escapedQuote)}"""`;
 }

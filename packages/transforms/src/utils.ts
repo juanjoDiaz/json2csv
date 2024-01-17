@@ -1,14 +1,14 @@
 type GetIndexedField<T, K> = K extends keyof T
   ? T[K]
   : K extends `${number}`
-  ? 'length' extends keyof T
-    ? number extends T['length']
-      ? number extends keyof T
-        ? T[number]
+    ? 'length' extends keyof T
+      ? number extends T['length']
+        ? number extends keyof T
+          ? T[number]
+          : undefined
         : undefined
       : undefined
-    : undefined
-  : undefined;
+    : undefined;
 
 type FieldWithPossiblyUndefined<T, Key> =
   | GetFieldType<Exclude<T, undefined>, Key>
@@ -24,20 +24,20 @@ type GetFieldType<T, P> = P extends `${infer Left}.${infer Right}`
         | FieldWithPossiblyUndefined<Exclude<T, undefined>[Left], Right>
         | Extract<T, undefined>
     : Left extends `${infer FieldKey}[${infer IndexKey}]`
-    ? FieldKey extends keyof T
-      ? FieldWithPossiblyUndefined<
-          IndexedFieldWithPossiblyUndefined<T[FieldKey], IndexKey>,
-          Right
-        >
+      ? FieldKey extends keyof T
+        ? FieldWithPossiblyUndefined<
+            IndexedFieldWithPossiblyUndefined<T[FieldKey], IndexKey>,
+            Right
+          >
+        : undefined
       : undefined
-    : undefined
   : P extends keyof T
-  ? T[P]
-  : P extends `${infer FieldKey}[${infer IndexKey}]`
-  ? FieldKey extends keyof T
-    ? IndexedFieldWithPossiblyUndefined<T[FieldKey], IndexKey>
-    : undefined
-  : IndexedFieldWithPossiblyUndefined<T, P>;
+    ? T[P]
+    : P extends `${infer FieldKey}[${infer IndexKey}]`
+      ? FieldKey extends keyof T
+        ? IndexedFieldWithPossiblyUndefined<T[FieldKey], IndexKey>
+        : undefined
+      : IndexedFieldWithPossiblyUndefined<T, P>;
 
 type PropertyName = string | number | symbol;
 
