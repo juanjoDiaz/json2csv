@@ -43,7 +43,7 @@
     "pretest": "npm run build",
     "test": "node test/CommonJS.cjs && npm run test:raw | tap-spec",
     "test-with-coverage": "c8 --reporter=text npm test",
-    "test:raw": "ts-node --esm test/index.ts",
+    "test:raw": "node --loader ts-node/esm test/index.ts",
     "dependencies:update-internal": "npm uninstall @json2csv/plainjs && npm install @json2csv/plainjs",
     "prepublishOnly": "npm run build"
   },
