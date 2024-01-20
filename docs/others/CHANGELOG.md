@@ -1,3 +1,16 @@
+## [7.0.5](https://github.com/juanjodiaz/json2csv/compare/v7.0.4...v7.0.5) (2024-01-20)
+
+
+### Bug Fixes
+
+* fix typings of WHATWG AsyncParser ([610e292](https://github.com/juanjodiaz/json2csv/commit/610e292746ce3349c213b10c2a03d05a77b3dc58))
+* update streamparser version on CDN build ([ab22f53](https://github.com/juanjodiaz/json2csv/commit/ab22f535aef94f430408da1d104298935eb25562))
+
+
+### Performance Improvements
+
+* cache regular expresions for string formatters ([dcaadcf](https://github.com/juanjodiaz/json2csv/commit/dcaadcfce3fb072d920f4f99fdef583adbbcb522))
+
 ## [7.0.4](https://github.com/juanjodiaz/json2csv/compare/v7.0.3...v7.0.4) (2023-11-05)
 
 ## [7.0.3](https://github.com/juanjodiaz/json2csv/compare/v7.0.2...v7.0.3) (2023-08-24)
