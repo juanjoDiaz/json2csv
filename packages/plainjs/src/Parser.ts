@@ -10,7 +10,7 @@ export default class JSON2CSVParser<
   TRaw extends object,
   T extends object,
 > extends JSON2CSVBase<TRaw, T> {
-  constructor(opts?: Readonly<Json2CSVBaseOptions<TRaw, T>>) {
+  constructor(opts?: Readonly<Omit<Json2CSVBaseOptions<TRaw, T>, 'ndjson'>>) {
     super(opts);
   }
 

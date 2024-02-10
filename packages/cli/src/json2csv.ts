@@ -36,6 +36,16 @@ const { readFile, writeFile } = fsPromises;
 
 type InputOptions = { ndjson: boolean; eol: string };
 type OutputOptions = TablePrinterOptions & { pretty: boolean };
+type FormattersOptions = {
+  excelStrings: boolean;
+  quote: string;
+  escapedQuote: string;
+};
+type TransformsOptions = {
+  flattenObjects: boolean;
+  flattenArrays: boolean;
+  flattenSeparator: string;
+} & { unwind: true | string; unwindBlank: boolean };
 
 type Options = {
   input: string;
@@ -46,11 +56,9 @@ type Options = {
   Omit<ParserOptions<unknown, unknown>, 'fields' | 'withBOM'> & {
     fields?: Array<string> | string;
     withBom: boolean;
-  } & StreamParserOptions & {
-    flattenObjects: boolean;
-    flattenArrays: boolean;
-    flattenSeparator: string;
-  } & { unwind: true | string; unwindBlank: boolean };
+  } & StreamParserOptions &
+  FormattersOptions &
+  TransformsOptions;
 
 const program = new Command();
 program

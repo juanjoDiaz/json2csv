@@ -27,7 +27,7 @@ var JSON2CSVBase = class {
    * Check passing opts and set defaults.
    *
    * @param {Json2CsvOptions} opts Options object containing fields,
-   * delimiter, default value, quote mark, header, etc.
+   * delimiter, default value, header, etc.
    */
   preprocessOpts(opts) {
     const processedOpts = Object.assign(

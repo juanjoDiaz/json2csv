@@ -62,11 +62,8 @@ export interface Json2CSVBaseOptions<TRaw, T> {
   fields?: Array<string | FieldInfo<T, unknown>>;
   ndjson?: boolean;
   defaultValue?: string;
-  quote?: string;
-  escapedQuote?: string;
   delimiter?: string;
   eol?: string;
-  excelStrings?: boolean;
   header?: boolean;
   includeEmptyRows?: boolean;
   withBOM?: boolean;
@@ -102,7 +99,7 @@ export default abstract class JSON2CSVBase<
    * Check passing opts and set defaults.
    *
    * @param {Json2CsvOptions} opts Options object containing fields,
-   * delimiter, default value, quote mark, header, etc.
+   * delimiter, default value, header, etc.
    */
   protected preprocessOpts(
     opts?: Json2CSVBaseOptions<TRaw, T>,
