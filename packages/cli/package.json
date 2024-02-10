@@ -42,6 +42,6 @@
     "@json2csv/formatters": "^7.0.5",
     "@json2csv/node": "^7.0.5",
     "@json2csv/transforms": "^7.0.5",
-    "commander": "^11.0.0"
+    "commander": "^12.0.0"
   }
 }
