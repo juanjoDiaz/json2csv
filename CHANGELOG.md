@@ -1,3 +1,10 @@
+## [7.0.6](https://github.com/juanjodiaz/json2csv/compare/v7.0.5...v7.0.6) (2024-02-11)
+
+
+### Bug Fixes
+
+* remove legacy unused settings ([bbe451e](https://github.com/juanjodiaz/json2csv/commit/bbe451eea76c7dc757622fb2fc62afeed4836964))
+
 ## [7.0.5](https://github.com/juanjodiaz/json2csv/compare/v7.0.4...v7.0.5) (2024-01-20)
 
 
