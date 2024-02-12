@@ -279,7 +279,7 @@ As with the sample transform in the previous section, the reason to wrap the act
 Keep in mind that the above example doesn't quote or escape the string which is problematic. A more realistic example could use our built-in string formatted to do the quoting and escaping like:
 
 ```js
-import { string as defaultStringFormatter } from 'json2csv/formatters';
+import { string as defaultStringFormatter } from '@json2csv/formatters';
 
 const fixedLengthStringFormatter = (stringLength, ellipsis = '...', stringFormatter = defaultStringFormatter()) =>
   (item) =>
