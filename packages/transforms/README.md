@@ -149,7 +149,7 @@ try {
   const opts = {
     transforms: [
       unwind({ paths: ['fieldToUnwind','fieldToUnwind.subfieldToUnwind'], blankOut: true }),
-      flatten({ object: true, array: true, separator: '_'}),
+      flatten({ objects: true, arrays: true, separator: '_'}),
       addCounter()
     ]
   };
