@@ -901,6 +901,24 @@ export default function (
   );
 
   testRunner.add(
+    'should support custom flatten separator using the flatten transform',
+    async (t) => {
+      const opts: ParserOptions = {
+        delimiter: ';',
+        transforms: [flatten({ separator: '.', arrays: true, objects: true })],
+      };
+
+      const parser = new Parser(opts);
+      const csv = await parseInput(
+        parser,
+        jsonFixtures.objectWithEmptyFields(),
+      );
+
+      t.equal(csv, csvFixtures.objectWithEmptyFieldsStream);
+    },
+  );
+
+  testRunner.add(
     'should support multiple transforms and honor the order in which they are declared',
     async (t) => {
       const opts: ParserOptions = {

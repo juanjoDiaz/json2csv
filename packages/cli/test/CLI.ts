@@ -834,6 +834,20 @@ export default function (
   );
 
   testRunner.add(
+    'should support custom flatten separator using the flatten transform',
+    async (t) => {
+      const opts =
+        '--delimiter , --flatten-objects --flatten-arrays --flatten-separator .';
+
+      const { stdout: csv } = await execAsync(
+        `${cli} -i "${getFixturePath('/json/objectWithEmptyFields.json')}" ${opts}`,
+      );
+
+      t.equal(csv, csvFixtures.objectWithEmptyFieldsStream);
+    },
+  );
+
+  testRunner.add(
     'should support multiple transforms and honor the order in which they are declared',
     async (t) => {
       const opts = '--unwind items --flatten-objects';
