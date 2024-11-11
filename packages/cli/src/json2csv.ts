@@ -232,9 +232,11 @@ async function processOutput(
   config: OutputOptions,
 ): Promise<void> {
   if (!outputPath) {
-    config.pretty
-      ? new TablePrinter(config).printCSV(csv)
-      : process.stdout.write(csv);
+    if (config.pretty) {
+      new TablePrinter(config).printCSV(csv);
+    } else {
+      process.stdout.write(csv);
+    }
     return;
   }
 

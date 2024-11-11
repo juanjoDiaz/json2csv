@@ -162,9 +162,13 @@ export function getProp<T>(
 export function flattenReducer<T>(acc: Array<T>, arr: Array<T> | T): Array<T> {
   try {
     // This is faster but susceptible to `RangeError: Maximum call stack size exceeded`
-    Array.isArray(arr) ? acc.push(...arr) : acc.push(arr);
+    if (Array.isArray(arr)) {
+      acc.push(...arr);
+    } else {
+      acc.push(arr);
+    }
     return acc;
-  } catch (err: unknown) {
+  } catch {
     // Fallback to a slower but safer option
     return acc.concat(arr);
   }

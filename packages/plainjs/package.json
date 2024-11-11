@@ -49,6 +49,6 @@
   },
   "dependencies": {
     "@json2csv/formatters": "^7.0.6",
-    "@streamparser/json": "^0.0.20"
+    "@streamparser/json": "^0.0.21"
   }
 }

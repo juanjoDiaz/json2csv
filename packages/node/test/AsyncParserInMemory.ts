@@ -1,4 +1,3 @@
-import os from 'os';
 import { type Readable, Writable } from 'stream';
 
 import TestRunner from '@json2csv/test-helpers/TestRunner.js';
@@ -109,13 +108,7 @@ export default function (
 
       t.fail('Exception expected');
     } catch (err: any) {
-      t.equal(
-        err.message,
-        `Unexpected SEPARATOR ("${os.EOL.replace('\r', '\\r').replace(
-          '\n',
-          '\\n',
-        )}") in state COMMA`,
-      );
+      t.equal(err.message, 'Unexpected LEFT_BRACE ("{") in state COMMA');
     }
   });
 
@@ -131,14 +124,7 @@ export default function (
 
       t.fail('Exception expected');
     } catch (err: any) {
-      t.ok(
-        err.message.includes(
-          `Unexpected SEPARATOR ("${os.EOL.replace('\r', '\\r').replace(
-            '\n',
-            '\\n',
-          )}") in state COMMA`,
-        ),
-      );
+      t.ok(err.message.includes('Unexpected LEFT_BRACE ("{") in state COMMA'));
     }
   });
 

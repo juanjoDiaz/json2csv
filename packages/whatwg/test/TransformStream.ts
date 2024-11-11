@@ -91,7 +91,7 @@ export default function (
 
       t.fail('Exception expected');
     } catch (err: any) {
-      t.equal(err.message, 'Unexpected SEPARATOR ("\\n") in state COMMA');
+      t.equal(err.message, 'Unexpected LEFT_BRACE ("{") in state COMMA');
     }
   });
 
@@ -107,7 +107,7 @@ export default function (
 
       t.fail('Exception expected');
     } catch (err: any) {
-      t.ok(err.message.includes('Unexpected SEPARATOR ("\\n") in state COMMA'));
+      t.ok(err.message.includes('Unexpected LEFT_BRACE ("{") in state COMMA'));
     }
   });
 

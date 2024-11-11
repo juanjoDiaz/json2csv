@@ -1,4 +1,3 @@
-import os from 'os';
 import { promises as fsPromises } from 'fs';
 import { join as joinPath } from 'path';
 import { exec } from 'child_process';
@@ -73,14 +72,7 @@ export default function (
 
       t.fail('Exception expected.');
     } catch (err: any) {
-      t.ok(
-        err.message.includes(
-          `Unexpected SEPARATOR ("${os.EOL.replace('\r', '\\r').replace(
-            '\n',
-            '\\n',
-          )}") in state COMMA`,
-        ),
-      );
+      t.ok(err.message.includes('Unexpected LEFT_BRACE ("{") in state COMMA'));
     }
   });
 

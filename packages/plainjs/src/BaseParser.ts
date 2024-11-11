@@ -53,7 +53,7 @@ export interface FormattersOptions {
   [FormatterTypes.bigint]?: Formatter<bigint>;
   [FormatterTypes.string]?: Formatter<string>;
   [FormatterTypes.symbol]?: Formatter<symbol>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   [FormatterTypes.function]?: Formatter<Function>;
   [FormatterTypes.object]?: Formatter<object>;
 }
