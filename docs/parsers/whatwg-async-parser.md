@@ -41,7 +41,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg@7.0.6';
+  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg@7.0.7';
 </script>
 ```
 

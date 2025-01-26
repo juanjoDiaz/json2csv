@@ -1,3 +1,10 @@
+## [7.0.7](https://github.com/juanjodiaz/json2csv/compare/v7.0.6...v7.0.7) (2025-01-26)
+
+### Bug Fixes
+
+* fix incorrect docs about transformers actions ([150cef3](https://github.com/juanjodiaz/json2csv/commit/150cef340f52e1b6eef9f3ded1d9bbd2b32f2a96))
+* infinite loop in flatten ([e81cd60](https://github.com/juanjodiaz/json2csv/commit/e81cd604192222133f32f3c12d72bc8b5e27994a))
+
 ## [7.0.6](https://github.com/juanjodiaz/json2csv/compare/v7.0.5...v7.0.6) (2024-02-11)
 
 
