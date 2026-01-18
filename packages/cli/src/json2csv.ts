@@ -1,34 +1,34 @@
 #!/usr/bin/env node
 
-import type { Readable, Writable } from 'stream';
 import {
   createReadStream,
   createWriteStream,
   promises as fsPromises,
-} from 'fs';
-import os from 'os';
-import { isAbsolute, join, extname } from 'path';
-import { Command, type OptionValues } from 'commander';
+} from 'node:fs';
+// Workaround to avoid warnings
+// import pkg from '../package.json' assert { type: 'json' };
+import { createRequire } from 'node:module';
+import os from 'node:os';
+import { extname, isAbsolute, join } from 'node:path';
+import type { Readable, Writable } from 'node:stream';
 
-import { flatten, unwind } from '@json2csv/transforms';
 import {
-  string as stringFormatter,
   stringExcel as stringExcelFormatter,
+  string as stringFormatter,
 } from '@json2csv/formatters';
+import { Transform as Json2csvTransform } from '@json2csv/node';
 import {
   Parser,
   type ParserOptions,
   type StreamParserOptions,
 } from '@json2csv/plainjs';
-import { Transform as Json2csvTransform } from '@json2csv/node';
+import { flatten, unwind } from '@json2csv/transforms';
+import { Command, type OptionValues } from 'commander';
 import parseNdJson from './utils/parseNdjson.js';
 import TablePrinter, {
   type TablePrinterOptions,
 } from './utils/TablePrinter.js';
 
-// Workaround to avoid warnings
-// import pkg from '../package.json' assert { type: 'json' };
-import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const pkg = require('../package.json');
 
@@ -360,7 +360,7 @@ async function processStream<TRaw extends object, T extends object>(
         `Invalid config file. (${processedError.message})`,
       );
     }
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: This is a CLI tool, so console output is appropriate here.
     console.error(processedError);
     process.exit(1);
   }

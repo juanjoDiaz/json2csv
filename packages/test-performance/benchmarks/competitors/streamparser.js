@@ -1,6 +1,7 @@
-import Benchmark from 'benchmark';
-import { StreamParser } from '@json2csv/plainjs';
 import { string as stringFormatter } from '@json2csv/formatters';
+import { StreamParser } from '@json2csv/plainjs';
+import Benchmark from 'benchmark';
+
 // import Papa from 'papaparse';
 // import json2csv2 from 'json-2-csv';
 
@@ -15,9 +16,10 @@ const suite = new Benchmark.Suite();
 suite
   .add('@json2csv', {
     defer: true,
-    fn: function (deferred) {
+    fn: (deferred) => {
       const json2csvParser = new StreamParser();
       json2csvParser.onError = (err) => {
+        // biome-ignore lint/suspicious/noConsole: Print error for debugging
         console.log(err);
         deferred.reject(err);
       };
@@ -28,13 +30,14 @@ suite
   })
   .add('@json2csv (no string escaping)', {
     defer: true,
-    fn: function (deferred) {
+    fn: (deferred) => {
       const json2csvParserWithoutScaping = new StreamParser({
         formatters: {
           string: stringFormatter({ escapedQuote: '"' }),
         },
       });
       json2csvParserWithoutScaping.onError = (err) => {
+        // biome-ignore lint/suspicious/noConsole: Print error for debugging
         console.log(err);
         deferred.reject(err);
       };
@@ -59,8 +62,9 @@ suite
   //     json2csv2.json2csv(data, () => deferred.resolve());
   //   }
   // })
-  .on('cycle', (event) => console.log(String(event.target)))
+  .on('cycle', (_event) => {})
   .on('complete', () =>
+    // biome-ignore lint/suspicious/noConsole: Print error for debugging
     console.log(`Fastest is ${suite.filter('fastest').map('name')} \n`),
   )
   .on('error', console.error)

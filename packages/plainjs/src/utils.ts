@@ -61,9 +61,9 @@ function isKey<TObject extends object>(value: any, object: TObject): boolean {
   }
   const type = typeof value;
   if (
-    type == 'number' ||
-    type == 'symbol' ||
-    type == 'boolean' ||
+    type === 'number' ||
+    type === 'symbol' ||
+    type === 'boolean' ||
     value == null
   ) {
     return true;

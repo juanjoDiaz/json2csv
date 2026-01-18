@@ -25,9 +25,7 @@
     "preserveConstEnums": true,
     "strict": true,
     /* Projects */
-    "incremental": true,
+    "incremental": true
   },
-  "include": [
-    "src/**/*.ts"
-  ]
+  "include": ["src/**/*.ts"]
 }

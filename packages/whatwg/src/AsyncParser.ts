@@ -52,6 +52,7 @@ export default class JSON2CSVNodeAsyncParser<
         start(controller) {
           (data as Array<TRaw>)
             .filter((item) => item !== null)
+            // biome-ignore lint/suspicious/useIterableCallbackReturn: controller.enqueue() returns void
             .forEach((item) => controller.enqueue(item));
           controller.close();
         },

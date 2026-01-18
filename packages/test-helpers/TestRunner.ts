@@ -1,13 +1,12 @@
 import tape from 'tape';
 
-
 interface TestDefinition {
   name: string;
-  test: tape.TestCase
+  test: tape.TestCase;
 }
 
 export default class TestRunner {
-  private name: string ;
+  private name: string;
   private tests: Array<TestDefinition> = [];
   private before: Array<() => void> = [];
   private after: Array<() => void> = [];
@@ -34,6 +33,7 @@ export default class TestRunner {
   async run() {
     try {
       await Promise.all(this.before.map((before) => before()));
+      // biome-ignore lint/suspicious/useIterableCallbackReturn: tape() returns a value but we don't need it
       this.tests.forEach(({ name, test }) =>
         tape(name, async (t: tape.Test) => {
           try {
@@ -41,11 +41,12 @@ export default class TestRunner {
           } catch (err: any) {
             t.fail(err);
           }
-        })
+        }),
       );
+      // biome-ignore lint/suspicious/useIterableCallbackReturn: tape.onFinish() returns a value but we don't need it
       this.after.forEach((after) => tape.onFinish(after));
     } catch (err) {
-      // eslint-disable-next-line no-console
+      // biome-ignore lint/suspicious/noConsole: Print error for debugging
       console.error(err);
     }
   }

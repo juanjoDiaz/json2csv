@@ -1,8 +1,8 @@
 import {
   Tokenizer,
+  TokenizerError,
   TokenParser,
   TokenType,
-  TokenizerError,
 } from '@streamparser/json';
 import JSON2CSVBase, {
   type Json2CSVBaseOptions,
@@ -201,24 +201,21 @@ export default class JSON2CSVStreamParser<
     });
   }
 
-  // No idea why eslint doesn't detect the usage of these
-  /* eslint-disable @typescript-eslint/no-unused-vars */
   /* c8 ignore start */
-  onHeader(header: string) {
+  onHeader(_header: string) {
     /* To be set by the user */
   }
-  onLine(line: string) {
+  onLine(_line: string) {
     /* To be set by the user */
   }
-  onData(data: string) {
+  onData(_data: string) {
     /* To be set by the user */
   }
-  onError(err: Error) {
+  onError(_err: Error) {
     /* To be set by the user */
   }
   onEnd() {
     /* To be set by the user */
   }
   /* c8 ignore stop */
-  /* eslint-enable @typescript-eslint/no-unused-vars */
 }

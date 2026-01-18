@@ -1,9 +1,9 @@
-import Benchmark from 'benchmark';
-import { Parser as LegacyParser } from 'json2csv';
-import { Parser } from '@json2csv/plainjs';
 import { string as stringFormatter } from '@json2csv/formatters';
-import Papa from 'papaparse';
+import { Parser } from '@json2csv/plainjs';
+import Benchmark from 'benchmark';
 import json2csv2 from 'json-2-csv';
+import { Parser as LegacyParser } from 'json2csv';
+import Papa from 'papaparse';
 
 const data = Array(1000).fill(
   (() => ({ carModel: 'Audi', price: 0, color: 'blue' }))(),
@@ -21,27 +21,25 @@ const json2csvParserWithoutScaping = new Parser({
 const json2csvLegacyParser = new LegacyParser();
 
 suite
-  .add('@json2csv', function () {
+  .add('@json2csv', () => {
     json2csvParser.parse(data);
   })
-  .add('@json2csv (no string escaping)', function () {
+  .add('@json2csv (no string escaping)', () => {
     json2csvParserWithoutScaping.parse(data);
   })
-  .add('json2csv (Legacy)', function () {
+  .add('json2csv (Legacy)', () => {
     json2csvLegacyParser.parse(data);
   })
-  .add('PapaParse', function () {
+  .add('PapaParse', () => {
     Papa.unparse(data);
   })
   .add('json-2-csv', {
     defer: true,
-    fn: function (deferred) {
+    fn: (deferred) => {
       json2csv2.json2csv(data, () => deferred.resolve());
     },
   })
-  .on('cycle', (event) => console.log(String(event.target)))
-  .on('complete', () =>
-    console.log(`Fastest is ${suite.filter('fastest').map('name')} \n`),
-  )
+  .on('cycle', (_event) => {})
+  .on('complete', () => {})
   .on('error', console.error)
   .run();

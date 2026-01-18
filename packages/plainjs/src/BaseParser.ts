@@ -1,26 +1,25 @@
 import {
-  type Formatter,
   default as defaultFormatter,
+  type Formatter,
   number as numberFormatterCtor,
+  object as objectFormatterCtor,
   string as stringFormatterCtor,
   symbol as symbolFormatterCtor,
-  object as objectFormatterCtor,
 } from '@json2csv/formatters';
 import type Transform from './types/Transform.js';
-import { getProp, flattenReducer, fastJoin } from './utils.js';
+import { fastJoin, flattenReducer, getProp } from './utils.js';
 
 export interface FieldValueGetterInfo<FT> {
   label: string;
   default?: FT;
 }
 
-export interface FieldValueGetterFnWithoutField<RT, FT> {
-  (row: RT): FT;
-}
+export type FieldValueGetterFnWithoutField<RT, FT> = (row: RT) => FT;
 
-export interface FieldValueGetterFnWithField<RT, FT> {
-  (row: RT, field: FieldValueGetterInfo<FT>): FT;
-}
+export type FieldValueGetterFnWithField<RT, FT> = (
+  row: RT,
+  field: FieldValueGetterInfo<FT>,
+) => FT;
 
 export type FieldValueGetter<RT, FT> =
   | string
@@ -53,7 +52,7 @@ export interface FormattersOptions {
   [FormatterTypes.bigint]?: Formatter<bigint>;
   [FormatterTypes.string]?: Formatter<string>;
   [FormatterTypes.symbol]?: Formatter<symbol>;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  // biome-ignore lint/complexity/noBannedTypes: Using 'Function' and 'object' types as keys for formatters
   [FormatterTypes.function]?: Formatter<Function>;
   [FormatterTypes.object]?: Formatter<object>;
 }
@@ -119,8 +118,7 @@ export default abstract class JSON2CSVBase<
     processedOpts.transforms = processedOpts.transforms || [];
 
     const stringFormatter =
-      (processedOpts.formatters && processedOpts.formatters['string']) ||
-      stringFormatterCtor();
+      processedOpts.formatters?.string || stringFormatterCtor();
     const objectFormatter = objectFormatterCtor({ stringFormatter });
     const defaultFormatters = {
       header: stringFormatter,
@@ -195,7 +193,7 @@ export default abstract class JSON2CSVBase<
       }
 
       throw new Error(
-        'Invalid field info option. ' + JSON.stringify(fieldInfo),
+        `Invalid field info option. ${JSON.stringify(fieldInfo)}`,
       );
     });
   }

@@ -1,5 +1,5 @@
 type Transform<I, O> = (input: I) => O[];
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore Issue https://github.com/microsoft/TypeScript/issues/41409
+// biome-ignore lint/suspicious/noTsIgnore: Required for verbatimModuleSyntax builds - see https://github.com/microsoft/TypeScript/issues/41409
+// @ts-ignore
 export default Transform;

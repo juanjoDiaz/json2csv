@@ -1,47 +1,52 @@
-[{
-        "carModel": "Porsche",
-        "price": 30000,
-        "extras": {
+[
+  {
+    "carModel": "Porsche",
+    "price": 30000,
+    "extras": {
+      "items": [
+        {
+          "name": "airbag",
           "items": [
-              {
-                  "name": "airbag",
-                  "items": [
-                      {
-                          "position": "left",
-                          "color": "white"
-                      }, {
-                          "position": "right",
-                          "color": "gray"
-                      }
-                  ]
-              },
-              {
-                  "name": "dashboard",
-                  "items": [
-                      {
-                          "position": "left",
-                          "color": "gray"
-                      }, {
-                          "position": "right",
-                          "color": "black"
-                      }
-                  ]
-              }
+            {
+              "position": "left",
+              "color": "white"
+            },
+            {
+              "position": "right",
+              "color": "gray"
+            }
+          ]
+        },
+        {
+          "name": "dashboard",
+          "items": [
+            {
+              "position": "left",
+              "color": "gray"
+            },
+            {
+              "position": "right",
+              "color": "black"
+            }
           ]
         }
-    }, {
-        "carModel": "BMW",
-        "price": 15000,
-        "extras": {
-          "items": [
-              {
-                  "name": "airbag",
-                  "color": "white"
-              }, {
-                  "name": "dashboard",
-                  "color": "black"
-              }
-          ]
-        }
+      ]
     }
+  },
+  {
+    "carModel": "BMW",
+    "price": 15000,
+    "extras": {
+      "items": [
+        {
+          "name": "airbag",
+          "color": "white"
+        },
+        {
+          "name": "dashboard",
+          "color": "black"
+        }
+      ]
+    }
+  }
 ]

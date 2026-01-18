@@ -1,18 +1,24 @@
 {
-  "fields": [{
-    "label": "Make",
-    "value": "car.make"
-  },{
-    "label": "Model",
-    "value": "car.model"
-  },{
-    "label": "Price",
-    "value": "prices[0]"
-  },{
-    "label": "Color",
-    "value": "color"
-  },{
-    "label": "Year",
-    "value": "car.ye.ar"
-  }]
+  "fields": [
+    {
+      "label": "Make",
+      "value": "car.make"
+    },
+    {
+      "label": "Model",
+      "value": "car.model"
+    },
+    {
+      "label": "Price",
+      "value": "prices[0]"
+    },
+    {
+      "label": "Color",
+      "value": "color"
+    },
+    {
+      "label": "Year",
+      "value": "car.ye.ar"
+    }
+  ]
 }

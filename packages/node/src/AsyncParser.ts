@@ -1,4 +1,4 @@
-import { Readable, type TransformOptions } from 'stream';
+import { Readable, type TransformOptions } from 'node:stream';
 import type { ParserOptions, StreamParserOptions } from '@json2csv/plainjs';
 import JSON2CSVNodeTransform from './Transform.js';
 

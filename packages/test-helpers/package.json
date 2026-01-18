@@ -17,7 +17,7 @@
   },
   "type": "module",
   "scripts": {
-    "lint": "eslint **/*.js",
+    "lint": "biome check .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {}

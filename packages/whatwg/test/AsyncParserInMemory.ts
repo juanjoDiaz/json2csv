@@ -1,15 +1,15 @@
 import { Readable } from 'node:stream';
 
-import TestRunner from '@json2csv/test-helpers/TestRunner.ts';
-import { forceCrlfEol } from '@json2csv/test-helpers/utils.ts';
-import type CarInfo from '@json2csv/test-helpers/fixtures/types/carInfo.ts';
-import { flatten, unwind } from '@json2csv/transforms';
 import {
   number as numberFormatter,
-  string as stringFormatter,
   stringExcel as stringExcelFormatter,
+  string as stringFormatter,
   stringQuoteOnlyIfNecessary as stringQuoteOnlyIfNecessaryFormatter,
 } from '@json2csv/formatters';
+import type CarInfo from '@json2csv/test-helpers/fixtures/types/carInfo.ts';
+import TestRunner from '@json2csv/test-helpers/TestRunner.ts';
+import { forceCrlfEol } from '@json2csv/test-helpers/utils.ts';
+import { flatten, unwind } from '@json2csv/transforms';
 import { AsyncParser as Parser, type ParserOptions } from '@json2csv/whatwg';
 
 async function parseInput<TRaw extends object, T extends object>(
@@ -39,7 +39,6 @@ export default function (
   testRunner.add('should error if input is of an invalid format', async (t) => {
     try {
       const parser = new Parser();
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error test for non TS users. Wrong type expected
       await parseInput(parser, 123);
 
@@ -352,7 +351,6 @@ export default function (
     const opts: ParserOptions = {
       fields: [
         { value: 'price' },
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error test for non TS users. Wrong type expected
         () => {
           /* Do nothing */
@@ -379,7 +377,6 @@ export default function (
       const opts: ParserOptions<CarInfo> = {
         fields: [
           { value: (row: CarInfo) => row.price },
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error test for non TS users. Wrong type expected
           { label: 'Price USD', value: [] },
         ],

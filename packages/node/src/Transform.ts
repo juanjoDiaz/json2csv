@@ -1,9 +1,9 @@
-import os from 'os';
+import os from 'node:os';
 import {
   Transform,
-  type TransformOptions,
   type TransformCallback,
-} from 'stream';
+  type TransformOptions,
+} from 'node:stream';
 import {
   type ParserOptions,
   StreamParser,
@@ -54,7 +54,7 @@ export default class JSON2CSVNodeTransform<
    */
   override _transform(
     chunk: any,
-    encoding: BufferEncoding,
+    _encoding: BufferEncoding,
     done: TransformCallback,
   ) {
     try {

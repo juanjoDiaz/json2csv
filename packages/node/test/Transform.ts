@@ -1,16 +1,16 @@
-import { type Readable, Writable } from 'stream';
+import { type Readable, Writable } from 'node:stream';
 
-import TestRunner from '@json2csv/test-helpers/TestRunner.ts';
-import { forceLfEol } from '@json2csv/test-helpers/utils.ts';
-import type CarInfo from '@json2csv/test-helpers/fixtures/types/carInfo.ts';
-import { flatten, unwind } from '@json2csv/transforms';
 import {
   number as numberFormatter,
-  string as stringFormatter,
   stringExcel as stringExcelFormatter,
+  string as stringFormatter,
   stringQuoteOnlyIfNecessary as stringQuoteOnlyIfNecessaryFormatter,
 } from '@json2csv/formatters';
 import { Transform as Parser, type ParserOptions } from '@json2csv/node';
+import type CarInfo from '@json2csv/test-helpers/fixtures/types/carInfo.ts';
+import TestRunner from '@json2csv/test-helpers/TestRunner.ts';
+import { forceLfEol } from '@json2csv/test-helpers/utils.ts';
+import { flatten, unwind } from '@json2csv/transforms';
 
 async function parseInput<TRaw extends object, T extends object>(
   transform: Parser<TRaw, T>,
@@ -334,7 +334,6 @@ export default function (
     const opts: ParserOptions = {
       fields: [
         { value: 'price' },
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error test for non TS users. Wrong type expected
         () => {
           /* Do nothing */
@@ -361,7 +360,6 @@ export default function (
       const opts: ParserOptions<CarInfo> = {
         fields: [
           { value: (row: CarInfo) => row.price },
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error test for non TS users. Wrong type expected
           { label: 'Price USD', value: [] },
         ],
@@ -970,7 +968,7 @@ export default function (
 
   testRunner.add('should handle errors in transforms correctly', async (t) => {
     const outputStream = new Writable({
-      write(chunk, encoding, callback) {
+      write(_chunk, _encoding, callback) {
         callback();
       },
     });

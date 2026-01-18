@@ -1,5 +1,5 @@
-import Benchmark from 'benchmark';
 import { fastJoin } from '@json2csv/plainjs/utils';
+import Benchmark from 'benchmark';
 
 function test(sampleSize) {
   const data = Array(sampleSize).fill((() => 'blue')());
@@ -7,10 +7,8 @@ function test(sampleSize) {
   suite
     .add(`fastJoin(${sampleSize})`, () => fastJoin(data, ', '))
     .add(`join(${sampleSize})`, () => data.join(', '))
-    .on('cycle', (event) => console.log(String(event.target)))
-    .on('complete', () =>
-      console.log(`Fastest is ${suite.filter('fastest').map('name')} \n`),
-    )
+    .on('cycle', (_event) => {})
+    .on('complete', () => {})
     .on('error', console.error)
     .run();
 }

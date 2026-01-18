@@ -1,5 +1,5 @@
 import type Transform from './Transform.js';
-import { getProp, setProp, unsetProp, flattenReducer } from './utils.js';
+import { flattenReducer, getProp, setProp, unsetProp } from './utils.js';
 
 function getUnwindablePaths<T extends object>(
   obj: T,

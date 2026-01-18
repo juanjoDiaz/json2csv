@@ -1,5 +1,5 @@
-import Benchmark from 'benchmark';
 import { flattenReducer } from '@json2csv/plainjs/utils';
+import Benchmark from 'benchmark';
 
 function test(sampleSize) {
   const data = Array(sampleSize).fill((() => ['blue', 'red', 'green'])());
@@ -7,10 +7,8 @@ function test(sampleSize) {
   suite
     .add(`flattenReducer(${sampleSize})`, () => data.reduce(flattenReducer, []))
     .add(`flat(${sampleSize})`, () => data.flat())
-    .on('cycle', (event) => console.log(String(event.target)))
-    .on('complete', () =>
-      console.log(`Fastest is ${suite.filter('fastest').map('name')} \n`),
-    )
+    .on('cycle', (_event) => {})
+    .on('complete', () => {})
     .on('error', console.error)
     .run();
 }

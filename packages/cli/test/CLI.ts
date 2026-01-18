@@ -1,7 +1,7 @@
-import { promises as fsPromises } from 'fs';
-import { join as joinPath } from 'path';
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { exec } from 'node:child_process';
+import { promises as fsPromises } from 'node:fs';
+import { join as joinPath } from 'node:path';
+import { promisify } from 'node:util';
 import TestRunner from '@json2csv/test-helpers/TestRunner.ts';
 
 const { mkdir, rm, readFile } = fsPromises;

@@ -1,16 +1,18 @@
-import os from 'os';
-import { createReadStream } from 'fs';
-import { readdir, readFile } from 'fs/promises';
-import { dirname, extname, join, parse } from 'path';
-import { fileURLToPath, pathToFileURL } from 'url';
-import { Readable } from 'stream';
+import { createReadStream } from 'node:fs';
+import { readdir, readFile } from 'node:fs/promises';
+import os from 'node:os';
+import { dirname, extname, join, parse } from 'node:path';
+import { Readable } from 'node:stream';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const csvDirectory = join(__dirname, 'fixtures', 'csv');
 const jsonDirectory = join(__dirname, 'fixtures', 'json');
 
-function getImportAssertion(filePath: string): { assert: { type: string } } | undefined {
+function getImportAssertion(
+  filePath: string,
+): { assert: { type: string } } | undefined {
   return extname(filePath).toLowerCase() === '.json'
     ? { with: { type: 'json' } }
     : undefined;
@@ -18,14 +20,17 @@ function getImportAssertion(filePath: string): { assert: { type: string } } | un
 
 interface Fixture<T> {
   name: string;
-  content: T
+  content: T;
 }
 
 function parseToJson<T>(fixtures: Array<Fixture<T>>): Record<string, T> {
-  return fixtures.reduce((data, fixture) => {
-    data[fixture.name] = fixture.content;
-    return data;
-  }, {} as Record<string, T>);
+  return fixtures.reduce(
+    (data, fixture) => {
+      data[fixture.name] = fixture.content;
+      return data;
+    },
+    {} as Record<string, T>,
+  );
 }
 
 async function loadJSON(): Promise<Record<string, () => any>> {
@@ -39,9 +44,12 @@ async function loadJSON(): Promise<Record<string, () => any>> {
         let content: any;
         try {
           content = (
-            await import(pathToFileURL(filePath).toString(), getImportAssertion(filename))
+            await import(
+              pathToFileURL(filePath).toString(),
+              getImportAssertion(filename)
+            )
           ).default;
-        } catch (e) {
+        } catch (_e) {
           content = await readFile(filePath, 'utf-8');
         }
 
@@ -49,19 +57,21 @@ async function loadJSON(): Promise<Record<string, () => any>> {
           name,
           content: () => content,
         };
-      })
+      }),
   );
 
   return parseToJson(fixtures);
 }
 
-async function loadJSONStreams(): Promise<Record<string, (opts? : { objectMode: boolean }) => Readable>> {
+async function loadJSONStreams(): Promise<
+  Record<string, (opts?: { objectMode: boolean }) => Readable>
+> {
   const filenames = await readdir(jsonDirectory);
   const fixtures = await Promise.all(
     filenames
       .filter((filename) => !filename.startsWith('.'))
       .map(async (filename) => {
-        let parsedContent: any  = undefined;
+        let parsedContent: any;
         try {
           parsedContent = (
             await import(
@@ -69,7 +79,7 @@ async function loadJSONStreams(): Promise<Record<string, (opts? : { objectMode: 
               getImportAssertion(filename)
             )
           ).default;
-        } catch (err) {
+        } catch (_err) {
           // leave empty
         }
         return {
@@ -83,7 +93,7 @@ async function loadJSONStreams(): Promise<Record<string, (opts? : { objectMode: 
             });
           },
         };
-      })
+      }),
   );
 
   return parseToJson(fixtures);
@@ -97,7 +107,7 @@ async function loadCSV(): Promise<Record<string, string>> {
       .map(async (filename) => ({
         name: parse(filename).name,
         content: await readFile(join(csvDirectory, filename), 'utf-8'),
-      }))
+      })),
   );
 
   return parseToJson(fixtures);
@@ -110,13 +120,11 @@ async function loadAllFixtures() {
     loadCSV(),
   ]);
 
-  const csvFixturesWithLinuxEol: Record<string, string> = Object.entries(csvFixtures).reduce(
-    (obj, [key, value]) => ({
-      ...obj,
-      [key]:
-        os.EOL !== '\n' ? value.replace(new RegExp(os.EOL, 'g'), '\n') : value,
-    }),
-    {}
+  const csvFixturesWithLinuxEol: Record<string, string> = Object.fromEntries(
+    Object.entries(csvFixtures).map(([key, value]) => [
+      key,
+      os.EOL !== '\n' ? value.replace(new RegExp(os.EOL, 'g'), '\n') : value,
+    ]),
   );
 
   return {

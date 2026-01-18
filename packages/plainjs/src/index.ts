@@ -1,11 +1,11 @@
 export {
   default as BaseParser,
-  type FieldValueGetterInfo,
-  type FieldValueGetterFnWithoutField,
-  type FieldValueGetterFnWithField,
   type FieldInfo,
-  FormatterTypes,
+  type FieldValueGetterFnWithField,
+  type FieldValueGetterFnWithoutField,
+  type FieldValueGetterInfo,
   type FormattersOptions,
+  FormatterTypes,
 } from './BaseParser.js';
 export { default as Parser, type ParserOptions } from './Parser.js';
 export {

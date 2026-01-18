@@ -1,5 +1,5 @@
 import JSON2CSVBase, { type Json2CSVBaseOptions } from './BaseParser.js';
-import { flattenReducer, fastJoin } from './utils.js';
+import { fastJoin, flattenReducer } from './utils.js';
 
 export type ParserOptions<TRaw = object, T = TRaw> = Json2CSVBaseOptions<
   TRaw,
@@ -10,10 +10,6 @@ export default class JSON2CSVParser<
   TRaw extends object,
   T extends object,
 > extends JSON2CSVBase<TRaw, T> {
-  constructor(opts?: Readonly<Omit<Json2CSVBaseOptions<TRaw, T>, 'ndjson'>>) {
-    super(opts);
-  }
-
   /**
    * Main function that converts json to csv.
    *
@@ -87,7 +83,9 @@ export default class JSON2CSVParser<
    */
   processData(data: Array<T>): string {
     return fastJoin(
-      data.map((row) => this.processRow(row)).filter((row) => row), // Filter empty rows
+      data
+        .map((row) => this.processRow(row))
+        .filter((row) => row), // Filter empty rows
       this.opts.eol,
     );
   }

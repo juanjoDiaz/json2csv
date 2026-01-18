@@ -1,5 +1,5 @@
-import os from 'os';
-import { Writable } from 'stream';
+import os from 'node:os';
+import { Writable } from 'node:stream';
 
 const MIN_CELL_WIDTH = 15;
 
@@ -55,13 +55,11 @@ export default class TablePrinter {
   }
 
   print(top: string, lines: Array<string>, bottom?: string) {
-    const table =
-      `${top}${os.EOL}` +
-      lines
-        .map((row) => this.formatRow(row))
-        .join(`${os.EOL}${this.middleLine}${os.EOL}`) +
-      os.EOL +
-      (bottom ? bottom : '');
+    const table = `${top}${os.EOL}${lines
+      .map((row) => this.formatRow(row))
+      .join(
+        `${os.EOL}${this.middleLine}${os.EOL}`,
+      )}${os.EOL}${bottom ? bottom : ''}`;
 
     process.stdout.write(table);
   }
@@ -126,7 +124,7 @@ export default class TablePrinter {
   writeStream(): Writable {
     let csv = '';
     return new Writable({
-      write: (chunk, encoding, callback) => {
+      write: (chunk, _encoding, callback) => {
         csv += chunk.toString();
         const index = csv.lastIndexOf(this.opts.eol);
         const lines = csv.substring(0, index);

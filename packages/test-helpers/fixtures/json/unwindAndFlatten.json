@@ -6,12 +6,14 @@
       {
         "name": "airbag",
         "color": "white"
-      }, {
+      },
+      {
         "name": "dashboard",
         "color": "black"
       }
     ]
-  }, {
+  },
+  {
     "carModel": "Porsche",
     "price": 30000,
     "items": [
@@ -20,14 +22,14 @@
         "color": "gray"
       },
       {
-        "name": "dashboard", 
+        "name": "dashboard",
         "color": "red"
       }
     ]
   },
   {
-    "carModel": "Mercedes", 
-    "price": 20000,  
+    "carModel": "Mercedes",
+    "price": 20000,
     "items": []
   }
 ]

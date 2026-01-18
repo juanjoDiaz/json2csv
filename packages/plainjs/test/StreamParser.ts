@@ -1,15 +1,15 @@
-import { Readable } from 'stream';
-import TestRunner from '@json2csv/test-helpers/TestRunner.ts';
-import { forceCrlfEol } from '@json2csv/test-helpers/utils.ts';
-import type CarInfo from '@json2csv/test-helpers/fixtures/types/carInfo.ts';
-import { flatten, unwind } from '@json2csv/transforms';
+import type { Readable } from 'node:stream';
 import {
   number as numberFormatter,
-  string as stringFormatter,
   stringExcel as stringExcelFormatter,
+  string as stringFormatter,
   stringQuoteOnlyIfNecessary as stringQuoteOnlyIfNecessaryFormatter,
 } from '@json2csv/formatters';
-import { type ParserOptions, StreamParser as Parser } from '@json2csv/plainjs';
+import { StreamParser as Parser, type ParserOptions } from '@json2csv/plainjs';
+import type CarInfo from '@json2csv/test-helpers/fixtures/types/carInfo.ts';
+import TestRunner from '@json2csv/test-helpers/TestRunner.ts';
+import { forceCrlfEol } from '@json2csv/test-helpers/utils.ts';
+import { flatten, unwind } from '@json2csv/transforms';
 
 async function parseInput<TRaw extends object, T extends object>(
   parser: Parser<TRaw, T>,
@@ -45,7 +45,7 @@ export default function (
     const parser = new Parser(opts, transformOpts);
     const csv = await parseInput(
       parser,
-      jsonFixtures['default']({ objectMode: true }),
+      jsonFixtures.default({ objectMode: true }),
     );
 
     t.equal(csv, csvFixtures.ndjson);
@@ -58,7 +58,7 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['ndjson']());
+    const csv = await parseInput(parser, jsonFixtures.ndjson());
 
     t.equal(csv, csvFixtures.ndjson);
   });
@@ -72,7 +72,7 @@ export default function (
 
       try {
         const parser = new Parser(opts);
-        await parseInput(parser, jsonFixtures['empty']());
+        await parseInput(parser, jsonFixtures.empty());
 
         t.fail('Exception expected');
       } catch (err: any) {
@@ -92,7 +92,7 @@ export default function (
 
     try {
       const parser = new Parser(opts);
-      await parseInput(parser, jsonFixtures['ndjsonInvalid']());
+      await parseInput(parser, jsonFixtures.ndjsonInvalid());
 
       t.fail('Exception expected');
     } catch (err: any) {
@@ -103,7 +103,7 @@ export default function (
   testRunner.add('should not modify the opts passed', async (t) => {
     const opts: ParserOptions = {};
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['default']());
+    const csv = await parseInput(parser, jsonFixtures.default());
 
     t.equal(csv, csvFixtures.defaultStream);
     t.deepEqual(opts, {});
@@ -114,7 +114,7 @@ export default function (
     async (t) => {
       try {
         const parser = new Parser();
-        await parseInput(parser, jsonFixtures['empty']());
+        await parseInput(parser, jsonFixtures.empty());
 
         t.fail('Exception expected');
       } catch (err: any) {
@@ -131,7 +131,7 @@ export default function (
     async (t) => {
       try {
         const parser = new Parser();
-        await parseInput(parser, jsonFixtures['notObjectSingleItem']());
+        await parseInput(parser, jsonFixtures.notObjectSingleItem());
 
         t.fail('Exception expected');
       } catch (err: any) {
@@ -146,7 +146,7 @@ export default function (
   testRunner.add('should error if input data is not an object', async (t) => {
     try {
       const parser = new Parser();
-      await parseInput(parser, jsonFixtures['notObjectArray']());
+      await parseInput(parser, jsonFixtures.notObjectArray());
 
       t.fail('Exception expected');
     } catch (err: any) {
@@ -164,7 +164,7 @@ export default function (
 
     try {
       const parser = new Parser(opts);
-      await parseInput(parser, jsonFixtures['defaultInvalid']());
+      await parseInput(parser, jsonFixtures.defaultInvalid());
 
       t.fail('Exception expected');
     } catch (err: any) {
@@ -181,7 +181,7 @@ export default function (
 
       try {
         const parser = new Parser(opts);
-        await parseInput(parser, jsonFixtures['invalidNoToken']());
+        await parseInput(parser, jsonFixtures.invalidNoToken());
 
         t.fail('Exception expected');
       } catch (err: any) {
@@ -196,7 +196,7 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['emptyObject']());
+    const csv = await parseInput(parser, jsonFixtures.emptyObject());
 
     t.equal(csv, csvFixtures.emptyObject);
   });
@@ -207,7 +207,7 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['emptyArray']());
+    const csv = await parseInput(parser, jsonFixtures.emptyArray());
 
     t.equal(csv, csvFixtures.emptyObject);
   });
@@ -218,14 +218,14 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['arrayWithNull']());
+    const csv = await parseInput(parser, jsonFixtures.arrayWithNull());
 
     t.equal(csv, csvFixtures.emptyObject);
   });
 
   testRunner.add('should handle deep JSON objects', async (t) => {
     const parser = new Parser();
-    const csv = await parseInput(parser, jsonFixtures['deepJSON']());
+    const csv = await parseInput(parser, jsonFixtures.deepJSON());
 
     t.equal(csv, csvFixtures.deepJSON);
   });
@@ -234,7 +234,7 @@ export default function (
     'should parse json to csv and infer the fields automatically ',
     async (t) => {
       const parser = new Parser();
-      const csv = await parseInput(parser, jsonFixtures['default']());
+      const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.defaultStream);
     },
@@ -246,7 +246,7 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['default']());
+    const csv = await parseInput(parser, jsonFixtures.default());
 
     t.equal(csv, csvFixtures.default);
   });
@@ -257,7 +257,7 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['default']());
+    const csv = await parseInput(parser, jsonFixtures.default());
 
     t.equal(csv, csvFixtures.selected);
   });
@@ -268,7 +268,7 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['default']());
+    const csv = await parseInput(parser, jsonFixtures.default());
 
     t.equal(csv, csvFixtures.reversed);
   });
@@ -287,7 +287,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['default']());
+      const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.withNotExistField);
     },
@@ -310,7 +310,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['default']());
+      const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.fieldNames);
     },
@@ -320,7 +320,6 @@ export default function (
     const opts: ParserOptions = {
       fields: [
         { value: 'price' },
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error test for non TS users. Wrong type expected
         () => {
           /* Do nothing */
@@ -330,7 +329,7 @@ export default function (
 
     try {
       const parser = new Parser(opts);
-      await parseInput(parser, jsonFixtures['default']());
+      await parseInput(parser, jsonFixtures.default());
 
       t.fail('Exception expected');
     } catch (err: any) {
@@ -347,7 +346,6 @@ export default function (
       const opts: ParserOptions<CarInfo> = {
         fields: [
           { value: (row: CarInfo) => row.price },
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error test for non TS users. Wrong type expected
           { label: 'Price USD', value: [] },
         ],
@@ -355,7 +353,7 @@ export default function (
 
       try {
         const parser = new Parser(opts);
-        await parseInput(parser, jsonFixtures['default']());
+        await parseInput(parser, jsonFixtures.default());
 
         t.fail('Exception expected');
       } catch (err: any) {
@@ -394,7 +392,7 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['nested']());
+    const csv = await parseInput(parser, jsonFixtures.nested());
 
     t.equal(csv, csvFixtures.nested);
   });
@@ -428,7 +426,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['nested']());
+      const csv = await parseInput(parser, jsonFixtures.nested());
 
       t.equal(csv, csvFixtures.nested);
     },
@@ -453,7 +451,7 @@ export default function (
       const parser = new Parser(opts);
       const csv = await parseInput(
         parser,
-        jsonFixtures['functionStringifyByDefault'](),
+        jsonFixtures.functionStringifyByDefault(),
       );
 
       t.equal(csv, csvFixtures.functionStringifyByDefault);
@@ -475,7 +473,7 @@ export default function (
       const parser = new Parser(opts);
       const csv = await parseInput(
         parser,
-        jsonFixtures['functionStringifyByDefault'](),
+        jsonFixtures.functionStringifyByDefault(),
       );
 
       t.equal(csv, csvFixtures.functionStringifyByDefault);
@@ -510,7 +508,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['fancyfields']());
+      const csv = await parseInput(parser, jsonFixtures.fancyfields());
 
       t.equal(csv, csvFixtures.fancyfields);
     },
@@ -527,7 +525,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['defaultValueEmpty']());
+      const csv = await parseInput(parser, jsonFixtures.defaultValueEmpty());
 
       t.equal(csv, csvFixtures.defaultValueEmpty);
     },
@@ -548,7 +546,7 @@ export default function (
       const parser = new Parser(opts);
       const csv = await parseInput(
         parser,
-        jsonFixtures['overriddenDefaultValue'](),
+        jsonFixtures.overriddenDefaultValue(),
       );
 
       t.equal(csv, csvFixtures.overriddenDefaultValue);
@@ -579,7 +577,7 @@ export default function (
       const parser = new Parser(opts);
       const csv = await parseInput(
         parser,
-        jsonFixtures['overriddenDefaultValue'](),
+        jsonFixtures.overriddenDefaultValue(),
       );
 
       t.equal(csv, csvFixtures.overriddenDefaultValue);
@@ -597,7 +595,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['default']());
+      const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.tsv);
     },
@@ -607,7 +605,7 @@ export default function (
     const opts: ParserOptions = { delimiter: '|@|' };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['delimiter']());
+    const csv = await parseInput(parser, jsonFixtures.delimiter());
 
     t.equal(csv, csvFixtures.delimiter);
   });
@@ -623,7 +621,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['default']());
+      const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, forceCrlfEol(csvFixtures.eol));
     },
@@ -638,7 +636,7 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['default']());
+    const csv = await parseInput(parser, jsonFixtures.default());
 
     t.equal(csv, csvFixtures.withoutHeader);
   });
@@ -649,7 +647,7 @@ export default function (
     'should not include empty rows when options.includeEmptyRows is not specified',
     async (t) => {
       const parser = new Parser();
-      const csv = await parseInput(parser, jsonFixtures['emptyRow']());
+      const csv = await parseInput(parser, jsonFixtures.emptyRow());
 
       t.equal(csv, csvFixtures.emptyRowNotIncluded);
     },
@@ -663,7 +661,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['emptyRow']());
+      const csv = await parseInput(parser, jsonFixtures.emptyRow());
 
       t.equal(csv, csvFixtures.emptyRow);
     },
@@ -677,7 +675,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['emptyRow']());
+      const csv = await parseInput(parser, jsonFixtures.emptyRow());
 
       t.equal(csv, csvFixtures.emptyRowNotIncluded);
     },
@@ -704,7 +702,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['emptyRow']());
+      const csv = await parseInput(parser, jsonFixtures.emptyRow());
 
       t.equal(csv, csvFixtures.emptyRowDefaultValues);
     },
@@ -719,7 +717,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['arrayWithNull']());
+      const csv = await parseInput(parser, jsonFixtures.arrayWithNull());
 
       t.equal(csv, csvFixtures.emptyObject);
     },
@@ -734,7 +732,7 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['specialCharacters']());
+    const csv = await parseInput(parser, jsonFixtures.specialCharacters());
 
     // Compare csv length to check if the BOM character is present
     t.equal(csv[0], '\ufeff');
@@ -760,7 +758,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['unwind2']());
+      const csv = await parseInput(parser, jsonFixtures.unwind2());
 
       t.equal(csv, csvFixtures.unwind2);
     },
@@ -775,7 +773,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['unwind']());
+      const csv = await parseInput(parser, jsonFixtures.unwind());
 
       t.equal(csv, csvFixtures.unwind);
     },
@@ -797,7 +795,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['unwind2']());
+      const csv = await parseInput(parser, jsonFixtures.unwind2());
 
       t.equal(csv, csvFixtures.unwind2);
     },
@@ -824,7 +822,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['unwind2']());
+      const csv = await parseInput(parser, jsonFixtures.unwind2());
 
       t.equal(csv, csvFixtures.unwind2Blank);
     },
@@ -838,7 +836,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['deepJSON']());
+      const csv = await parseInput(parser, jsonFixtures.deepJSON());
 
       t.equal(csv, csvFixtures.flattenedDeepJSON);
     },
@@ -852,7 +850,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['flattenArrays']());
+      const csv = await parseInput(parser, jsonFixtures.flattenArrays());
 
       t.equal(csv, csvFixtures.flattenedArrays);
     },
@@ -866,7 +864,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['deepJSON']());
+      const csv = await parseInput(parser, jsonFixtures.deepJSON());
 
       t.equal(csv, csvFixtures.flattenedCustomSeparatorDeepJSON);
     },
@@ -883,7 +881,7 @@ export default function (
       const parser = new Parser(opts);
       const csv = await parseInput(
         parser,
-        jsonFixtures['objectWithEmptyFields'](),
+        jsonFixtures.objectWithEmptyFields(),
       );
 
       t.equal(csv, csvFixtures.objectWithEmptyFieldsStream);
@@ -898,7 +896,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['unwindAndFlatten']());
+      const csv = await parseInput(parser, jsonFixtures.unwindAndFlatten());
 
       t.equal(csv, csvFixtures.unwindAndFlatten);
     },
@@ -923,10 +921,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(
-        parser,
-        jsonFixtures['unwindComplexObject'](),
-      );
+      const csv = await parseInput(parser, jsonFixtures.unwindComplexObject());
 
       t.equal(csv, csvFixtures.unwindComplexObject);
     },
@@ -952,7 +947,7 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['default']());
+    const csv = await parseInput(parser, jsonFixtures.default());
 
     t.equal(csv, csvFixtures.defaultCustomTransform);
   });
@@ -997,7 +992,7 @@ export default function (
         },
       };
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['numberFormatter']());
+      const csv = await parseInput(parser, jsonFixtures.numberFormatter());
 
       t.equal(csv, csvFixtures.numberFixedDecimals);
     },
@@ -1013,7 +1008,7 @@ export default function (
         },
       };
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['numberFormatter']());
+      const csv = await parseInput(parser, jsonFixtures.numberFormatter());
 
       t.equal(csv, csvFixtures.numberCustomSeparator);
     },
@@ -1029,7 +1024,7 @@ export default function (
         },
       };
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['numberFormatter']());
+      const csv = await parseInput(parser, jsonFixtures.numberFormatter());
 
       t.equal(csv, csvFixtures.numberFixedDecimalsAndCustomSeparator);
     },
@@ -1062,7 +1057,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['default']());
+      const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.withSimpleQuotes);
     },
@@ -1079,7 +1074,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['default']());
+      const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.withoutQuotes);
     },
@@ -1096,10 +1091,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(
-        parser,
-        jsonFixtures['escapeCustomQuotes'](),
-      );
+      const csv = await parseInput(parser, jsonFixtures.escapeCustomQuotes());
 
       t.equal(csv, csvFixtures.escapeCustomQuotes);
     },
@@ -1115,7 +1107,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['escapedQuotes']());
+      const csv = await parseInput(parser, jsonFixtures.escapedQuotes());
 
       t.equal(csv, csvFixtures.escapedQuotesUnescaped);
     },
@@ -1125,7 +1117,7 @@ export default function (
 
   testRunner.add('should escape quotes with double quotes', async (t) => {
     const parser = new Parser();
-    const csv = await parseInput(parser, jsonFixtures['quotes']());
+    const csv = await parseInput(parser, jsonFixtures.quotes());
 
     t.equal(csv, csvFixtures.quotes);
   });
@@ -1134,7 +1126,7 @@ export default function (
     'should not escape quotes with double quotes, when there is a backslash in the end',
     async (t) => {
       const parser = new Parser();
-      const csv = await parseInput(parser, jsonFixtures['backslashAtEnd']());
+      const csv = await parseInput(parser, jsonFixtures.backslashAtEnd());
 
       t.equal(csv, csvFixtures.backslashAtEnd);
     },
@@ -1146,7 +1138,7 @@ export default function (
       const parser = new Parser();
       const csv = await parseInput(
         parser,
-        jsonFixtures['backslashAtEndInMiddleColumn'](),
+        jsonFixtures.backslashAtEndInMiddleColumn(),
       );
 
       t.equal(csv, csvFixtures.backslashAtEndInMiddleColumn);
@@ -1164,7 +1156,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['escapedQuotes']());
+      const csv = await parseInput(parser, jsonFixtures.escapedQuotes());
 
       t.equal(csv, csvFixtures.escapedQuotes);
     },
@@ -1181,7 +1173,7 @@ export default function (
       const parser = new Parser(opts);
       const csv = await parseInput(
         parser,
-        jsonFixtures['backslashBeforeNewLine'](),
+        jsonFixtures.backslashBeforeNewLine(),
       );
 
       t.equal(csv, csvFixtures.backslashBeforeNewLine);
@@ -1201,10 +1193,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(
-        parser,
-        jsonFixtures['quoteOnlyIfNecessary'](),
-      );
+      const csv = await parseInput(parser, jsonFixtures.quoteOnlyIfNecessary());
 
       t.equal(csv, csvFixtures.quoteOnlyIfNecessary);
     },
@@ -1223,7 +1212,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['default']());
+      const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.excelStrings);
     },
@@ -1239,7 +1228,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['quotes']());
+      const csv = await parseInput(parser, jsonFixtures.quotes());
 
       t.equal(csv, csvFixtures.excelStringsWithEscapedQuoted);
     },
@@ -1255,7 +1244,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['trailingBackslash']());
+      const csv = await parseInput(parser, jsonFixtures.trailingBackslash());
 
       t.equal(csv, csvFixtures.trailingBackslash);
     },
@@ -1265,7 +1254,7 @@ export default function (
     const parser = new Parser();
     const csv = await parseInput(
       parser,
-      jsonFixtures['escapeDoubleBackslashedEscapedQuote'](),
+      jsonFixtures.escapeDoubleBackslashedEscapedQuote(),
     );
 
     t.equal(csv, csvFixtures.escapeDoubleBackslashedEscapedQuote);
@@ -1277,7 +1266,7 @@ export default function (
     };
 
     const parser = new Parser(opts);
-    const csv = await parseInput(parser, jsonFixtures['eol']());
+    const csv = await parseInput(parser, jsonFixtures.eol());
 
     t.equal(
       csv,
@@ -1302,7 +1291,7 @@ export default function (
       };
 
       const parser = new Parser(opts);
-      const csv = await parseInput(parser, jsonFixtures['default']());
+      const csv = await parseInput(parser, jsonFixtures.default());
 
       t.equal(csv, csvFixtures.customHeaderQuotes);
     },

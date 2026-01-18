@@ -1,9 +1,10 @@
-import fs from 'fs';
-import https from 'https';
-import { pipeline } from 'stream/promises';
+import fs from 'node:fs';
+import https from 'node:https';
+import { pipeline } from 'node:stream/promises';
 
 import { Transform } from '@json2csv/node';
 import { flatten } from '@json2csv/transforms';
+
 const mb100 =
   'https://data.wa.gov/api/views/f6w7-q2d2/rows.json?accessType=DOWNLOAD';
 
@@ -25,5 +26,6 @@ try {
     });
   });
 } catch (err) {
+  // biome-ignore lint/suspicious/noConsole: Print error for debugging
   console.error(err);
 }

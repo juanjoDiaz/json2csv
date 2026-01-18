@@ -28,7 +28,7 @@
     "json2csv": "./bin/json2csv.js"
   },
   "scripts": {
-    "lint": "eslint src test",
+    "lint": "biome check src test",
     "build:mjs": "tsc --module esnext --outDir ./bin",
     "build": "npm run build:mjs",
     "pretest": "npm run build",
@@ -39,7 +39,7 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0"
+    "@types/node": "22.7.5"
   },
   "dependencies": {
     "@json2csv/formatters": "^7.0.7",

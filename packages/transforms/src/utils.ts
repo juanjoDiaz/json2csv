@@ -61,9 +61,9 @@ function isKey<TObject extends object>(value: any, object: TObject): boolean {
   }
   const type = typeof value;
   if (
-    type == 'number' ||
-    type == 'symbol' ||
-    type == 'boolean' ||
+    type === 'number' ||
+    type === 'symbol' ||
+    type === 'boolean' ||
     value == null
   ) {
     return true;
@@ -195,24 +195,17 @@ export function unsetProp<T extends object>(obj: T, path: PropertyPath): T {
   }
 
   if (pathArray.length === 1) {
-    return Object.keys(obj)
-      .filter((prop) => prop !== key)
-      .reduce(
-        (acc, prop) => ({ ...acc, [prop]: obj[prop as keyof T] }),
-        {} as T,
-      );
+    return Object.fromEntries(
+      Object.entries(obj).filter(([prop]) => prop !== key),
+    ) as T;
   }
 
-  return Object.keys(obj).reduce(
-    (acc, prop) => ({
-      ...acc,
-      [prop]:
-        prop !== key
-          ? obj[prop as keyof T]
-          : unsetProp(obj[key as keyof T] as object, restPath),
-    }),
-    {} as T,
-  );
+  return Object.fromEntries(
+    Object.entries(obj).map(([prop, value]) => [
+      prop,
+      prop !== key ? value : unsetProp(value as object, restPath),
+    ]),
+  ) as T;
 }
 
 export function flattenReducer<T>(acc: Array<T>, arr: Array<T> | T): Array<T> {

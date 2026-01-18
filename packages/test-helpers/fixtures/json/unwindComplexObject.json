@@ -10,7 +10,8 @@
             {
               "position": "left",
               "color": "white"
-            }, {
+            },
+            {
               "position": "right",
               "color": "gray"
             }
@@ -22,7 +23,8 @@
         }
       ]
     }
-  }, {
+  },
+  {
     "carModel": "BMW",
     "price": 15000,
     "extras": {
@@ -31,7 +33,8 @@
           "name": "airbag",
           "color": "white",
           "items": []
-        }, {
+        },
+        {
           "name": "dashboard",
           "color": "black"
         }
