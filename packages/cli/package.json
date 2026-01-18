@@ -32,11 +32,14 @@
     "build:mjs": "tsc --module esnext --outDir ./bin",
     "build": "npm run build:mjs",
     "pretest": "npm run build",
-    "test:raw": "node --loader ts-node/esm test/index.ts",
+    "test:raw": "node test/index.ts",
     "test": "npm run test:raw | tap-spec",
     "test-with-coverage": "c8 --reporter=text npm test",
     "dependencies:update-internal": "npm uninstall @json2csv/formatters @json2csv/node @json2csv/transforms && npm install @json2csv/formatters @json2csv/node @json2csv/transforms",
     "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0"
   },
   "dependencies": {
     "@json2csv/formatters": "^7.0.7",

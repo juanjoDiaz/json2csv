@@ -174,9 +174,9 @@ process.stdout.on('error', (error) => {
 async function getInputJSON<TRaw>(inputPath: string): Promise<TRaw> {
   const assert =
     extname(inputPath).toLowerCase() === '.json'
-      ? { assert: { type: 'json' } }
+      ? { with: { type: 'json' } }
       : undefined;
-  const { default: json } = await import(`file://${inputPath}`, assert);
+  const { default: json } = await import(`file://${inputPath}`, assert as any); // TODO remove castonce @types/node can be updated which requires updating typescript to 5.2+
   return json;
 }
 

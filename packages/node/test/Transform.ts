@@ -1,8 +1,8 @@
 import { type Readable, Writable } from 'stream';
 
-import TestRunner from '@json2csv/test-helpers/TestRunner.js';
-import { forceLfEol } from '@json2csv/test-helpers/utils.js';
-import type CarInfo from '@json2csv/test-helpers/fixtures/types/carInfo.js';
+import TestRunner from '@json2csv/test-helpers/TestRunner.ts';
+import { forceLfEol } from '@json2csv/test-helpers/utils.ts';
+import type CarInfo from '@json2csv/test-helpers/fixtures/types/carInfo.ts';
 import { flatten, unwind } from '@json2csv/transforms';
 import {
   number as numberFormatter,

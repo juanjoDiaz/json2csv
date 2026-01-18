@@ -12,7 +12,7 @@ const jsonDirectory = join(__dirname, 'fixtures', 'json');
 
 function getImportAssertion(filePath: string): { assert: { type: string } } | undefined {
   return extname(filePath).toLowerCase() === '.json'
-    ? { assert: { type: 'json' } }
+    ? { with: { type: 'json' } }
     : undefined;
 }
 

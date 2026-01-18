@@ -1,8 +1,8 @@
-import { fixtures } from '@json2csv/test-helpers/fixtureLoader.js';
+import { fixtures } from '@json2csv/test-helpers/fixtureLoader.ts';
 
-import AsyncParser from './AsyncParser.js';
-import AsyncParserInMemory from './AsyncParserInMemory.js';
-import TransformStream from './TransformStream.js';
+import AsyncParser from './AsyncParser.ts';
+import AsyncParserInMemory from './AsyncParserInMemory.ts';
+import TransformStream from './TransformStream.ts';
 
 async function run() {
   const { jsonFixtures, jsonFixturesStreams, csvFixturesWithLinuxEol } =

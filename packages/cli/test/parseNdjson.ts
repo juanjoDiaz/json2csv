@@ -1,4 +1,4 @@
-import TestRunner from '@json2csv/test-helpers/TestRunner.js';
+import TestRunner from '@json2csv/test-helpers/TestRunner.ts';
 import parsendjson from '../bin/utils/parseNdjson.js';
 
 export default function (jsonFixtures: Record<string, () => any>) {
