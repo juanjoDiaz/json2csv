@@ -1,7 +1,7 @@
 import path from 'path';
 import esbuild from 'esbuild';
 import glob from 'tiny-glob';
-import pkg from './packages/plainjs/package.json' assert { type: 'json' };
+import pkg from './packages/plainjs/package.json' with { type: 'json' };
 
 const replaceDependenciesByJsdelivr = {
   name: 'replace-dependencies-by-jsdelivr',

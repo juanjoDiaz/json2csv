@@ -29,7 +29,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "0x": "^5.3.1",
+    "0x": "^6.0.0",
     "benchmark": "^2.1.4"
   }
 }
