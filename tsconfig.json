@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* Language and Environment */
     "target": "es6",
-    "module": "esnext",
+    "module": "nodenext",
     "moduleResolution": "nodenext",
     "lib": ["es2020", "dom"],
     /* Emit */

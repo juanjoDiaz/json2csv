@@ -23,7 +23,7 @@
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
-    "lineEnding": "lf"
+    "lineEnding": "auto"
   },
   "javascript": {
     "formatter": {
@@ -36,6 +36,7 @@
       "!**/dist",
       "!**/node_modules",
       "!**/docs",
+      "!**/coverage",
       "!**/packages/test-helpers/fixtures",
       "!**/packages/cli/bin",
       "!**/packages/test-performance"

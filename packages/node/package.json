@@ -37,8 +37,8 @@
   "main": "dist/mjs/index.js",
   "scripts": {
     "lint": "biome check src test",
-    "build:cjs": "tsc --module commonjs --verbatimModuleSyntax false --outDir ./dist/cjs && node ../../build-cjs.js",
-    "build:mjs": "tsc --module esnext --outDir ./dist/mjs",
+    "build:cjs": "tsc --module commonjs --moduleResolution node --verbatimModuleSyntax false --outDir ./dist/cjs && node ../../build-cjs.js",
+    "build:mjs": "tsc --module nodenext --outDir ./dist/mjs",
     "build": "npm run build:cjs && npm run build:mjs",
     "pretest": "npm run build",
     "test": "node test/CommonJS.cjs && npm run test:raw | tap-spec",
@@ -48,7 +48,7 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@types/node": "22.7.5"
+    "@types/node": "~24.10.9"
   },
   "dependencies": {
     "@json2csv/plainjs": "^7.0.7"
