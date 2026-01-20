@@ -32,9 +32,8 @@
     "build:mjs": "tsc --module nodenext --outDir ./bin",
     "build": "npm run build:mjs",
     "pretest": "npm run build",
-    "test:raw": "node test/index.ts",
-    "test": "npm run test:raw | tap-spec",
-    "test-with-coverage": "c8 --reporter=text npm test",
+    "test": "vitest run",
+    "test-with-coverage": "vitest run --coverage",
     "dependencies:update-internal": "npm uninstall @json2csv/formatters @json2csv/node @json2csv/transforms && npm install @json2csv/formatters @json2csv/node @json2csv/transforms",
     "prepublishOnly": "npm run build"
   },

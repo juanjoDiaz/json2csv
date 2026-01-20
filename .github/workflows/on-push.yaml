@@ -32,6 +32,8 @@ jobs:
         run: npm ci --workspaces --include-workspace-root
       - name: Linting
         run: npm run lint
+      - name: Build
+        run: npm run build
       - name: Unit tests
         run: npm run test-with-coverage
       - name: Coveralls Parallel
