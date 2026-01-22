@@ -55,20 +55,16 @@ const replaceDependenciesByJsdelivr = {
 
 const pkgs = ['plainjs', 'whatwg', 'transforms', 'formatters'];
 
-pkgs.forEach(async (pkg) => {
-  const entryPoints = await glob(`packages/${pkg}/src/*.ts`);
-  esbuild
-    .build({
+await Promise.all(
+  pkgs.map(async (pkg) => {
+    const entryPoints = await glob(`packages/${pkg}/src/*.ts`);
+    await esbuild.build({
       entryPoints,
       bundle: true,
       target: 'es2019',
       format: 'esm',
       outdir: `dist/cdn/${pkg}`,
       plugins: [replaceDependenciesByJsdelivr],
-    })
-    .catch((err) => {
-      // biome-ignore lint/suspicious/noConsole: Print error for debugging
-      console.error(err);
-      process.exit(1);
     });
-});
+  }),
+);
