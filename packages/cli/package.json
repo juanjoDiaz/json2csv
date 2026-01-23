@@ -31,6 +31,7 @@
     "lint": "biome check src test",
     "build:mjs": "tsc --module nodenext --outDir ./bin",
     "build": "npm run build:mjs",
+    "clean": "node -e \"fs.rmSync('bin', {recursive:true, force:true})\"",
     "pretest": "npm run build",
     "test": "vitest run",
     "test-with-coverage": "vitest run --coverage",

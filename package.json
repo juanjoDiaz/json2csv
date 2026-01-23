@@ -45,6 +45,7 @@
     "test-with-coverage": "vitest run --coverage",
     "build:cdn": "node build-cdn.js",
     "build": "npm run build -w @json2csv/formatters -w @json2csv/transforms -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg -w @json2csv/cli",
+    "clean": "npm run clean -w @json2csv/formatters -w @json2csv/transforms -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg -w @json2csv/cli",
     "dependencies:update-internal": "npm run dependencies:update-internal -w @json2csv/cli -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg",
     "changelog:update": "conventional-changelog-cli -p conventionalcommits -i CHANGELOG.md -s && cp CHANGELOG.md docs/others/CHANGELOG.md"
   },
