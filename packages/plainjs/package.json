@@ -2,6 +2,7 @@
   "name": "@json2csv/plainjs",
   "version": "7.0.7",
   "description": "Pure Javascript JSON to CSV converter.",
+  "sideEffects": false,
   "keywords": [
     "json",
     "to",
