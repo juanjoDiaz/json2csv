@@ -1,0 +1,6 @@
+# So it cand find NPM installed by homebrew
+PATH="/usr/local/bin/:$PATH"
+
+npm run lint
+npm run build:cdn
+git diff --exit-code dist/cdn/ || (echo "CDN bundle is out of sync. Please commit the updated dist/cdn/ files." && exit 1)

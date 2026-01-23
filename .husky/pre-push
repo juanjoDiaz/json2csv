@@ -1,0 +1,4 @@
+# So it cand find NPM installed by homebrew
+PATH="/usr/local/bin/:$PATH"
+
+npm test
