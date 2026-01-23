@@ -1,17 +1,36 @@
 // packages/transforms/src/utils.ts
-var rePropName = RegExp(
-  // Match anything that isn't a dot or bracket.
-  `[^.[\\]]+|\\[(?:([^"'][^[]*)|(["'])((?:(?!\\2)[^\\\\]|\\\\.)*?)\\2)\\]|(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))`,
-  "g"
-);
-function castPath(value) {
-  var _a, _b, _c;
-  const result = [];
-  let match;
-  while (match = rePropName.exec(value)) {
-    result.push((_c = (_b = match[3]) != null ? _b : (_a = match[1]) == null ? void 0 : _a.trim()) != null ? _c : match[0]);
+var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
+var reIsPlainProp = /^\w*$/;
+var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+var reEscapeChar = /\\(\\)?/g;
+function isKey(value, object) {
+  if (Array.isArray(value)) {
+    return false;
   }
+  const type = typeof value;
+  if (type === "number" || type === "symbol" || type === "boolean" || value == null) {
+    return true;
+  }
+  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) || object != null && value in Object(object);
+}
+function stringToPath(string) {
+  const result = [];
+  if (string.charCodeAt(0) === 46) {
+    result.push("");
+  }
+  string.replace(rePropName, (match, number, quote, subString) => {
+    result.push(
+      quote ? subString.replace(reEscapeChar, "$1") : number || match
+    );
+    return match;
+  });
   return result;
+}
+function castPath(value, object) {
+  if (Array.isArray(value)) {
+    return value;
+  }
+  return isKey(value, object) ? [value] : stringToPath(String(value));
 }
 function getProp(obj, path, defaultValue) {
   if (path in obj) {
@@ -22,14 +41,12 @@ function getProp(obj, path, defaultValue) {
   let currentValue = obj;
   for (const key of processedPath) {
     currentValue = currentValue == null ? void 0 : currentValue[key];
-    if (currentValue === void 0)
-      return defaultValue;
+    if (currentValue === void 0) return defaultValue;
   }
   return currentValue;
 }
 function propertyPathToString(path) {
-  if (typeof path === "string")
-    return path.split(".");
+  if (typeof path === "string") return path.split(".");
   return path;
 }
 function setProp(obj, path, value) {
@@ -47,24 +64,26 @@ function unsetProp(obj, path) {
     return obj;
   }
   if (pathArray.length === 1) {
-    return Object.keys(obj).filter((prop) => prop !== key).reduce(
-      (acc, prop) => ({ ...acc, [prop]: obj[prop] }),
-      {}
+    return Object.fromEntries(
+      Object.entries(obj).filter(([prop]) => prop !== key)
     );
   }
-  return Object.keys(obj).reduce(
-    (acc, prop) => ({
-      ...acc,
-      [prop]: prop !== key ? obj[prop] : unsetProp(obj[key], restPath)
-    }),
-    {}
+  return Object.fromEntries(
+    Object.entries(obj).map(([prop, value]) => [
+      prop,
+      prop !== key ? value : unsetProp(value, restPath)
+    ])
   );
 }
 function flattenReducer(acc, arr) {
   try {
-    Array.isArray(arr) ? acc.push(...arr) : acc.push(arr);
+    if (Array.isArray(arr)) {
+      acc.push(...arr);
+    } else {
+      acc.push(arr);
+    }
     return acc;
-  } catch (err) {
+  } catch {
     return acc.concat(arr);
   }
 }

@@ -1,5 +1,5 @@
 // packages/transforms/src/unwind.ts
-import { getProp, setProp, unsetProp, flattenReducer } from "./utils.js";
+import { flattenReducer, getProp, setProp, unsetProp } from "./utils.js";
 function getUnwindablePaths(obj, currentPath) {
   return Object.keys(obj).reduce(
     (unwindablePaths, key) => {

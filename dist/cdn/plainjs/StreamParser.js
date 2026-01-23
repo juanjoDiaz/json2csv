@@ -1,10 +1,10 @@
 // packages/plainjs/src/StreamParser.ts
 import {
   Tokenizer,
+  TokenizerError,
   TokenParser,
-  TokenType,
-  TokenizerError
-} from "https://cdn.jsdelivr.net/npm/@streamparser/json@^0.0.19/dist/mjs/index.js";
+  TokenType
+} from "https://cdn.jsdelivr.net/npm/@streamparser/json@^0.0.22/dist/mjs/index.js";
 import JSON2CSVBase from "./BaseParser.js";
 var JSON2CSVStreamParser = class extends JSON2CSVBase {
   constructor(opts, asyncOpts) {
@@ -39,8 +39,7 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
     tokenizer.onToken = tokenParser.write.bind(this.tokenParser);
     tokenizer.onError = (err) => this.onError(err);
     tokenizer.onEnd = () => {
-      if (!this.tokenParser.isEnded)
-        this.tokenParser.end();
+      if (!this.tokenParser.isEnded) this.tokenParser.end();
     };
     tokenParser.onValue = ({ value }) => this.pushLine(value);
     tokenParser.onError = (err) => this.onError(err);
@@ -94,12 +93,10 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
     this.tokenizer.write(data);
   }
   end() {
-    if (this.tokenizer && !this.tokenizer.isEnded)
-      this.tokenizer.end();
+    if (this.tokenizer && !this.tokenizer.isEnded) this.tokenizer.end();
   }
   pushHeaderIfNotWritten() {
-    if (this._hasWritten)
-      return;
+    if (this._hasWritten) return;
     if (!this.opts.fields) {
       this.onError(
         new Error(
@@ -147,28 +144,24 @@ var JSON2CSVStreamParser = class extends JSON2CSVBase {
     }
     processedData.forEach((row) => {
       const line = this.processRow(row);
-      if (line === void 0)
-        return;
+      if (line === void 0) return;
       this.onLine(line);
       this.onData(this._hasWritten ? this.opts.eol + line : line);
       this._hasWritten = true;
     });
   }
-  // No idea why eslint doesn't detect the usage of these
-  /* eslint-disable @typescript-eslint/no-unused-vars */
   /* c8 ignore start */
-  onHeader(header) {
+  onHeader(_header) {
   }
-  onLine(line) {
+  onLine(_line) {
   }
-  onData(data) {
+  onData(_data) {
   }
-  onError(err) {
+  onError(_err) {
   }
   onEnd() {
   }
   /* c8 ignore stop */
-  /* eslint-enable @typescript-eslint/no-unused-vars */
 };
 export {
   JSON2CSVStreamParser as default

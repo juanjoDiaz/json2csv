@@ -1,10 +1,7 @@
 // packages/plainjs/src/Parser.ts
 import JSON2CSVBase from "./BaseParser.js";
-import { flattenReducer, fastJoin } from "./utils.js";
+import { fastJoin, flattenReducer } from "./utils.js";
 var JSON2CSVParser = class extends JSON2CSVBase {
-  constructor(opts) {
-    super(opts);
-  }
   /**
    * Main function that converts json to csv.
    *

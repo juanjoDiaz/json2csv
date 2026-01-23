@@ -2,11 +2,11 @@
 import {
   default as defaultFormatter,
   number as numberFormatterCtor,
+  object as objectFormatterCtor,
   string as stringFormatterCtor,
-  symbol as symbolFormatterCtor,
-  object as objectFormatterCtor
+  symbol as symbolFormatterCtor
 } from "../formatters/index.js";
-import { getProp, flattenReducer, fastJoin } from "./utils.js";
+import { fastJoin, flattenReducer, getProp } from "./utils.js";
 var FormatterTypes = /* @__PURE__ */ ((FormatterTypes2) => {
   FormatterTypes2["header"] = "header";
   FormatterTypes2["undefined"] = "undefined";
@@ -30,6 +30,7 @@ var JSON2CSVBase = class {
    * delimiter, default value, header, etc.
    */
   preprocessOpts(opts) {
+    var _a;
     const processedOpts = Object.assign(
       {},
       opts
@@ -41,7 +42,7 @@ var JSON2CSVBase = class {
       );
     }
     processedOpts.transforms = processedOpts.transforms || [];
-    const stringFormatter = processedOpts.formatters && processedOpts.formatters["string"] || stringFormatterCtor();
+    const stringFormatter = ((_a = processedOpts.formatters) == null ? void 0 : _a.string) || stringFormatterCtor();
     const objectFormatter = objectFormatterCtor({ stringFormatter });
     const defaultFormatters = {
       header: stringFormatter,
@@ -103,7 +104,7 @@ var JSON2CSVBase = class {
         }
       }
       throw new Error(
-        "Invalid field info option. " + JSON.stringify(fieldInfo)
+        `Invalid field info option. ${JSON.stringify(fieldInfo)}`
       );
     });
   }
