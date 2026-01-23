@@ -178,7 +178,7 @@ describe('Node Transform', () => {
     expect(csv).toBe(csvFixtures.emptyObject);
   });
 
-  it('should hanlde array with nulls', async () => {
+  it('should handle array with nulls', async () => {
     const opts: ParserOptions = {
       fields: ['carModel', 'price', 'color'],
     };
