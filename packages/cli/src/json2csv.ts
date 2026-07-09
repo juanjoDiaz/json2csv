@@ -167,7 +167,7 @@ programOpts.config = makePathAbsolute(programOpts.config);
 
 // don't fail if piped to e.g. head
 /* c8 ignore next 3 */
-process.stdout.on('error', (error) => {
+process.stdout.on('error', (error: NodeJS.ErrnoException) => {
   if (error.code === 'EPIPE') process.exit(1);
 });
 

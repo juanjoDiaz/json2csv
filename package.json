@@ -55,10 +55,10 @@
     "@vitest/coverage-v8": "^4.0.17",
     "conventional-changelog-cli": "^5.0.0",
     "docsify-cli": "^4.4.4",
-    "esbuild": "^0.27.0",
+    "esbuild": "^0.28.1",
     "husky": "^9.1.7",
     "tiny-glob": "^0.2.9",
-    "typescript": "~5.9.3",
+    "typescript": "~6.0.3",
     "vitest": "^4.0.17"
   },
   "engines": {

@@ -48,7 +48,7 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@types/node": "~24.10.9"
+    "@types/node": "~26.1.0"
   },
   "dependencies": {
     "@json2csv/plainjs": "^7.0.7"

@@ -4,6 +4,7 @@
     "target": "es2020",
     "module": "nodenext",
     "moduleResolution": "nodenext",
+    "ignoreDeprecations": "6.0",
     "lib": ["es2020", "dom"],
     /* Emit */
     "declaration": true,
