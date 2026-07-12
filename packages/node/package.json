@@ -38,7 +38,7 @@
   "main": "dist/mjs/index.js",
   "scripts": {
     "lint": "biome check src test",
-    "build:cjs": "tsc --module commonjs --moduleResolution node --verbatimModuleSyntax false --outDir ./dist/cjs && node ../../build-cjs.js",
+    "build:cjs": "tsc --module commonjs --moduleResolution bundler --verbatimModuleSyntax false --outDir ./dist/cjs && node ../../build-cjs.js",
     "build:mjs": "tsc --module nodenext --outDir ./dist/mjs",
     "build": "npm run build:cjs && npm run build:mjs",
     "clean": "node -e \"fs.rmSync('dist', {recursive:true, force:true})\"",

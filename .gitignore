@@ -7,6 +7,7 @@ coverage
 server.*
 published
 *.log
+*.tsbuildinfo
 _docpress
 .vscode
 

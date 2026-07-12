@@ -42,7 +42,8 @@
     "lint:fix": "biome check --write .",
     "prepublishOnly": "npm run build",
     "pretest": "npm run build",
-    "test": "vitest run",
+    "test:cjs": "node packages/formatters/test/CommonJS.cjs && node packages/transforms/test/CommonJS.cjs && node packages/plainjs/test/CommonJS.cjs && node packages/node/test/CommonJS.cjs && node packages/whatwg/test/CommonJS.cjs",
+    "test": "npm run test:cjs && vitest run",
     "test-with-coverage": "vitest run --coverage",
     "build:cdn": "node build-cdn.js",
     "build": "npm run build -w @json2csv/formatters -w @json2csv/transforms -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg -w @json2csv/cli",
@@ -58,7 +59,7 @@
     "esbuild": "^0.28.1",
     "husky": "^9.1.7",
     "tiny-glob": "^0.2.9",
-    "typescript": "~6.0.3",
+    "typescript": "~7.0.2",
     "vitest": "^4.0.17"
   },
   "engines": {
