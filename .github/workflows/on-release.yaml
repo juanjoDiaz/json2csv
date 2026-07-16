@@ -6,6 +6,9 @@ on:
 jobs:
   build:
     runs-on: Ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     strategy:
       matrix:
@@ -19,14 +22,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
         with:
           node-version: '24.x'
-          # Needs to be explicitly specified for auth to work
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm run build
       - run: npm publish --access public -w ${{ matrix.package }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
