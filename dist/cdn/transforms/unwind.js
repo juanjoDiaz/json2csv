@@ -1,23 +1,23 @@
 // packages/transforms/src/unwind.ts
-import { flattenReducer, getProp, setProp, unsetProp } from "./utils.js";
-function getUnwindablePaths(obj, currentPath) {
+import { getProp, setProp, unsetProp } from "./utils.js";
+function getUnwindablePaths(obj, currentPath, unwindablePaths = /* @__PURE__ */ new Set()) {
   return Object.keys(obj).reduce(
-    (unwindablePaths, key) => {
+    (unwindablePaths2, key) => {
       const newPath = currentPath ? `${currentPath}.${key}` : key;
       const value = obj[key];
       if (typeof value === "object" && value !== null && !Array.isArray(value) && Object.prototype.toString.call(value.toJSON) !== "[object Function]" && Object.keys(value).length) {
-        unwindablePaths = unwindablePaths.concat(
-          getUnwindablePaths(value, newPath)
-        );
+        getUnwindablePaths(value, newPath, unwindablePaths2);
       } else if (Array.isArray(value)) {
-        unwindablePaths.push(newPath);
-        unwindablePaths = unwindablePaths.concat(
-          value.map((arrObj) => getUnwindablePaths(arrObj, newPath)).reduce(flattenReducer, []).filter((item, index, arr) => arr.indexOf(item) !== index)
-        );
+        unwindablePaths2.add(newPath);
+        for (const arrObj of value) {
+          if (typeof arrObj === "object" && arrObj !== null) {
+            getUnwindablePaths(arrObj, newPath, unwindablePaths2);
+          }
+        }
       }
-      return unwindablePaths;
+      return unwindablePaths2;
     },
-    []
+    unwindablePaths
   );
 }
 function unwind(opts = {}) {
@@ -41,7 +41,7 @@ function unwind(opts = {}) {
     });
   }
   const paths = Array.isArray(opts.paths) ? opts.paths : opts.paths ? [opts.paths] : void 0;
-  return (dataRow) => (paths || getUnwindablePaths(dataRow)).reduce(unwindReducer, [
+  return (dataRow) => (paths || Array.from(getUnwindablePaths(dataRow))).reduce(unwindReducer, [
     dataRow
   ]);
 }

@@ -1,12 +1,13 @@
 import type Transform from './Transform.js';
-import { flattenReducer, getProp, setProp, unsetProp } from './utils.js';
+import { getProp, setProp, unsetProp } from './utils.js';
 
 function getUnwindablePaths<T extends object>(
   obj: T,
   currentPath?: string,
-): Array<string> {
+  unwindablePaths = new Set<string>(),
+): Set<string> {
   return Object.keys(obj).reduce(
-    (unwindablePaths: Array<string>, key: string) => {
+    (unwindablePaths: Set<string>, key: string) => {
       const newPath = currentPath ? `${currentPath}.${key}` : key;
       const value = obj[key as keyof T];
 
@@ -18,22 +19,19 @@ function getUnwindablePaths<T extends object>(
           '[object Function]' &&
         Object.keys(value).length
       ) {
-        unwindablePaths = unwindablePaths.concat(
-          getUnwindablePaths(value, newPath),
-        );
+        getUnwindablePaths(value, newPath, unwindablePaths);
       } else if (Array.isArray(value)) {
-        unwindablePaths.push(newPath);
-        unwindablePaths = unwindablePaths.concat(
-          (value as Array<any>)
-            .map((arrObj) => getUnwindablePaths(arrObj, newPath))
-            .reduce(flattenReducer, [])
-            .filter((item, index, arr) => arr.indexOf(item) !== index),
-        );
+        unwindablePaths.add(newPath);
+        for (const arrObj of value) {
+          if (typeof arrObj === 'object' && arrObj !== null) {
+            getUnwindablePaths(arrObj, newPath, unwindablePaths);
+          }
+        }
       }
 
       return unwindablePaths;
     },
-    [],
+    unwindablePaths,
   );
 }
 
@@ -83,7 +81,7 @@ export default function unwind<
       ? [opts.paths]
       : undefined;
   return (dataRow: I) =>
-    (paths || getUnwindablePaths(dataRow)).reduce(unwindReducer, [
+    (paths || Array.from(getUnwindablePaths(dataRow))).reduce(unwindReducer, [
       dataRow,
     ]) as unknown as Array<O>;
 }
