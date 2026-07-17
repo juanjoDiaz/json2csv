@@ -23,7 +23,11 @@ export default function stringQuoteOnlyIfNecessaryFormatter(
   const stringFormatter = defaulStringFormatter({ quote, escapedQuote });
 
   return (value) => {
-    if ([quote, separator, eol].some((char) => value.includes(char))) {
+    if (
+      value.includes(quote) ||
+      value.includes(separator) ||
+      value.includes(eol)
+    ) {
       return stringFormatter(value);
     }
 
