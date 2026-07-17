@@ -66,16 +66,12 @@ function getProp(obj, path, defaultValue) {
   return getPropByPath(obj, castPath(path, obj), defaultValue);
 }
 function flattenReducer(acc, arr) {
-  try {
-    if (Array.isArray(arr)) {
-      acc.push(...arr);
-    } else {
-      acc.push(arr);
-    }
-    return acc;
-  } catch {
-    return acc.concat(arr);
+  if (Array.isArray(arr)) {
+    for (const item of arr) acc.push(item);
+  } else {
+    acc.push(arr);
   }
+  return acc;
 }
 function fastJoin(arr, separator) {
   let isFirst = true;

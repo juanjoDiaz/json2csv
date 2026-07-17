@@ -209,16 +209,10 @@ export function unsetProp<T extends object>(obj: T, path: PropertyPath): T {
 }
 
 export function flattenReducer<T>(acc: Array<T>, arr: Array<T> | T): Array<T> {
-  try {
-    // This is faster but susceptible to `RangeError: Maximum call stack size exceeded`
-    if (Array.isArray(arr)) {
-      acc.push(...arr);
-    } else {
-      acc.push(arr);
-    }
-    return acc;
-  } catch {
-    // Fallback to a slower but safer option
-    return acc.concat(arr);
+  if (Array.isArray(arr)) {
+    for (const item of arr) acc.push(item);
+  } else {
+    acc.push(arr);
   }
+  return acc;
 }
