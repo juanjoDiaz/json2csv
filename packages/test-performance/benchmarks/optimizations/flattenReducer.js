@@ -9,6 +9,16 @@ function flattenWithLoops(data) {
   return flattened;
 }
 
+function spreadFlattenReducer(acc, arr) {
+  try {
+    if (Array.isArray(arr)) acc.push(...arr);
+    else acc.push(arr);
+    return acc;
+  } catch {
+    return acc.concat(arr);
+  }
+}
+
 for (const sampleSize of [10, 100, 1000, 10000]) {
   const data = Array.from({ length: sampleSize }, () => [
     'blue',
@@ -24,6 +34,10 @@ for (const sampleSize of [10, 100, 1000, 10000]) {
       {
         name: 'flattenReducer',
         run: () => data.reduce(flattenReducer, []),
+      },
+      {
+        name: 'legacy spread reducer',
+        run: () => data.reduce(spreadFlattenReducer, []),
       },
       {
         name: 'Array.flat',

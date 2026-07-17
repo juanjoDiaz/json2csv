@@ -24,15 +24,24 @@
   "main": "index.js",
   "scripts": {
     "build:dependencies": "npm run build -w @json2csv/formatters -w @json2csv/transforms -w @json2csv/plainjs",
-    "prebenchmark": "npm run build:dependencies",
-    "benchmark": "node benchmarks/index.js",
-    "flamegraph": "0x --output-dir flamegraphs/results --open flamegraphs/flamegraph.js",
     "lint": "biome check .",
-    "pretest": "npm run build:dependencies",
-    "test": "node benchmarks/index.js --validate-only"
+    "pretest:node": "npm run build:dependencies",
+    "test:node": "node benchmarks/index.js --validate-only",
+    "pretest:browser": "npm run build:dependencies",
+    "test:browser": "node benchmarks/browser.js --validate-only",
+    "pretest:all": "npm run build:dependencies",
+    "test:all": "node benchmarks/all.js --validate-only",
+    "prebenchmark:node": "npm run build:dependencies",
+    "benchmark:node": "node benchmarks/index.js",
+    "prebenchmark:browser": "npm run build:dependencies",
+    "benchmark:browser": "node benchmarks/browser.js",
+    "prebenchmark:all": "npm run build:dependencies",
+    "benchmark:all": "node benchmarks/all.js",
+    "flamegraph": "0x --output-dir flamegraphs/results --open flamegraphs/flamegraph.js"
   },
   "devDependencies": {
     "0x": "^6.0.0",
-    "benchmark": "^2.1.4"
+    "benchmark": "^2.1.4",
+    "playwright": "^1.61.1"
   }
 }

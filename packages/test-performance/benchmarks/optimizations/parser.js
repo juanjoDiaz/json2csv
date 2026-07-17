@@ -1,4 +1,5 @@
 import { Parser } from '@json2csv/plainjs';
+import { getProp } from '@json2csv/plainjs/utils.js';
 import { unwind } from '@json2csv/transforms';
 import runSuite from '../runSuite.js';
 
@@ -32,6 +33,12 @@ await runSuite({
 const nestedRows = flatRows.map((row) => ({ nested: row }));
 const nestedFields = fields.map((field) => `nested.${field}`);
 const stringPathParser = new Parser({ fields: nestedFields });
+const reparsedPathParser = new Parser({
+  fields: nestedFields.map((field) => ({
+    label: field,
+    value: (row) => getProp(row, field),
+  })),
+});
 const compiledGetterParser = new Parser({
   fields: fields.map((field) => ({
     label: `nested.${field}`,
@@ -45,8 +52,12 @@ await runSuite({
   expected: expectedNestedCsv,
   benchmarks: [
     {
-      name: 'string paths',
+      name: 'cached string paths',
       run: () => stringPathParser.parse(nestedRows),
+    },
+    {
+      name: 'legacy reparsed paths',
+      run: () => reparsedPathParser.parse(nestedRows),
     },
     {
       name: 'precompiled getters',
@@ -73,6 +84,14 @@ const explicitUnwindParser = new Parser({
   fields: unwindFields,
   transforms: [unwind({ paths: ['items', 'items.tags'] })],
 });
+const repeatedUnwindParser = new Parser({
+  fields: unwindFields,
+  transforms: [
+    unwind({
+      paths: ['items', ...Array.from({ length: 99 }, () => 'items.tags')],
+    }),
+  ],
+});
 const expectedUnwindCsv = explicitUnwindParser.parse(nestedArrayData);
 
 await runSuite({
@@ -82,6 +101,10 @@ await runSuite({
     {
       name: 'automatic paths',
       run: () => automaticUnwindParser.parse(nestedArrayData),
+    },
+    {
+      name: 'legacy repeated paths',
+      run: () => repeatedUnwindParser.parse(nestedArrayData),
     },
     {
       name: 'explicit deduplicated paths',
