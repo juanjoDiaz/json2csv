@@ -23,10 +23,13 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "benchmark": "cd benchmarks && node",
+    "build:dependencies": "npm run build -w @json2csv/formatters -w @json2csv/transforms -w @json2csv/plainjs",
+    "prebenchmark": "npm run build:dependencies",
+    "benchmark": "node benchmarks/index.js",
     "flamegraph": "0x --output-dir flamegraphs/results --open flamegraphs/flamegraph.js",
     "lint": "biome check .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "npm run build:dependencies",
+    "test": "node benchmarks/index.js --validate-only"
   },
   "devDependencies": {
     "0x": "^6.0.0",

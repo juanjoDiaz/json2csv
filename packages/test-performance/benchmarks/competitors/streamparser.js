@@ -19,7 +19,6 @@ suite
     fn: (deferred) => {
       const json2csvParser = new StreamParser();
       json2csvParser.onError = (err) => {
-        // biome-ignore lint/suspicious/noConsole: Print error for debugging
         console.log(err);
         deferred.reject(err);
       };
@@ -37,7 +36,6 @@ suite
         },
       });
       json2csvParserWithoutScaping.onError = (err) => {
-        // biome-ignore lint/suspicious/noConsole: Print error for debugging
         console.log(err);
         deferred.reject(err);
       };
@@ -62,9 +60,8 @@ suite
   //     json2csv2.json2csv(data, () => deferred.resolve());
   //   }
   // })
-  .on('cycle', (_event) => {})
+  .on('cycle', (event) => console.log(String(event.target)))
   .on('complete', () =>
-    // biome-ignore lint/suspicious/noConsole: Print error for debugging
     console.log(`Fastest is ${suite.filter('fastest').map('name')} \n`),
   )
   .on('error', console.error)

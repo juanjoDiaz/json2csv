@@ -26,6 +26,5 @@ try {
     });
   });
 } catch (err) {
-  // biome-ignore lint/suspicious/noConsole: Print error for debugging
   console.error(err);
 }

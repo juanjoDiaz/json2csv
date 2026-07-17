@@ -1,4 +1,4 @@
-import stringFormatter from '@json2csv/formatters/string';
+import stringFormatter from '@json2csv/formatters/string.js';
 import { Parser, StreamParser } from '@json2csv/plainjs';
 import { Parser as LegacyParser } from 'json2csv';
 

@@ -1,16 +1,26 @@
-import { fastJoin } from '@json2csv/plainjs/utils';
-import Benchmark from 'benchmark';
+import { fastJoin } from '@json2csv/plainjs/utils.js';
+import runSuite from '../runSuite.js';
 
-function test(sampleSize) {
-  const data = Array(sampleSize).fill((() => 'blue')());
-  const suite = new Benchmark.Suite();
-  suite
-    .add(`fastJoin(${sampleSize})`, () => fastJoin(data, ', '))
-    .add(`join(${sampleSize})`, () => data.join(', '))
-    .on('cycle', (_event) => {})
-    .on('complete', () => {})
-    .on('error', console.error)
-    .run();
+for (const sampleSize of [10, 100, 1000, 10000]) {
+  const data = Array.from({ length: sampleSize }, (_, index) => {
+    if (index % 29 === 0) return undefined;
+    if (index % 17 === 0) return null;
+    return 'blue';
+  });
+  const expected = data.join(', ');
+
+  await runSuite({
+    name: `Joining ${sampleSize} cells`,
+    expected,
+    benchmarks: [
+      {
+        name: 'fastJoin',
+        run: () => fastJoin(data, ', '),
+      },
+      {
+        name: 'Array.join',
+        run: () => data.join(', '),
+      },
+    ],
+  });
 }
-
-[10, 100, 1000, 10000].forEach(test);

@@ -39,7 +39,9 @@ suite
       json2csv2.json2csv(data, () => deferred.resolve());
     },
   })
-  .on('cycle', (_event) => {})
-  .on('complete', () => {})
+  .on('cycle', (event) => console.log(String(event.target)))
+  .on('complete', () =>
+    console.log(`Fastest is ${suite.filter('fastest').map('name')}\n`),
+  )
   .on('error', console.error)
   .run();
