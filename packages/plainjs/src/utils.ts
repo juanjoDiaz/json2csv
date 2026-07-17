@@ -40,12 +40,14 @@ type GetFieldType<T, P> = P extends `${infer Left}.${infer Right}`
       : IndexedFieldWithPossiblyUndefined<T, P>;
 
 type PropertyName = string | number | symbol;
+type PropertyPath = ReadonlyArray<PropertyName>;
 
 const reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
 const reIsPlainProp = /^\w*$/;
 const rePropName =
   /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
 const reEscapeChar = /\\(\\)?/g;
+const emptyObject = Object.create(null);
 
 /**
  * Checks if `value` is a property name and not a property path.
@@ -104,22 +106,53 @@ function stringToPath(string: string): string[] {
  * @param {Object} [object] The object to query keys on.
  * @returns {Array} Returns the cast property path array.
  */
-function castPath<TKey extends keyof TObject, TObject extends object>(
-  path: TKey,
-  obj: TObject,
-): [TKey];
-function castPath<TPath extends string, TObject>(
-  path: TPath,
-  obj: TObject,
-): Exclude<GetFieldType<TObject, TPath>, null | undefined>;
-function castPath<TObject extends object>(
-  value: string,
-  object: TObject,
-): string[] {
+function castPath(
+  value: PropertyName | PropertyPath,
+  object: object,
+): PropertyPath {
   if (Array.isArray(value)) {
     return value;
   }
-  return isKey(value, object) ? [value] : stringToPath(String(value));
+  const propertyName = value as PropertyName;
+  return isKey(propertyName, object)
+    ? [propertyName]
+    : stringToPath(String(propertyName));
+}
+
+function getPropByPath<T>(
+  obj: any,
+  path: PropertyPath,
+  defaultValue?: T,
+): T | undefined {
+  let currentValue = obj;
+  for (const key of path) {
+    currentValue = currentValue?.[key];
+    if (currentValue === undefined) return defaultValue;
+  }
+  return currentValue;
+}
+
+export function getPropGetter<TObject extends object>(
+  path: string,
+  defaultValue?: unknown,
+): (obj: TObject) => unknown {
+  const processedPath = castPath(path, emptyObject);
+
+  if (processedPath.length === 1 && processedPath[0] === path) {
+    return (obj) => {
+      const value = (obj as any)[path];
+      return value === undefined ? defaultValue : value;
+    };
+  }
+
+  return (obj) => {
+    if (path in obj) {
+      const value = (obj as any)[path];
+      return value === undefined ? defaultValue : value;
+    }
+
+    return getPropByPath(obj, processedPath, defaultValue);
+  };
 }
 
 export function getProp<TObject extends object, TKey extends keyof TObject>(
@@ -150,13 +183,7 @@ export function getProp<T>(
     return value === undefined ? defaultValue : value;
   }
 
-  const processedPath = Array.isArray(path) ? path : castPath(path, obj);
-  let currentValue = obj;
-  for (const key of processedPath) {
-    currentValue = currentValue?.[key];
-    if (currentValue === undefined) return defaultValue;
-  }
-  return currentValue;
+  return getPropByPath(obj, castPath(path, obj), defaultValue);
 }
 
 export function flattenReducer<T>(acc: Array<T>, arr: Array<T> | T): Array<T> {

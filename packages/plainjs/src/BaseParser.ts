@@ -7,7 +7,7 @@ import {
   symbol as symbolFormatterCtor,
 } from '@json2csv/formatters';
 import type Transform from './types/Transform.js';
-import { fastJoin, flattenReducer, getProp } from './utils.js';
+import { fastJoin, flattenReducer, getPropGetter } from './utils.js';
 
 export interface FieldValueGetterInfo<FT> {
   label: string;
@@ -161,7 +161,7 @@ export default abstract class JSON2CSVBase<
       if (typeof fieldInfo === 'string') {
         return {
           label: fieldInfo,
-          value: (row) => getProp(row, fieldInfo, globalDefaultValue),
+          value: getPropGetter<T>(fieldInfo, globalDefaultValue),
         };
       }
 
@@ -173,7 +173,7 @@ export default abstract class JSON2CSVBase<
           const fieldPath: string = fieldInfo.value;
           return {
             label: fieldInfo.label || fieldInfo.value,
-            value: (row) => getProp(row, fieldPath, defaultValue),
+            value: getPropGetter<T>(fieldPath, defaultValue),
           };
         }
 

@@ -6,7 +6,7 @@ import {
   string as stringFormatterCtor,
   symbol as symbolFormatterCtor
 } from "../formatters/index.js";
-import { fastJoin, flattenReducer, getProp } from "./utils.js";
+import { fastJoin, flattenReducer, getPropGetter } from "./utils.js";
 var FormatterTypes = /* @__PURE__ */ ((FormatterTypes2) => {
   FormatterTypes2["header"] = "header";
   FormatterTypes2["undefined"] = "undefined";
@@ -78,7 +78,7 @@ var JSON2CSVBase = class {
       if (typeof fieldInfo === "string") {
         return {
           label: fieldInfo,
-          value: (row) => getProp(row, fieldInfo, globalDefaultValue)
+          value: getPropGetter(fieldInfo, globalDefaultValue)
         };
       }
       if (typeof fieldInfo === "object") {
@@ -87,7 +87,7 @@ var JSON2CSVBase = class {
           const fieldPath = fieldInfo.value;
           return {
             label: fieldInfo.label || fieldInfo.value,
-            value: (row) => getProp(row, fieldPath, defaultValue)
+            value: getPropGetter(fieldPath, defaultValue)
           };
         }
         if (typeof fieldInfo.value === "function") {

@@ -3,6 +3,7 @@ var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
 var reIsPlainProp = /^\w*$/;
 var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
 var reEscapeChar = /\\(\\)?/g;
+var emptyObject = /* @__PURE__ */ Object.create(null);
 function isKey(value, object) {
   if (Array.isArray(value)) {
     return false;
@@ -30,20 +31,39 @@ function castPath(value, object) {
   if (Array.isArray(value)) {
     return value;
   }
-  return isKey(value, object) ? [value] : stringToPath(String(value));
+  const propertyName = value;
+  return isKey(propertyName, object) ? [propertyName] : stringToPath(String(propertyName));
+}
+function getPropByPath(obj, path, defaultValue) {
+  let currentValue = obj;
+  for (const key of path) {
+    currentValue = currentValue == null ? void 0 : currentValue[key];
+    if (currentValue === void 0) return defaultValue;
+  }
+  return currentValue;
+}
+function getPropGetter(path, defaultValue) {
+  const processedPath = castPath(path, emptyObject);
+  if (processedPath.length === 1 && processedPath[0] === path) {
+    return (obj) => {
+      const value = obj[path];
+      return value === void 0 ? defaultValue : value;
+    };
+  }
+  return (obj) => {
+    if (path in obj) {
+      const value = obj[path];
+      return value === void 0 ? defaultValue : value;
+    }
+    return getPropByPath(obj, processedPath, defaultValue);
+  };
 }
 function getProp(obj, path, defaultValue) {
   if (path in obj) {
     const value = obj[path];
     return value === void 0 ? defaultValue : value;
   }
-  const processedPath = Array.isArray(path) ? path : castPath(path, obj);
-  let currentValue = obj;
-  for (const key of processedPath) {
-    currentValue = currentValue == null ? void 0 : currentValue[key];
-    if (currentValue === void 0) return defaultValue;
-  }
-  return currentValue;
+  return getPropByPath(obj, castPath(path, obj), defaultValue);
 }
 function flattenReducer(acc, arr) {
   try {
@@ -73,5 +93,6 @@ function fastJoin(arr, separator) {
 export {
   fastJoin,
   flattenReducer,
-  getProp
+  getProp,
+  getPropGetter
 };

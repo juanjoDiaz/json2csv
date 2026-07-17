@@ -301,6 +301,28 @@ describe('Parser', () => {
     expect(csv).toBe(csvFixtures.nested);
   });
 
+  it('should prefer exact field names over nested property selectors', async () => {
+    const parser = new Parser({
+      fields: ['nested.value', { label: 'Bracket', value: 'nested["value"]' }],
+    });
+    const csv = parser.parse([
+      {
+        'nested.value': 'literal dot',
+        'nested["value"]': 'literal bracket',
+        nested: { value: 'nested' },
+      },
+      { nested: { value: 'nested' } },
+    ]);
+
+    expect(csv).toBe(
+      [
+        '"nested.value","Bracket"',
+        '"literal dot","literal bracket"',
+        '"nested","nested"',
+      ].join('\n'),
+    );
+  });
+
   it('field.value function should receive a valid field object', async () => {
     let receivedField: any;
     const opts: ParserOptions<{ value1: any }> = {
