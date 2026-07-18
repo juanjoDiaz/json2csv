@@ -59,8 +59,8 @@ var JSON2CSVParser = class extends JSON2CSVBase {
    */
   processData(data) {
     return fastJoin(
-      data.map((row) => this.processRow(row)).filter((row) => row),
-      // Filter empty rows
+      data.map((row) => this.processRow(row)).filter((row) => row !== void 0),
+      // Filter skipped rows
       this.opts.eol
     );
   }

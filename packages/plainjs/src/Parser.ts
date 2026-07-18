@@ -81,7 +81,9 @@ export default class JSON2CSVParser<
    */
   processData(data: Array<T>): string {
     return fastJoin(
-      data.map((row) => this.processRow(row)).filter((row) => row), // Filter empty rows
+      data
+        .map((row) => this.processRow(row))
+        .filter((row) => row !== undefined), // Filter skipped rows
       this.opts.eol,
     );
   }

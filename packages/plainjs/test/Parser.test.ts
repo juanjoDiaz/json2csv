@@ -527,6 +527,34 @@ describe('Parser', () => {
     expect(csv).toBe(csvFixtures.emptyRow);
   });
 
+  it('should include a single-field empty row when options.includeEmptyRows is true', async () => {
+    // With exactly one field, an included empty row's joined line is the
+    // empty string itself (no delimiter to keep it non-empty). A naive
+    // `.filter((row) => row)` treats that falsy '' the same as a skipped
+    // (undefined) row and drops it, contradicting includeEmptyRows: true.
+    const opts: ParserOptions = {
+      fields: ['value'],
+      includeEmptyRows: true,
+    };
+
+    const parser = new Parser(opts);
+    const csv = await parseInput(parser, jsonFixtures.singleFieldEmptyRow());
+
+    expect(csv).toBe(csvFixtures.singleFieldEmptyRowIncluded);
+  });
+
+  it('should not include a single-field empty row when options.includeEmptyRows is false', async () => {
+    const opts: ParserOptions = {
+      fields: ['value'],
+      includeEmptyRows: false,
+    };
+
+    const parser = new Parser(opts);
+    const csv = await parseInput(parser, jsonFixtures.singleFieldEmptyRow());
+
+    expect(csv).toBe(csvFixtures.singleFieldEmptyRowNotIncluded);
+  });
+
   it('should not include empty rows when options.includeEmptyRows is false', async () => {
     const opts: ParserOptions = {
       includeEmptyRows: false,
