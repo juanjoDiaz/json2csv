@@ -122,6 +122,24 @@ function castPath<TObject extends object>(
   return isKey(value, object) ? [value] : stringToPath(String(value));
 }
 
+// Same paths (e.g. unwind()'s configured paths) are looked up repeatedly
+// across every row, so the parsed segments are cached to avoid re-running
+// the isKey/stringToPath regexes on each call. Bounded like lodash's own
+// memoizeCapped, since paths originate from caller config or the dataset's
+// own property names, not unbounded attacker input.
+const MAX_PATH_CACHE_SIZE = 500;
+const pathCache = new Map<PropertyName, PropertyName[]>();
+
+function castPathCached(value: PropertyName, object: any): PropertyName[] {
+  const cached = pathCache.get(value);
+  if (cached !== undefined) return cached;
+
+  const processedPath: PropertyName[] = castPath(String(value), object);
+  if (pathCache.size >= MAX_PATH_CACHE_SIZE) pathCache.clear();
+  pathCache.set(value, processedPath);
+  return processedPath;
+}
+
 export function getProp<TObject extends object, TKey extends keyof TObject>(
   obj: TObject,
   path: TKey,
@@ -150,15 +168,13 @@ export function getProp<T>(
     return value === undefined ? defaultValue : value;
   }
 
-  const processedPath = Array.isArray(path) ? path : castPath(path, obj);
+  const processedPath = Array.isArray(path) ? path : castPathCached(path, obj);
   let currentValue = obj;
   for (const key of processedPath) {
     currentValue = currentValue?.[key];
     if (currentValue === undefined) return defaultValue;
   }
   return currentValue;
-  // const value = obj[path];
-  // return value === undefined ? defaultValue : value;
 }
 
 type PropertyPath = string | ReadonlyArray<string>;

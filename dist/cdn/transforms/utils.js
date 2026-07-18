@@ -32,12 +32,22 @@ function castPath(value, object) {
   }
   return isKey(value, object) ? [value] : stringToPath(String(value));
 }
+var MAX_PATH_CACHE_SIZE = 500;
+var pathCache = /* @__PURE__ */ new Map();
+function castPathCached(value, object) {
+  const cached = pathCache.get(value);
+  if (cached !== void 0) return cached;
+  const processedPath = castPath(String(value), object);
+  if (pathCache.size >= MAX_PATH_CACHE_SIZE) pathCache.clear();
+  pathCache.set(value, processedPath);
+  return processedPath;
+}
 function getProp(obj, path, defaultValue) {
   if (path in obj) {
     const value = obj[path];
     return value === void 0 ? defaultValue : value;
   }
-  const processedPath = Array.isArray(path) ? path : castPath(path, obj);
+  const processedPath = Array.isArray(path) ? path : castPathCached(path, obj);
   let currentValue = obj;
   for (const key of processedPath) {
     currentValue = currentValue == null ? void 0 : currentValue[key];
