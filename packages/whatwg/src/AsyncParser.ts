@@ -48,12 +48,17 @@ export default class JSON2CSVNodeAsyncParser<
       });
     } else if (Array.isArray(data)) {
       this.asyncOpts.objectMode = true;
+      const items = data as Array<TRaw>;
+      let index = 0;
       data = new ReadableStream({
-        start(controller) {
-          (data as Array<TRaw>)
-            .filter((item) => item !== null)
-            // biome-ignore lint/suspicious/useIterableCallbackReturn: controller.enqueue() returns void
-            .forEach((item) => controller.enqueue(item));
+        pull(controller) {
+          while (index < items.length) {
+            const item = items[index++];
+            if (item !== null) {
+              controller.enqueue(item);
+              return;
+            }
+          }
           controller.close();
         },
       });

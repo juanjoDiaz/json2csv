@@ -199,6 +199,37 @@ describe('WHATWG Async Parser', () => {
     expect(csv).toBe(csvFixtures.emptyObject);
   });
 
+  it('should not drain the whole input array before the consumer reads', async () => {
+    const opts: ParserOptions = {
+      fields: ['carModel', 'price', 'color'],
+    };
+    const itemCount = 5000;
+    let highestIndexAccessed = -1;
+    const source = Array.from({ length: itemCount }, (_, i) => ({
+      carModel: 'Audi',
+      price: i,
+      color: 'blue',
+    }));
+    const trackedSource = new Proxy(source, {
+      get(target, prop, receiver) {
+        if (typeof prop === 'string' && /^\d+$/.test(prop)) {
+          highestIndexAccessed = Math.max(highestIndexAccessed, Number(prop));
+        }
+        return Reflect.get(target, prop, receiver);
+      },
+    });
+
+    const parser = new Parser(opts);
+    // Intentionally not reading the output: a lazy (pull-based) source should
+    // stop producing once backpressure kicks in, instead of enqueueing
+    // every item from the array upfront.
+    parser.parse(trackedSource);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(highestIndexAccessed).toBeGreaterThanOrEqual(0);
+    expect(highestIndexAccessed).toBeLessThan(itemCount / 2);
+  });
+
   it('should handle deep JSON objects', async () => {
     const parser = new Parser();
     const csv = await parseInput(parser, jsonFixtures.deepJSON());

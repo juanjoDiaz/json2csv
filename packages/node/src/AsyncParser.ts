@@ -2,6 +2,12 @@ import { Readable, type TransformOptions } from 'node:stream';
 import type { ParserOptions, StreamParserOptions } from '@json2csv/plainjs';
 import JSON2CSVNodeTransform from './Transform.js';
 
+function* excludeNulls<TRaw>(items: Array<TRaw>): Generator<TRaw> {
+  for (const item of items) {
+    if (item !== null) yield item;
+  }
+}
+
 export default class JSON2CSVNodeAsyncParser<
   TRaw extends object,
   T extends object,
@@ -36,14 +42,10 @@ export default class JSON2CSVNodeAsyncParser<
       | ReadableStream<TRaw>
       | Readable,
   ) {
-    // if (Array.isArray(data)) {
-    //   data = Readable.from(data.filter((item) => item !== null));
-    // } else if (isIterable(data) || isAsyncIterable(data)) {
-    //   data = Readable.from(data, { objectMode: false });
     if (typeof data === 'string' || ArrayBuffer.isView(data)) {
       data = Readable.from(data as Iterable<number>, { objectMode: false });
     } else if (Array.isArray(data)) {
-      data = Readable.from(data.filter((item) => item !== null));
+      data = Readable.from(excludeNulls(data));
     } else if (typeof data === 'object' && !(data instanceof Readable)) {
       data = Readable.from([data]);
     }

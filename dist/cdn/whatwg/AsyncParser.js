@@ -23,9 +23,17 @@ var JSON2CSVNodeAsyncParser = class {
       });
     } else if (Array.isArray(data)) {
       this.asyncOpts.objectMode = true;
+      const items = data;
+      let index = 0;
       data = new ReadableStream({
-        start(controller) {
-          data.filter((item) => item !== null).forEach((item) => controller.enqueue(item));
+        pull(controller) {
+          while (index < items.length) {
+            const item = items[index++];
+            if (item !== null) {
+              controller.enqueue(item);
+              return;
+            }
+          }
           controller.close();
         }
       });
