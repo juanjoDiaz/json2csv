@@ -194,6 +194,31 @@ describe('CLI', () => {
     expect(csv).toEqual(csvFixtures.defaultStream);
   });
 
+  it('should handle an input path containing a "#" character', async () => {
+    // A naive `file://${path}` URL construction truncates everything after
+    // "#" (parsed as a URL fragment), so the file was never found.
+    const opts = '--fields a,b --no-streaming';
+
+    const { stdout: csv } = await execAsync(
+      `${cli} -i "${getFixturePath('/json/file#hash.json')}" ${opts}`,
+    );
+
+    expect(csv).toEqual(csvFixtures.pathWithHash);
+  });
+
+  it('should handle an input path containing a literal "%20" substring', async () => {
+    // A naive `file://${path}` URL gets percent-decoded on resolution, so a
+    // filename literally containing "%20" resolved to a different, wrong
+    // path with a real space instead.
+    const opts = '--fields a,b --no-streaming';
+
+    const { stdout: csv } = await execAsync(
+      `${cli} -i "${getFixturePath('/json/file%20name.json')}" ${opts}`,
+    );
+
+    expect(csv).toEqual(csvFixtures.pathWithPercent20);
+  });
+
   it('should error on invalid fields config file path', async () => {
     const opts = `--config "${getFixturePath('/fields2/fieldNames.json')}"`;
 

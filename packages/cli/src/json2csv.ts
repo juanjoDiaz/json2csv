@@ -11,6 +11,7 @@ import { createRequire } from 'node:module';
 import os from 'node:os';
 import { extname, isAbsolute, join } from 'node:path';
 import type { Readable, Writable } from 'node:stream';
+import { pathToFileURL } from 'node:url';
 
 import {
   stringExcel as stringExcelFormatter,
@@ -176,7 +177,7 @@ async function getInputJSON<TRaw>(inputPath: string): Promise<TRaw> {
     extname(inputPath).toLowerCase() === '.json'
       ? { with: { type: 'json' } }
       : undefined;
-  const { default: json } = await import(`file://${inputPath}`, assert as any); // TODO remove castonce @types/node can be updated which requires updating typescript to 5.2+
+  const { default: json } = await import(pathToFileURL(inputPath).href, assert);
   return json;
 }
 
