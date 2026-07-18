@@ -703,6 +703,26 @@ describe('CLI', () => {
     expect(csv).toEqual(csvFixtures.prettyprintWithoutRows);
   });
 
+  it('should not treat a real newline inside a quoted value as a row boundary', async () => {
+    const opts = '--pretty';
+
+    const { stdout: csv } = await execAsync(
+      `${cli} -i "${getFixturePath('/json/prettyPrintQuotedNewline.json')}" ${opts}`,
+    );
+
+    expect(csv).toEqual(csvFixtures.prettyPrintQuotedNewline);
+  });
+
+  it('should not treat a delimiter inside a quoted value as a column boundary', async () => {
+    const opts = '--pretty';
+
+    const { stdout: csv } = await execAsync(
+      `${cli} -i "${getFixturePath('/json/prettyPrintQuotedDelimiter.json')}" ${opts}`,
+    );
+
+    expect(csv).toEqual(csvFixtures.prettyPrintQuotedDelimiter);
+  });
+
   // Preprocessing
 
   it('should unwind all unwindable fields using the unwind transform', async () => {
