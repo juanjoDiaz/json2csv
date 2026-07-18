@@ -925,6 +925,20 @@ describe('Node Transform', () => {
     expect(csv).toBe(csvFixtures.numberFixedDecimalsAndCustomSeparator);
   });
 
+  it("should format with zero decimals when 'decimals' is 0", async () => {
+    // `decimals: 0` is falsy, so a naive `if (decimals)` check silently
+    // skipped toFixed(0) and left the raw value unrounded.
+    const opts: ParserOptions = {
+      formatters: {
+        number: numberFormatter({ decimals: 0 }),
+      },
+    };
+    const parser = new Parser(opts);
+    const csv = await parseInput(parser, jsonFixtures.numberFormatter());
+
+    expect(csv).toBe(csvFixtures.numberZeroDecimals);
+  });
+
   // Symbol
 
   it('should format Symbol by its name', async () => {
@@ -981,6 +995,37 @@ describe('Node Transform', () => {
     const csv = await parseInput(parser, jsonFixtures.escapeCustomQuotes());
 
     expect(csv).toBe(csvFixtures.escapeCustomQuotes);
+  });
+
+  it('should treat a regex-special quote character as a literal string', async () => {
+    // "." is "any character" in a regex; a previous implementation built
+    // `new RegExp(quote, 'g')`, which corrupted every character in the value.
+    const opts: ParserOptions = {
+      fields: ['text'],
+      formatters: {
+        string: stringFormatter({ quote: '.', escapedQuote: '..' }),
+      },
+    };
+
+    const parser = new Parser(opts);
+    const csv = await parseInput(parser, jsonFixtures.regexSpecialQuoteChar());
+
+    expect(csv).toBe(csvFixtures.regexSpecialQuoteChar);
+  });
+
+  it('should not throw for a quote that would be an invalid regex pattern', async () => {
+    // An unbalanced "(" used to throw a SyntaxError from `new RegExp(...)`.
+    const opts: ParserOptions = {
+      fields: ['text'],
+      formatters: {
+        string: stringFormatter({ quote: '(', escapedQuote: '((' }),
+      },
+    };
+
+    const parser = new Parser(opts);
+    const csv = await parseInput(parser, jsonFixtures.invalidRegexQuoteChar());
+
+    expect(csv).toBe(csvFixtures.invalidRegexQuoteChar);
   });
 
   it("should not escape '\"' when setting 'quote' set to something else", async () => {

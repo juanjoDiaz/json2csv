@@ -10,14 +10,14 @@ export default function numberFormatter<T extends number>(
 ): Formatter<T> {
   const { separator, decimals } = opts;
   if (separator) {
-    if (decimals) {
+    if (decimals !== undefined) {
       return (value) => value.toFixed(decimals).replace('.', separator);
     }
 
     return (value) => `${value}`.replace('.', separator);
   }
 
-  if (decimals) {
+  if (decimals !== undefined) {
     return (value) => value.toFixed(decimals);
   }
 

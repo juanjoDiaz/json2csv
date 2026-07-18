@@ -2,12 +2,12 @@
 function numberFormatter(opts = {}) {
   const { separator, decimals } = opts;
   if (separator) {
-    if (decimals) {
+    if (decimals !== void 0) {
       return (value) => value.toFixed(decimals).replace(".", separator);
     }
     return (value) => `${value}`.replace(".", separator);
   }
-  if (decimals) {
+  if (decimals !== void 0) {
     return (value) => value.toFixed(decimals);
   }
   return (value) => `${value}`;

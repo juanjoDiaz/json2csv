@@ -18,10 +18,9 @@ export default function stringFormatter(
     return (value) => value;
   }
 
-  const quoteRegExp = new RegExp(quote, 'g');
   return (value) => {
     if (value.includes(quote)) {
-      value = value.replace(quoteRegExp, escapedQuote);
+      value = value.replaceAll(quote, escapedQuote);
     }
 
     return `${quote}${value}${quote}`;

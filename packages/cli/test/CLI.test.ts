@@ -792,6 +792,29 @@ describe('CLI', () => {
     expect(csv).toEqual(csvFixtures.escapeCustomQuotes);
   });
 
+  it('should treat a regex-special quote character as a literal string', async () => {
+    // "." is "any character" in a regex; a previous implementation built
+    // `new RegExp(quote, 'g')`, which corrupted every character in the value.
+    const opts = '--fields text --quote "." --escaped-quote ".."';
+
+    const { stdout: csv } = await execAsync(
+      `${cli} -i "${getFixturePath('/json/regexSpecialQuoteChar.json')}" ${opts}`,
+    );
+
+    expect(csv).toEqual(csvFixtures.regexSpecialQuoteChar);
+  });
+
+  it('should not throw for a quote that would be an invalid regex pattern', async () => {
+    // An unbalanced "(" used to throw a SyntaxError from `new RegExp(...)`.
+    const opts = '--fields text --quote "(" --escaped-quote "(("';
+
+    const { stdout: csv } = await execAsync(
+      `${cli} -i "${getFixturePath('/json/invalidRegexQuoteChar.json')}" ${opts}`,
+    );
+
+    expect(csv).toEqual(csvFixtures.invalidRegexQuoteChar);
+  });
+
   it("should not escape '\"' when setting 'quote' set to something else", async () => {
     const opts = '--quote "\'"';
 
