@@ -14,6 +14,7 @@ var JSON2CSVNodeAsyncParser = class {
    * @returns {Stream} A stream producing the CSV formated data as a string
    */
   parse(data) {
+    let asyncOpts = this.asyncOpts;
     if (typeof data === "string" || ArrayBuffer.isView(data)) {
       data = new ReadableStream({
         start(controller) {
@@ -22,7 +23,7 @@ var JSON2CSVNodeAsyncParser = class {
         }
       });
     } else if (Array.isArray(data)) {
-      this.asyncOpts.objectMode = true;
+      asyncOpts = { ...this.asyncOpts, objectMode: true };
       const items = data;
       let index = 0;
       data = new ReadableStream({
@@ -38,7 +39,7 @@ var JSON2CSVNodeAsyncParser = class {
         }
       });
     } else if (typeof data === "object" && !(data instanceof ReadableStream)) {
-      this.asyncOpts.objectMode = true;
+      asyncOpts = { ...this.asyncOpts, objectMode: true };
       data = new ReadableStream({
         start(controller) {
           controller.enqueue(data);
@@ -53,7 +54,7 @@ var JSON2CSVNodeAsyncParser = class {
     }
     const transform = new JSON2CSVWHATWGTransformStream(
       this.opts,
-      this.asyncOpts,
+      asyncOpts,
       this.writableStrategy,
       this.readableStrategy
     );

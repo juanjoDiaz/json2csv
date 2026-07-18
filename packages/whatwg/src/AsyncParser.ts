@@ -39,6 +39,7 @@ export default class JSON2CSVNodeAsyncParser<
       | TRaw
       | ReadableStream<TRaw>,
   ): AwaitableReadableStream<string> {
+    let asyncOpts = this.asyncOpts;
     if (typeof data === 'string' || ArrayBuffer.isView(data)) {
       data = new ReadableStream({
         start(controller) {
@@ -47,7 +48,7 @@ export default class JSON2CSVNodeAsyncParser<
         },
       });
     } else if (Array.isArray(data)) {
-      this.asyncOpts.objectMode = true;
+      asyncOpts = { ...this.asyncOpts, objectMode: true };
       const items = data as Array<TRaw>;
       let index = 0;
       data = new ReadableStream({
@@ -63,7 +64,7 @@ export default class JSON2CSVNodeAsyncParser<
         },
       });
     } else if (typeof data === 'object' && !(data instanceof ReadableStream)) {
-      this.asyncOpts.objectMode = true;
+      asyncOpts = { ...this.asyncOpts, objectMode: true };
       data = new ReadableStream({
         start(controller) {
           controller.enqueue(data as TRaw);
@@ -80,7 +81,7 @@ export default class JSON2CSVNodeAsyncParser<
 
     const transform = new JSON2CSVWHATWGTransformStream(
       this.opts,
-      this.asyncOpts,
+      asyncOpts,
       this.writableStrategy,
       this.readableStrategy,
     );

@@ -9,7 +9,11 @@ import { fixtures } from '@json2csv/test-helpers/fixtureLoader.ts';
 import type CarInfo from '@json2csv/test-helpers/fixtures/types/carInfo.ts';
 import { forceCrlfEol } from '@json2csv/test-helpers/utils.ts';
 import { flatten, unwind } from '@json2csv/transforms';
-import { AsyncParser as Parser, type ParserOptions } from '@json2csv/whatwg';
+import {
+  AsyncParser as Parser,
+  type ParserOptions,
+  type StreamParserOptions,
+} from '@json2csv/whatwg';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 let jsonFixtures: Record<string, (opts?: { objectMode: boolean }) => Readable>;
@@ -117,6 +121,18 @@ describe('WHATWG Async Parser', () => {
 
     expect(csv).toBe(csvFixtures.defaultStream);
     expect(opts).toEqual({});
+  });
+
+  it('should not leak objectMode into the passed asyncOpts nor into a later parse() call on the same instance', async () => {
+    const asyncOpts: StreamParserOptions = {};
+    const parser = new Parser({ fields: ['a'] }, asyncOpts);
+
+    const csv1 = await parseInput(parser, [{ a: 1 }, { a: 2 }]);
+    expect(csv1).toBe('"a"\n1\n2');
+    expect(asyncOpts).toEqual({});
+
+    const csv2 = await parseInput(parser, '[{"a":3},{"a":4}]');
+    expect(csv2).toBe('"a"\n3\n4');
   });
 
   it('should error if input data is empty and fields are not set', async () => {
