@@ -276,10 +276,25 @@ async function processStream<TRaw extends object, T extends object>(
   programConfig: OptionValues,
 ) {
   try {
+    // Commander pre-populates options that declare a coded default (e.g.
+    // delimiter, eol, header, streaming) even when the user never passed the
+    // corresponding flag. Merge with defaults lowest priority, a --config
+    // file next (so it can override a default), and explicitly-set CLI/env
+    // values always winning, regardless of the config file.
+    const defaultProgramConfig: Partial<OptionValues> = {};
+    const explicitProgramConfig: Partial<OptionValues> = {};
+    for (const [key, value] of Object.entries(programConfig)) {
+      if (program.getOptionValueSource(key) === 'default') {
+        defaultProgramConfig[key] = value;
+      } else {
+        explicitProgramConfig[key] = value;
+      }
+    }
     const config: Options = Object.assign(
       {},
+      defaultProgramConfig,
       programConfig.config ? await getInputJSON(programConfig.config) : {},
-      programConfig,
+      explicitProgramConfig,
     ) as Options;
 
     const transforms: any = [];

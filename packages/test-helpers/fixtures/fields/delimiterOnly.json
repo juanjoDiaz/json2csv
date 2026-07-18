@@ -1,0 +1,4 @@
+{
+  "delimiter": ";",
+  "fields": ["carModel", "price"]
+}

@@ -259,6 +259,19 @@ describe('CLI', () => {
     expect(csv).toEqual(csvFixtures.fieldNames);
   });
 
+  it('should respect a config-file option that has a CLI default, when the flag is not passed', async () => {
+    // Commander pre-populates options with a coded default (like delimiter)
+    // even when the flag isn't passed, which used to let that default
+    // silently clobber the same option coming from --config.
+    const opts = `--config "${getFixturePath('/fields/delimiterOnly.json')}"`;
+
+    const { stdout: csv } = await execAsync(
+      `${cli} -i "${getFixturePath('/json/default.json')}" ${opts}`,
+    );
+
+    expect(csv).toEqual(csvFixtures.configDelimiterOnly);
+  });
+
   it('should support nested properties selectors', async () => {
     const opts = `--config "${getFixturePath('/fields/nested.json')}"`;
 
