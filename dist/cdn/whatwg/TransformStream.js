@@ -5,21 +5,33 @@ import {
 var JSON2CSVWHATWGTransformer = class extends StreamParser {
   constructor(opts = {}, asyncOpts = {}) {
     super(opts, asyncOpts);
+    // Rows produced while processing a single input chunk are coalesced into
+    // one enqueued chunk, instead of one enqueue() per CSV row.
+    this.outputBuffer = "";
   }
   onData(data) {
-    this.controller.enqueue(data);
+    this.outputBuffer += data;
   }
   onError(err) {
+    this.flushOutputBuffer();
     this.controller.error(err);
   }
   onEnd() {
+    this.flushOutputBuffer();
     this.controller.terminate();
   }
   start(controller) {
     this.controller = controller;
   }
+  flushOutputBuffer() {
+    if (!this.outputBuffer) return;
+    const data = this.outputBuffer;
+    this.outputBuffer = "";
+    this.controller.enqueue(data);
+  }
   transform(chunk) {
     this.tokenizer.write(chunk);
+    this.flushOutputBuffer();
   }
   flush() {
     this.end();

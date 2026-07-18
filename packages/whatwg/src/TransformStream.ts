@@ -9,6 +9,9 @@ class JSON2CSVWHATWGTransformer<TRaw extends object, T extends object>
   implements Transformer<TRaw, string>
 {
   private controller!: TransformStreamDefaultController<string>;
+  // Rows produced while processing a single input chunk are coalesced into
+  // one enqueued chunk, instead of one enqueue() per CSV row.
+  private outputBuffer = '';
 
   constructor(
     opts: ParserOptions<TRaw, T> = {},
@@ -18,14 +21,16 @@ class JSON2CSVWHATWGTransformer<TRaw extends object, T extends object>
   }
 
   override onData(data: string) {
-    this.controller.enqueue(data);
+    this.outputBuffer += data;
   }
 
   override onError(err: Error) {
+    this.flushOutputBuffer();
     this.controller.error(err);
   }
 
   override onEnd() {
+    this.flushOutputBuffer();
     this.controller.terminate();
   }
 
@@ -33,8 +38,16 @@ class JSON2CSVWHATWGTransformer<TRaw extends object, T extends object>
     this.controller = controller;
   }
 
+  private flushOutputBuffer() {
+    if (!this.outputBuffer) return;
+    const data = this.outputBuffer;
+    this.outputBuffer = '';
+    this.controller.enqueue(data);
+  }
+
   transform(chunk: TRaw) {
     this.tokenizer.write(chunk as any);
+    this.flushOutputBuffer();
   }
 
   flush() {

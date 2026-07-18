@@ -1,4 +1,4 @@
-import { type Readable, Writable } from 'node:stream';
+import { Readable, Writable } from 'node:stream';
 import {
   number as numberFormatter,
   stringExcel as stringExcelFormatter,
@@ -187,6 +187,44 @@ describe('Node Transform', () => {
     const csv = await parseInput(parser, jsonFixtures.arrayWithNull());
 
     expect(csv).toBe(csvFixtures.emptyObject);
+  });
+
+  it('should coalesce multiple rows from one input chunk into one output chunk', async () => {
+    const opts: ParserOptions = {
+      fields: ['a', 'b'],
+    };
+    const rowCount = 5000;
+    const rows = Array.from({ length: rowCount }, (_, i) => ({
+      a: i,
+      b: 'x'.repeat(20),
+    }));
+    const jsonText = JSON.stringify(rows);
+    // A handful of large reads (like a real file), not one chunk per row.
+    const readChunkSize = 65536;
+    function* chunked() {
+      for (let i = 0; i < jsonText.length; i += readChunkSize) {
+        yield jsonText.slice(i, i + readChunkSize);
+      }
+    }
+    const source = Readable.from(chunked(), { objectMode: false });
+
+    const parser = new Parser(opts);
+    let outputChunkCount = 0;
+    let csv = '';
+    await new Promise((resolve, reject) => {
+      source
+        .pipe(parser)
+        .on('data', (chunk) => {
+          outputChunkCount++;
+          csv += chunk.toString();
+        })
+        .on('end', resolve)
+        .on('error', reject);
+    });
+
+    expect(csv.split('\n')).toHaveLength(rowCount + 1); // + header
+    // Far fewer output chunks than rows: proves rows aren't pushed one at a time.
+    expect(outputChunkCount).toBeLessThan(rowCount / 10);
   });
 
   it('should handle deep JSON objects', async () => {

@@ -186,6 +186,42 @@ describe('WHATWG Transform Stream', () => {
     expect(csv).toBe(csvFixtures.emptyObject);
   });
 
+  it('should coalesce multiple rows from one input chunk into one output chunk', async () => {
+    const opts: ParserOptions = {
+      fields: ['a', 'b'],
+    };
+    const rowCount = 5000;
+    const rows = Array.from({ length: rowCount }, (_, i) => ({
+      a: i,
+      b: 'x'.repeat(20),
+    }));
+    const jsonText = JSON.stringify(rows);
+    // A handful of large reads (like a real file), not one chunk per row.
+    const readChunkSize = 65536;
+    function* chunked() {
+      for (let i = 0; i < jsonText.length; i += readChunkSize) {
+        yield jsonText.slice(i, i + readChunkSize);
+      }
+    }
+    const source = Readable.from(chunked(), { objectMode: false });
+
+    const parser = new Parser(opts);
+    let outputChunkCount = 0;
+    const readable = Readable.toWeb(source).pipeThrough(parser as any) as any;
+    const reader = readable.getReader();
+    let csv = '';
+    let result = await reader.read();
+    while (!result.done) {
+      outputChunkCount++;
+      csv += result.value;
+      result = await reader.read();
+    }
+
+    expect(csv.split('\n')).toHaveLength(rowCount + 1); // + header
+    // Far fewer output chunks than rows: proves rows aren't enqueued one at a time.
+    expect(outputChunkCount).toBeLessThan(rowCount / 10);
+  });
+
   it('should handle deep JSON objects', async () => {
     const parser = new Parser();
     const csv = await parseInput(parser, jsonFixtures.deepJSON());

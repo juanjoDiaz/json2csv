@@ -15,6 +15,9 @@ export default class JSON2CSVNodeTransform<
   T extends object,
 > extends Transform {
   private streamParser: StreamParser<TRaw, T>;
+  // Rows produced while processing a single input chunk are coalesced into
+  // one pushed chunk, instead of one push() per CSV row.
+  private outputBuffer = '';
 
   constructor(
     opts: ParserOptions<TRaw, T> = {},
@@ -36,13 +39,22 @@ export default class JSON2CSVNodeTransform<
 
     this.streamParser.onHeader = (header) => this.emit('header', header);
     this.streamParser.onLine = (line) => this.emit('line', line);
-    this.streamParser.onData = (data) => this.push(data);
+    this.streamParser.onData = (data) => {
+      this.outputBuffer += data;
+    };
     this.streamParser.onError = (err) => {
       throw err;
     };
     this.streamParser.onEnd = () => {
       if (!this.writableEnded) this.end();
     };
+  }
+
+  private flushOutputBuffer() {
+    if (!this.outputBuffer) return;
+    const data = this.outputBuffer;
+    this.outputBuffer = '';
+    this.push(data);
   }
 
   /**
@@ -59,8 +71,10 @@ export default class JSON2CSVNodeTransform<
   ) {
     try {
       this.streamParser.write(chunk);
+      this.flushOutputBuffer();
       done();
     } catch (err: unknown) {
+      this.flushOutputBuffer();
       done(err as Error);
     }
   }
@@ -68,8 +82,10 @@ export default class JSON2CSVNodeTransform<
   override _final(done: any) {
     try {
       this.streamParser.end();
+      this.flushOutputBuffer();
       done();
     } catch (err: unknown) {
+      this.flushOutputBuffer();
       done(err);
     }
   }
