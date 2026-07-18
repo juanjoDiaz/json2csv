@@ -179,7 +179,7 @@ export default class JSON2CSVStreamParser<
 
     if (!this._hasWritten) {
       if (!this.opts.fields) {
-        if (typeof processedData[0] !== 'object') {
+        if (processedData[0] === null || typeof processedData[0] !== 'object') {
           throw new Error(
             'Data items should be objects or the "fields" option should be included',
           );

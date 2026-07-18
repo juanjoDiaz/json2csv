@@ -140,6 +140,18 @@ describe('Node Async Parser', () => {
     );
   });
 
+  it('should error, not crash, if an array element is null and fields are not set', async () => {
+    // typeof null === 'object', so a naive `typeof x !== 'object'` guard lets
+    // null through, and it later throws a raw, unhelpful TypeError from
+    // Object.keys(null) instead of this descriptive error.
+    const parser = new Parser();
+    await expect(
+      parseInput(parser, jsonFixtures.nullArrayElement()),
+    ).rejects.toThrow(
+      'Data items should be objects or the "fields" option should be included',
+    );
+  });
+
   it('should error if input data is not valid json', async () => {
     const opts: ParserOptions = {
       fields: ['carModel', 'price', 'color', 'manual'],

@@ -158,6 +158,23 @@ describe('CLI', () => {
     }
   });
 
+  it('should error, not crash, if an array element is null and fields are not set', async () => {
+    // typeof null === 'object', so a naive `typeof x !== 'object'` guard lets
+    // null through, and it later throws a raw, unhelpful TypeError from
+    // Object.keys(null) instead of this descriptive error.
+    try {
+      await execAsync(
+        `${cli} -i "${getFixturePath('/json/nullArrayElement.json')}"`,
+      );
+
+      expect.fail('Exception expected.');
+    } catch (err: any) {
+      expect(err.stderr.split('\n')[0].substring(7)).toEqual(
+        'Data items should be objects or the "fields" option should be included',
+      );
+    }
+  });
+
   it('should handle empty object', async () => {
     const opts = '--fields carModel,price,color';
 

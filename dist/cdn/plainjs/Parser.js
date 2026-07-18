@@ -41,7 +41,7 @@ var JSON2CSVParser = class extends JSON2CSVBase {
           'Data should not be empty or the "fields" option should be included'
         );
       }
-      if (typeof processedData[0] !== "object") {
+      if (processedData[0] === null || typeof processedData[0] !== "object") {
         throw new Error(
           'Data items should be objects or the "fields" option should be included'
         );
