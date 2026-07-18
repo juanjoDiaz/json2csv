@@ -19,20 +19,18 @@ export default class JSON2CSVParser<
   parse(data: Array<TRaw> | TRaw): string {
     const preprocessedData = this.preprocessData(data);
 
-    this.opts.fields =
-      this.opts.fields ||
-      this.preprocessFieldsInfo(
-        preprocessedData.reduce((fields: Array<string>, item) => {
-          Object.keys(item).forEach((field) => {
-            if (!fields.includes(field)) {
-              fields.push(field);
-            }
-          });
-
-          return fields;
-        }, []),
+    if (!this.opts.fields) {
+      const fieldSet = new Set<string>();
+      for (const item of preprocessedData) {
+        for (const field of Object.keys(item)) {
+          fieldSet.add(field);
+        }
+      }
+      this.opts.fields = this.preprocessFieldsInfo(
+        [...fieldSet],
         this.opts.defaultValue,
       );
+    }
 
     const header = this.opts.header ? this.getHeader() : '';
     const rows = this.processData(preprocessedData);

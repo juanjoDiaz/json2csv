@@ -30,6 +30,34 @@ await runSuite({
   ],
 });
 
+const wideFieldCount = 200;
+const wideFields = Array.from(
+  { length: wideFieldCount },
+  (_, index) => `f${index}`,
+);
+const wideRows = Array.from({ length: rowCount }, (_, rowIndex) =>
+  Object.fromEntries(
+    wideFields.map((field, fieldIndex) => [field, rowIndex + fieldIndex]),
+  ),
+);
+const wideExplicitParser = new Parser({ fields: wideFields });
+const expectedWideCsv = wideExplicitParser.parse(wideRows);
+
+await runSuite({
+  name: `Wide-schema field discovery (${rowCount} rows x ${wideFieldCount} fields)`,
+  expected: expectedWideCsv,
+  benchmarks: [
+    {
+      name: 'inferred fields',
+      run: () => new Parser().parse(wideRows),
+    },
+    {
+      name: 'explicit fields',
+      run: () => new Parser({ fields: wideFields }).parse(wideRows),
+    },
+  ],
+});
+
 const nestedRows = flatRows.map((row) => ({ nested: row }));
 const nestedFields = fields.map((field) => `nested.${field}`);
 const stringPathParser = new Parser({ fields: nestedFields });

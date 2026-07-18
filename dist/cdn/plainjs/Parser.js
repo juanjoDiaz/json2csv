@@ -10,17 +10,18 @@ var JSON2CSVParser = class extends JSON2CSVBase {
    */
   parse(data) {
     const preprocessedData = this.preprocessData(data);
-    this.opts.fields = this.opts.fields || this.preprocessFieldsInfo(
-      preprocessedData.reduce((fields, item) => {
-        Object.keys(item).forEach((field) => {
-          if (!fields.includes(field)) {
-            fields.push(field);
-          }
-        });
-        return fields;
-      }, []),
-      this.opts.defaultValue
-    );
+    if (!this.opts.fields) {
+      const fieldSet = /* @__PURE__ */ new Set();
+      for (const item of preprocessedData) {
+        for (const field of Object.keys(item)) {
+          fieldSet.add(field);
+        }
+      }
+      this.opts.fields = this.preprocessFieldsInfo(
+        [...fieldSet],
+        this.opts.defaultValue
+      );
+    }
     const header = this.opts.header ? this.getHeader() : "";
     const rows = this.processData(preprocessedData);
     const csv = (this.opts.withBOM ? "\uFEFF" : "") + header + (header && rows ? this.opts.eol : "") + rows;
