@@ -67,7 +67,7 @@ export default class JSON2CSVWHATWGTransformStream<
   implements TransformStream<TRaw, string>, EventTarget
 {
   override readonly readable!: AwaitableReadableStream<string>;
-  private delegate?: DocumentFragment; // TODO should be (event: Event): boolean
+  private readonly delegate = new EventTarget();
 
   constructor(
     opts: ParserOptions<TRaw, T> = {},
@@ -78,20 +78,15 @@ export default class JSON2CSVWHATWGTransformStream<
     const transformer = new JSON2CSVWHATWGTransformer<TRaw, T>(opts, asyncOpts);
     super(transformer, writableStrategy, readableStrategy);
 
-    // Implement the EventTarget interface when running on a browser
-    if (typeof document === 'object') {
-      this.delegate = document.createDocumentFragment();
-
-      transformer.onHeader = (header) =>
-        this.dispatchEvent(new CustomEvent('header', { detail: header }));
-      transformer.onLine = (line) =>
-        this.dispatchEvent(new CustomEvent('line', { detail: line }));
-      const origOnData = transformer.onData.bind(transformer);
-      transformer.onData = (data) => {
-        origOnData(data);
-        this.dispatchEvent(new CustomEvent('data', { detail: data }));
-      };
-    }
+    transformer.onHeader = (header) =>
+      this.dispatchEvent(new CustomEvent('header', { detail: header }));
+    transformer.onLine = (line) =>
+      this.dispatchEvent(new CustomEvent('line', { detail: line }));
+    const origOnData = transformer.onData.bind(transformer);
+    transformer.onData = (data) => {
+      origOnData(data);
+      this.dispatchEvent(new CustomEvent('data', { detail: data }));
+    };
 
     this.readable.promise = async () => {
       let csv = '';
@@ -110,19 +105,21 @@ export default class JSON2CSVWHATWGTransformStream<
     type: string,
     callback: EventListenerOrEventListenerObject | null,
     options?: boolean | AddEventListenerOptions | undefined,
-  ): void {
-    this.delegate?.addEventListener(type, callback, options);
+  ): this {
+    this.delegate.addEventListener(type, callback, options);
+    return this;
   }
 
   public dispatchEvent(event: Event): boolean {
-    return this.delegate?.dispatchEvent(event) ?? false;
+    return this.delegate.dispatchEvent(event);
   }
 
   public removeEventListener(
     type: string,
     callback: EventListenerOrEventListenerObject | null,
     options?: boolean | EventListenerOptions | undefined,
-  ): void {
-    this.delegate?.removeEventListener(type, callback, options);
+  ): this {
+    this.delegate.removeEventListener(type, callback, options);
+    return this;
   }
 }

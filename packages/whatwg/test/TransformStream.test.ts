@@ -106,6 +106,43 @@ describe('WHATWG Transform Stream', () => {
     expect(opts).toEqual({});
   });
 
+  it('should dispatch header/line/data events outside a browser document', async () => {
+    const opts: ParserOptions = {
+      fields: ['carModel', 'price', 'color', 'manual'],
+    };
+    const parser = new Parser(opts);
+
+    const headers: unknown[] = [];
+    const lines: unknown[] = [];
+    const dataChunks: unknown[] = [];
+    parser.addEventListener('header', (event) =>
+      headers.push((event as CustomEvent).detail),
+    );
+    parser.addEventListener('line', (event) =>
+      lines.push((event as CustomEvent).detail),
+    );
+    parser.addEventListener('data', (event) =>
+      dataChunks.push((event as CustomEvent).detail),
+    );
+
+    await parseInput(parser, jsonFixtures.default());
+
+    expect(headers).not.toHaveLength(0);
+    expect(lines).not.toHaveLength(0);
+    expect(dataChunks).not.toHaveLength(0);
+  });
+
+  it('should support chaining addEventListener/removeEventListener calls', () => {
+    const parser = new Parser();
+    const noop = () => {};
+
+    expect(
+      parser
+        .addEventListener('header', noop)
+        .removeEventListener('header', noop),
+    ).toBe(parser);
+  });
+
   it('should error if input data is empty and fields are not set', async () => {
     const parser = new Parser();
     await expect(parseInput(parser, jsonFixtures.empty())).rejects.toThrow(
