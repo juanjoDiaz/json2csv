@@ -3,6 +3,14 @@ import { Writable } from 'node:stream';
 
 const MIN_CELL_WIDTH = 15;
 
+// String#length counts UTF-16 code units, so an astral character (most
+// emoji) counts as 2 - overcounting width and, worse, letting the wrap
+// regex split a surrogate pair across two lines (rendered as mojibake).
+// Counting code points instead keeps a character atomic.
+function codePointLength(str: string): number {
+  return [...str].length;
+}
+
 export interface TablePrinterOptions {
   eol: string;
   delimiter: string;
@@ -149,10 +157,10 @@ export default class TablePrinter {
 
   setColumnWidths(line: string): void {
     this.colWidths = this.splitCells(line).map((elem) =>
-      Math.max(elem.length * 2, MIN_CELL_WIDTH),
+      Math.max(codePointLength(elem) * 2, MIN_CELL_WIDTH),
     );
     this.cellWrapRegexes = this.colWidths.map(
-      (width) => new RegExp(`(.{1,${width - 2}})`, 'g'),
+      (width) => new RegExp(`(.{1,${width - 2}})`, 'gu'),
     );
 
     this.topLine = `┌${this.colWidths.map((i) => '─'.repeat(i)).join('┬')}┐`;
@@ -218,7 +226,7 @@ export default class TablePrinter {
 
   padCellHorizontally(content: Array<string>, width: number): Array<string> {
     return content.map((line) => {
-      const horPad = width - line.length - 2;
+      const horPad = width - codePointLength(line) - 2;
       return ` ${line}${' '.repeat(horPad)} `;
     });
   }

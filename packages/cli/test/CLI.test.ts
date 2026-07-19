@@ -723,6 +723,16 @@ describe('CLI', () => {
     expect(csv).toEqual(csvFixtures.prettyPrintQuotedDelimiter);
   });
 
+  it('should not split an astral character (e.g. emoji) across two wrapped lines', async () => {
+    const opts = '--pretty';
+
+    const { stdout: csv } = await execAsync(
+      `${cli} -i "${getFixturePath('/json/prettyPrintEmoji.json')}" ${opts}`,
+    );
+
+    expect(csv).toEqual(csvFixtures.prettyPrintEmoji);
+  });
+
   // Preprocessing
 
   it('should unwind all unwindable fields using the unwind transform', async () => {
