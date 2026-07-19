@@ -92,6 +92,7 @@ export default class TablePrinter {
   private _hasWritten = false;
 
   private colWidths!: Array<number>;
+  private cellWrapRegexes!: Array<RegExp>;
   private topLine!: string;
   private middleLine!: string;
   private bottomLine!: string;
@@ -150,6 +151,9 @@ export default class TablePrinter {
     this.colWidths = this.splitCells(line).map((elem) =>
       Math.max(elem.length * 2, MIN_CELL_WIDTH),
     );
+    this.cellWrapRegexes = this.colWidths.map(
+      (width) => new RegExp(`(.{1,${width - 2}})`, 'g'),
+    );
 
     this.topLine = `┌${this.colWidths.map((i) => '─'.repeat(i)).join('┬')}┐`;
     this.middleLine = `├${this.colWidths.map((i) => '─'.repeat(i)).join('┼')}┤`;
@@ -168,9 +172,7 @@ export default class TablePrinter {
 
   formatRow(row: string): string {
     const wrappedRow = this.splitCells(row).map(
-      (cell, i) =>
-        cell.match(new RegExp(`(.{1,${this.colWidths[i] - 2}})`, 'g')) ||
-        ([] as Array<string>),
+      (cell, i) => cell.match(this.cellWrapRegexes[i]) || ([] as Array<string>),
     );
 
     const height = wrappedRow.reduce(
