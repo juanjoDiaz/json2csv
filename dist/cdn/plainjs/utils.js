@@ -58,13 +58,6 @@ function getPropGetter(path, defaultValue) {
     return getPropByPath(obj, processedPath, defaultValue);
   };
 }
-function getProp(obj, path, defaultValue) {
-  if (path in obj) {
-    const value = obj[path];
-    return value === void 0 ? defaultValue : value;
-  }
-  return getPropByPath(obj, castPath(path, obj), defaultValue);
-}
 function flattenReducer(acc, arr) {
   if (Array.isArray(arr)) {
     for (const item of arr) acc.push(item);
@@ -89,6 +82,5 @@ function fastJoin(arr, separator) {
 export {
   fastJoin,
   flattenReducer,
-  getProp,
   getPropGetter
 };
