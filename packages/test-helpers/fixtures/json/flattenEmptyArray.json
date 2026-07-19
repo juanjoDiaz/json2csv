@@ -1,0 +1,4 @@
+[
+  { "name": "Jack", "tags": [], "address": {} },
+  { "name": "Thomas", "tags": ["red", "blue"], "address": { "city": "NYC" } }
+]

@@ -728,6 +728,18 @@ describe('Parser', () => {
     expect(csv).toBe(csvFixtures.flattenedArrays);
   });
 
+  it('should consistently drop empty arrays and empty objects instead of keeping only one, using the flatten transform', async () => {
+    const opts: ParserOptions = {
+      fields: ['name', 'tags', 'tags.0', 'tags.1', 'address', 'address.city'],
+      transforms: [flatten({ arrays: true, objects: true })],
+    };
+
+    const parser = new Parser(opts);
+    const csv = await parseInput(parser, jsonFixtures.flattenEmptyArray());
+
+    expect(csv).toBe(csvFixtures.flattenedEmptyArray);
+  });
+
   it('should support custom flatten separator using the flatten transform', async () => {
     const opts: ParserOptions = {
       transforms: [flatten({ separator: '__' })],

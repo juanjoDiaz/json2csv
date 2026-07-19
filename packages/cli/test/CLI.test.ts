@@ -791,6 +791,17 @@ describe('CLI', () => {
     expect(csv).toEqual(csvFixtures.flattenedArrays);
   });
 
+  it('should consistently drop empty arrays and empty objects instead of keeping only one, using the flatten transform', async () => {
+    const opts =
+      '--fields name,tags,tags.0,tags.1,address,address.city --flatten-arrays --flatten-objects';
+
+    const { stdout: csv } = await execAsync(
+      `${cli} -i "${getFixturePath('/json/flattenEmptyArray.json')}" ${opts}`,
+    );
+
+    expect(csv).toEqual(csvFixtures.flattenedEmptyArray);
+  });
+
   it('should support custom flatten separator using the flatten transform', async () => {
     const opts = '--flatten-objects --flatten-separator __';
 

@@ -8,7 +8,7 @@ function flatten({
     Object.keys(obj).forEach((key) => {
       const newPath = currentPath ? `${currentPath}${separator}${key}` : key;
       const value = obj[key];
-      if (objects && typeof value === "object" && value !== null && !Array.isArray(value) && Object.prototype.toString.call(value.toJSON) !== "[object Function]" && Object.keys(value).length) {
+      if (objects && typeof value === "object" && value !== null && !Array.isArray(value) && Object.prototype.toString.call(value.toJSON) !== "[object Function]") {
         step(value, flatDataRow, newPath);
         return;
       }

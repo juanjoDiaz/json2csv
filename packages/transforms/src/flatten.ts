@@ -35,8 +35,7 @@ export default function flatten<
         value !== null &&
         !Array.isArray(value) &&
         Object.prototype.toString.call((value as any).toJSON) !==
-          '[object Function]' &&
-        Object.keys(value).length
+          '[object Function]'
       ) {
         step(value, flatDataRow, newPath);
         return;
