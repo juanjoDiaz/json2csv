@@ -66,7 +66,7 @@ export default class JSON2CSVWHATWGTransformStream<
   extends TransformStream<TRaw, string>
   implements TransformStream<TRaw, string>, EventTarget
 {
-  override readonly readable!: AwaitableReadableStream<string>;
+  declare readonly readable: AwaitableReadableStream<string>;
   private readonly delegate = new EventTarget();
 
   constructor(
