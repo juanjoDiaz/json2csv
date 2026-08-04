@@ -36,7 +36,7 @@ You can import the latest version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg';
+  import { TransformStream } from 'https://cdn.jsdelivr.net/gh/juanjoDiaz/json2csv@latest/dist/cdn/whatwg/index.js';
 </script>
 ```
 
@@ -44,7 +44,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg@7.0.7';
+  import { TransformStream } from 'https://cdn.jsdelivr.net/gh/juanjoDiaz/json2csv@7.0.7/dist/cdn/whatwg/index.js';
 </script>
 ```
 
@@ -67,8 +67,8 @@ await response.body.pipeThrough(parser).pipeTo(writableStream);
 
 // You can also listen for events on the conversion and see how the header or the lines are coming out.
 parser
-  .addEventListener('header', (header) => console.log(header))
-  .addEventListener('line', (line) => console.log(line));
+  .addEventListener('header', (event) => console.log(event.detail))
+  .addEventListener('line', (event) => console.log(event.detail));
 ```
 
 ### Parameters

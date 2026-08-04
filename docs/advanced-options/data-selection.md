@@ -156,7 +156,7 @@ const toTextStream = new WritableStream({
   }
 });
 
-await dataStream.pipeThrough(datajson2csvParserStream).pipeTo(toTextStream);
+await dataStream.pipeThrough(json2csvParser).pipeTo(toTextStream);
 
 console.log(csv);
 ```
@@ -325,7 +325,7 @@ const toTextStream = new WritableStream({
   }
 });
 
-await dataStream.pipeThrough(datajson2csvParserStream).pipeTo(toTextStream);
+await dataStream.pipeThrough(json2csvParser).pipeTo(toTextStream);
 
 console.log(csv);
 ```
@@ -587,7 +587,7 @@ const toTextStream = new WritableStream({
   }
 });
 
-await dataStream.pipeThrough(datajson2csvParserStream).pipeTo(toTextStream);
+await dataStream.pipeThrough(json2csvParser).pipeTo(toTextStream);
 
 console.log(csv);
 ```

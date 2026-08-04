@@ -33,7 +33,7 @@ The `unwind` transform deconstructs an array field from the input item to output
 
 The transform needs to be instantiated and takes an options object as arguments containing:
 
-* `paths` [&lt;String[]&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) List of the paths to the fields to be unwound. It's mandatory and should not be empty.
+* `paths` [&lt;String[]&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) List of the paths to the fields to be unwound. Optional. If omitted, all array fields are automatically detected and unwound.
 * `blankOut` [&lt;Boolean&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) Flag indicating whether to unwind using blank values instead of repeating data or not. Defaults to `false`.
 
 
@@ -90,7 +90,7 @@ The transform needs to be instantiated and takes an options object as arguments 
 // Default
 flatten();
 
-// Custom separator '__'
+// Custom separator '_'
 flatten({ separator: '_' });
 
 // Flatten only arrays

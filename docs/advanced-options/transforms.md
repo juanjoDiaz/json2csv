@@ -45,7 +45,7 @@ You can import the latest version:
 
 ```html
 <script type="module">
-  import unwind from 'https://cdn.jsdelivr.net/npm/@json2csv/transforms';
+  import { unwind } from 'https://cdn.jsdelivr.net/gh/juanjoDiaz/json2csv@latest/dist/cdn/transforms/index.js';
 </script>
 ```
 
@@ -53,7 +53,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import unwind from 'https://cdn.jsdelivr.net/npm/@json2csv/transforms@7.0.7';
+  import { unwind } from 'https://cdn.jsdelivr.net/gh/juanjoDiaz/json2csv@7.0.7/dist/cdn/transforms/index.js';
 </script>
 ```
 
@@ -65,7 +65,7 @@ The `unwind` transform deconstructs an array field from the input item to output
 
 The transform needs to be instantiated and takes an options object as arguments containing:
 
-* `paths` [&lt;String[]&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) List of the paths to the fields to be unwound. It's mandatory and should not be empty.
+* `paths` [&lt;String[]&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) List of the paths to the fields to be unwound. Optional. If omitted, all array fields are automatically detected and unwound.
 * `blankOut` [&lt;Boolean&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) Flag indicating whether to unwind using blank values instead of repeating data or not. Defaults to `false`.
 
 
@@ -125,9 +125,9 @@ const opts = {
 const parser = new StreamParser(opts, { objectMode: true });
 
 let csv = '';
-parser.onData = (chunk) => (csv += chunk.toString()));
-parser.onEnd = () => console.log(csv));
-parser.onError = (err) => console.error(err));
+parser.onData = (chunk) => (csv += chunk.toString());
+parser.onEnd = () => console.log(csv);
+parser.onError = (err) => console.error(err);
 
 data.forEach(record => parser.write(record));
 ```
@@ -154,7 +154,7 @@ const opts = {
     unwind({ paths: ['colors'] })
   ]
 };
-const parser = new Transform(ops);
+const parser = new Transform(opts);
 
 const processor = input.pipe(parser).pipe(output);
 
@@ -224,7 +224,7 @@ The transform needs to be instantiated and takes an options object as arguments 
 // Default
 flatten();
 
-// Custom separator '__'
+// Custom separator '_'
 flatten({ separator: '_' });
 
 // Flatten only arrays
@@ -340,7 +340,7 @@ const opts = {
     addCounter()
   ]
 };
-const parser = new Transform(ops);
+const parser = new Transform(opts);
 
 const processor = input.pipe(parser).pipe(output);
 
@@ -389,8 +389,8 @@ await sourceStream.pipeThrough(parser).pipeTo(writableStream);
 
 // You can also listen for events on the conversion and see how the header or the lines are coming out.
 parser
-  .addEventListener('header', (header) => console.log(header))
-  .addEventListener('line', (line) => console.log(line));
+  .addEventListener('header', (event) => console.log(event.detail))
+  .addEventListener('line', (event) => console.log(event.detail));
 ```
 
 #### **CLI**

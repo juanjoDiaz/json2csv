@@ -29,4 +29,4 @@
 - Others
   - [Known Gotchas](others/known-gotchas.md)
   - [Contributing](others/contributing.md)
-  - [Changelog](others/changelog.md)
+  - [Changelog](others/CHANGELOG.md)

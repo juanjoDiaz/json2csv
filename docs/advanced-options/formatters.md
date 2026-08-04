@@ -73,7 +73,7 @@ You can import the latest version:
 
 ```html
 <script type="module">
-  import default from 'https://cdn.jsdelivr.net/npm/@json2csv/formatters';
+  import defaultFormatter from 'https://cdn.jsdelivr.net/gh/juanjoDiaz/json2csv@latest/dist/cdn/formatters/index.js';
 </script>
 ```
 
@@ -81,7 +81,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import default from 'https://cdn.jsdelivr.net/npm/@json2csv/formatters@7.0.7';
+  import defaultFormatter from 'https://cdn.jsdelivr.net/gh/juanjoDiaz/json2csv@7.0.7/dist/cdn/formatters/index.js';
 </script>
 ```
 
@@ -90,7 +90,7 @@ You can also select a specific version:
 ### Default
 
 This formatter just relies on standard JavaScript stringification.
-This is the default formatter for `undefined`, `boolean`, `number` and `bigint` elements.
+This is the default formatter for `undefined`, `boolean` and `bigint` elements.
 
 It's not a factory but the formatter itself.
 
@@ -98,7 +98,6 @@ It's not a factory but the formatter itself.
 {
   undefined: defaultFormatter,
   boolean: defaultFormatter,
-  number: defaultFormatter,
   bigint: defaultFormatter,
 }
 ```
@@ -114,11 +113,11 @@ The formatter needs to be instantiated and takes an options object as arguments 
 
 ```js
 {
-  // 2 decimals
+  // All available decimals
   number: numberFormatter(),
 
   // 3 decimals
-  number: numberFormatter(3)
+  number: numberFormatter({ decimals: 3 })
 }
 ```
 
@@ -151,13 +150,14 @@ This is the default for `string` elements.
 
 ### String Quote Only Necessary
 
-The default string formatter quote all strings. This is consistent but it is not mandatory according to the CSV standard. This formatter only quote strings if they don't contain quotes (by default `"`), the CSV separator character (by default `,`) or the end-of-line (by default `\n` or `\r\n` depending on you operating system).
+The default string formatter quote all strings. This is consistent but it is not mandatory according to the CSV standard. This formatter only quote strings if they don't contain quotes (by default `"`), the CSV separator character (by default `,`) or the end-of-line (by default `\n`).
 
 The formatter needs to be instantiated and takes an options object as arguments containing:
 
 - `quote` - String, quote around cell values and column names. Defaults to `"`.
 - `escapedQuote` - String, the value to replace escaped quotes in strings. Defaults to 2x`quotes` (for example `""`).
-- `eol` - String, overrides the default OS line ending (i.e. `\n` on Unix and `\r\n` on Windows). Ensure that you use the same `eol` here as in the json2csv options.
+- `separator` - String, the CSV delimiter to check against when deciding whether to quote. Defaults to `,`. Ensure it matches the `delimiter` used in the json2csv options.
+- `eol` - String, the end-of-line to check against when deciding whether to quote. Defaults to `\n`. Ensure that you use the same `eol` here as in the json2csv options.
 
 ```js
 {
@@ -180,9 +180,9 @@ The formatter needs to be instantiated and takes an options object as arguments 
 
 ### String Excel
 
-Converts string data into normalized Excel style data after formatting it using the given string formatter.
+Converts string data into normalized Excel style data.
 
-The formatter needs to be instantiated and takes no arguments.
+It's not a factory but the formatter itself.
 
 ```js
 {
@@ -207,7 +207,7 @@ This is the default for `symbol` elements.
 
   // Uses custom string formatter
   // You rarely need to this since the symbol formatter will use the string formatter that you set.
-  symbol: symbolFormatter(myStringFormatter()),
+  symbol: symbolFormatter({ stringFormatter: myStringFormatter() }),
 }
 ```
 
@@ -218,7 +218,7 @@ Some object types likes `Date` or Mongo's `ObjectId` are automatically quoted by
 
 The formatter needs to be instantiated and takes an options object as arguments containing:
 
-- `stringFormatter` - tring formatter to use to stringify the symbol name. Defaults to our built-in `stringFormatter`.
+- `stringFormatter` - String formatter to use to stringify the object. Defaults to our built-in `stringFormatter`.
 
 This is the default for `function` and `object` elements. `function`'s are formatted as empty ``.
 
@@ -229,7 +229,7 @@ This is the default for `function` and `object` elements. `function`'s are forma
 
   // Uses custom string formatter
   // You rarely need to this since the object formatter will use the string formatter that you set.
-  object: objectFormatter(myStringFormatter()),
+  object: objectFormatter({ stringFormatter: myStringFormatter() }),
 }
 ```
 
@@ -285,7 +285,7 @@ const fixedLengthStringFormatter = (stringLength, ellipsis = '...', stringFormat
   (item) =>
     item.length <= stringLength
       ? item
-      : stringFormatter(`${item.slice(0, stringLength - ellipsis.length)}${ellipsis})`;
+      : stringFormatter(`${item.slice(0, stringLength - ellipsis.length)}${ellipsis}`);
 ```
 
 ## How to use formatters
@@ -346,7 +346,7 @@ parser.onLine = (line) => console.log(line);
 
 ```js
 import { createReadStream, createWriteStream } from 'fs';
-import { Transform } from '@json2csv/ node';
+import { Transform } from '@json2csv/node';
 import { number as numberFormatter } from '@json2csv/formatters';
 import { fixedLengthStringFormatter } from './custom-formatters';
 
@@ -358,7 +358,7 @@ const opts = {
     string: fixedLengthStringFormatter(20)
   }
 };
-const parser = new Transform(ops);
+const parser = new Transform(opts);
 
 const processor = input.pipe(parser).pipe(output);
 
@@ -405,8 +405,8 @@ await sourceStream.pipeThrough(parser).pipeTo(writableStream);
 
 // You can also listen for events on the conversion and see how the header or the lines are coming out.
 parser
-  .addEventListener('header', (header) => console.log(header))
-  .addEventListener('line', (line) => console.log(line));
+  .addEventListener('header', (event) => console.log(event.detail))
+  .addEventListener('line', (event) => console.log(event.detail));
 ```
 
 #### **WHATWG Async Parser**

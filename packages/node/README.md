@@ -45,7 +45,7 @@ And a couple of libraries that enable additional configurations:
 
 ## Requirements
 
-- Node v16+
+- Node v20+
 
 ## Installation
 

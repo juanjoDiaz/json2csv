@@ -159,8 +159,8 @@ await response.body.pipeThrough(parser).pipeTo(writableStream);
 
 // You can also listen for events on the conversion and see how the header or the lines are coming out.
 parser
-  .addEventListener('header', (header) => console.log(header))
-  .addEventListener('line', (line) => console.log(line));
+  .addEventListener('header', (event) => console.log(event.detail))
+  .addEventListener('line', (event) => console.log(event.detail));
 ```
 
 #### **WHATWG Async Parser**
@@ -178,7 +178,7 @@ $ npm install --save @json2csv/whatwg
 #### Usage
 
 ```js
-const { AsyncParser } from '@json2csv/whatwg';
+import { AsyncParser } from '@json2csv/whatwg';
 
 const parser = new AsyncParser();
 

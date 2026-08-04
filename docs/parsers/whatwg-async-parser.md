@@ -33,7 +33,7 @@ You can import the latest version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv';
+  import { AsyncParser } from 'https://cdn.jsdelivr.net/gh/juanjoDiaz/json2csv@latest/dist/cdn/whatwg/index.js';
 </script>
 ```
 
@@ -41,7 +41,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import Parser from 'https://cdn.jsdelivr.net/npm/@json2csv/whatwg@7.0.7';
+  import { AsyncParser } from 'https://cdn.jsdelivr.net/gh/juanjoDiaz/json2csv@7.0.7/dist/cdn/whatwg/index.js';
 </script>
 ```
 
@@ -53,9 +53,10 @@ You can also select a specific version:
 import { AsyncParser } from '@json2csv/whatwg';
 
 const opts = {};
-const transformOpts = {};
 const asyncOpts = {};
-const parser = new AsyncParser(opts, asyncOpts, transformOpts);
+const writableStrategy = {};
+const readableStrategy = {};
+const parser = new AsyncParser(opts, asyncOpts, writableStrategy, readableStrategy);
 
 const csv = await parser.parse(data).promise();
 
