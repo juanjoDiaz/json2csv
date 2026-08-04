@@ -42,6 +42,6 @@
   "devDependencies": {
     "0x": "^6.0.0",
     "benchmark": "^2.1.4",
-    "playwright": "^1.61.1"
+    "playwright": "^1.62.1"
   }
 }

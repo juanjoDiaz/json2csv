@@ -4,7 +4,7 @@ import {
   TokenizerError,
   TokenParser,
   TokenType
-} from "https://cdn.jsdelivr.net/npm/@streamparser/json@^0.0.22/dist/mjs/index.js";
+} from "https://cdn.jsdelivr.net/npm/@streamparser/json@^0.0.23/dist/mjs/index.js";
 import JSON2CSVBase from "./BaseParser.js";
 var JSON2CSVStreamParser = class extends JSON2CSVBase {
   constructor(opts, asyncOpts) {
