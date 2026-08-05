@@ -1,3 +1,30 @@
+## [7.0.8](https://github.com/juanjodiaz/json2csv/compare/v7.0.7...v7.0.8) (2026-08-04)
+
+### Bug Fixes
+
+* --config file values silently overridden by CLI option defaults ([3785565](https://github.com/juanjodiaz/json2csv/commit/3785565c32ea01637f96955050279df9027d04aa))
+* --pretty tears quoted values apart on embedded delimiter/newline ([5705272](https://github.com/juanjodiaz/json2csv/commit/5705272dbc6a249ba9b77ae5724a2117c0b273d4))
+* flatten treats empty objects and empty arrays inconsistently ([7231780](https://github.com/juanjodiaz/json2csv/commit/72317806eeb5dce44ec1c9cbd499ad66f64f1c76))
+* includeEmptyRows:true silently drops single-field empty rows ([6e28964](https://github.com/juanjodiaz/json2csv/commit/6e28964c2d056f2e2a7569b4e61417f947f811c5))
+* null array elements crash field-inference with raw TypeError ([f1bf37f](https://github.com/juanjodiaz/json2csv/commit/f1bf37f2da7e689676225dd5bbd07a6b50cb741c))
+* quote/separator regex injection and decimals:0 in formatters ([14c9f8d](https://github.com/juanjodiaz/json2csv/commit/14c9f8d1d78a5870bb71071beccff2366e09a2d8))
+* TablePrinter splits astral characters (emoji) across wrapped lines ([2863e5f](https://github.com/juanjodiaz/json2csv/commit/2863e5f16a111df13ed9e66b7ac258cc896c1ab6))
+* unencoded file paths break dynamic import() in CLI ([2d7289c](https://github.com/juanjodiaz/json2csv/commit/2d7289ce500c49c6ea2d247abc050f19ef4adee8))
+* WHATWG AsyncParser mutates caller's asyncOpts on array/object input ([3476a15](https://github.com/juanjodiaz/json2csv/commit/3476a15d7d33a996427fb5843e878303fcba3175))
+* WHATWG TransformStream events silently no-op outside a browser ([2b24b5d](https://github.com/juanjodiaz/json2csv/commit/2b24b5d95d20687ee699f0993e9790042c783318))
+
+### Performance Improvements
+
+* avoid array allocation in quote-only formatter ([e5066f8](https://github.com/juanjodiaz/json2csv/commit/e5066f8536ae100111173491805a222c5828c58a))
+* batch stream output per input chunk ([3afffb5](https://github.com/juanjodiaz/json2csv/commit/3afffb58323dee356a74931fc15cbdc17a3cc00e))
+* cache parsed field paths ([2e945d6](https://github.com/juanjodiaz/json2csv/commit/2e945d6619252404e1f9e31d283e95ab7ace94db))
+* cache parsed property paths in transforms getProp ([4127458](https://github.com/juanjodiaz/json2csv/commit/4127458731b5db15afc4555ef49f36870ef7cf1a))
+* discover unwind paths once ([c2fdaee](https://github.com/juanjodiaz/json2csv/commit/c2fdaeee9eb92bb6bdea40691036c002b3e8a8be))
+* flatten arrays without spread ([256c36b](https://github.com/juanjodiaz/json2csv/commit/256c36b8b6f0f1cebbbf0cfdfa4ab898d328d3de))
+* lazily consume array inputs in AsyncParser ([417012f](https://github.com/juanjodiaz/json2csv/commit/417012fec4c04e2268b3c9f08d24c1543bf690f3))
+* precompile TablePrinter's cell-wrapping regex per column ([e8e97e1](https://github.com/juanjodiaz/json2csv/commit/e8e97e1e82b0caa8ed92205d091a36039864db68))
+* use a Set for field inference ([6f295e6](https://github.com/juanjodiaz/json2csv/commit/6f295e6b273be480e851a14c41695e508ef391dc))
+
 ## [7.0.7](https://github.com/juanjodiaz/json2csv/compare/v7.0.6...v7.0.7) (2025-01-26)
 
 ### Bug Fixes

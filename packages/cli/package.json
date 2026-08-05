@@ -1,6 +1,6 @@
 {
   "name": "@json2csv/cli",
-  "version": "7.0.7",
+  "version": "7.0.8",
   "description": "Command Line Interface to convert JSON to CSV.",
   "keywords": [
     "json",
@@ -42,9 +42,9 @@
     "@types/node": "~26.1.2"
   },
   "dependencies": {
-    "@json2csv/formatters": "^7.0.7",
-    "@json2csv/node": "^7.0.7",
-    "@json2csv/transforms": "^7.0.7",
+    "@json2csv/formatters": "^7.0.8",
+    "@json2csv/node": "^7.0.8",
+    "@json2csv/transforms": "^7.0.8",
     "commander": "^15.0.0"
   }
 }

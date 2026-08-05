@@ -1,6 +1,6 @@
 {
   "name": "json2csv",
-  "version": "7.0.7",
+  "version": "7.0.8",
   "private": true,
   "description": "Fast and highly configurable JSON to CSV converter",
   "keywords": [
@@ -49,7 +49,7 @@
     "build": "npm run build -w @json2csv/formatters -w @json2csv/transforms -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg -w @json2csv/cli",
     "clean": "npm run clean -w @json2csv/formatters -w @json2csv/transforms -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg -w @json2csv/cli",
     "dependencies:update-internal": "npm run dependencies:update-internal -w @json2csv/cli -w @json2csv/plainjs -w @json2csv/node -w @json2csv/whatwg",
-    "changelog:update": "conventional-changelog-cli -p conventionalcommits -i CHANGELOG.md -s && cp CHANGELOG.md docs/others/CHANGELOG.md"
+    "changelog:update": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s && cp CHANGELOG.md docs/others/CHANGELOG.md"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.6",

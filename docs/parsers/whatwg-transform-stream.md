@@ -44,7 +44,7 @@ You can also select a specific version:
 
 ```html
 <script type="module">
-  import { TransformStream } from 'https://cdn.jsdelivr.net/gh/juanjoDiaz/json2csv@7.0.7/dist/cdn/whatwg/index.js';
+  import { TransformStream } from 'https://cdn.jsdelivr.net/gh/juanjoDiaz/json2csv@7.0.8/dist/cdn/whatwg/index.js';
 </script>
 ```
 
